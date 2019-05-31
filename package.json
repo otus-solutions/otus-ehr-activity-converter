@@ -1,0 +1,33 @@
+{
+  "name": "otus-ehr-activity-converter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "gulp browser-sync",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccem-dev/otus-ehr-activity-converter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ccem-dev/otus-ehr-activity-converter/issues"
+  },
+  "homepage": "https://github.com/ccem-dev/otus-ehr-activity-converter#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "consign": "^0.1.6",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "express-fileupload": "^1.1.4",
+    "mongodb": "^3.2.6",
+    "xml2json": "^0.11.2"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1"
+  }
+}
