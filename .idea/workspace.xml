@@ -14,6 +14,25 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.xml">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1035">
+                    <caret line="129" column="19" lean-forward="true" selection-start-line="129" selection-start-column="19" selection-end-line="129" selection-end-column="19" />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
@@ -32,72 +51,39 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/home.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="77" column="23" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Downloads/resultados-de-exames-para-teste (1).json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="27" />
+            <state relative-caret-position="15">
+              <caret line="1" column="25" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.xml">
+        <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+            <state relative-caret-position="456">
+              <caret line="219" column="78" selection-start-line="219" selection-start-column="78" selection-end-line="219" selection-end-column="78" />
               <folding>
-                <element signature="e#243#475#0" />
-                <element signature="e#481#773#0" />
-                <element signature="e#779#1394#0" />
-                <element signature="e#1400#2016#0" />
-                <element signature="e#2022#2272#0" />
-                <element signature="e#2278#2553#0" />
-                <element signature="e#2559#2705#0" />
-                <element signature="e#2711#2997#0" />
-                <element signature="e#3003#3161#0" />
-                <element signature="e#3167#3415#0" />
-                <element signature="e#3421#3718#0" />
-                <element signature="e#3724#4509#0" />
-                <element signature="e#4515#4900#0" />
-                <element signature="e#6183#7082#0" />
-                <element signature="e#8436#10835#0" />
-                <element signature="e#8495#8835#0" />
-                <element signature="e#8845#9718#0" />
-                <element signature="e#10373#10592#0" />
-                <element signature="e#10841#11858#0" />
-                <element signature="e#11864#12479#0" />
-                <element signature="e#12485#14692#0" />
-                <element signature="e#14698#16112#0" />
-                <element signature="e#16118#16846#0" />
-                <element signature="e#16852#17580#0" />
-                <element signature="e#17586#18314#0" />
-                <element signature="e#18320#19048#0" />
-                <element signature="e#19054#19782#0" />
-                <element signature="e#19788#20516#0" />
-                <element signature="e#20522#21250#0" />
-                <element signature="e#21256#21984#0" />
-                <element signature="e#21990#22718#0" />
-                <element signature="e#22724#23413#0" />
-                <element signature="e#23419#24150#0" />
-                <element signature="e#24156#24887#0" />
-                <element signature="e#24893#25624#0" />
-                <element signature="e#25630#26361#0" />
-                <element signature="e#26367#26874#0" />
-                <element signature="e#26880#27749#0" />
+                <element signature="n#!!block;n#buildChoiceGroup#0" />
+                <element signature="n#!!block;n#buildOptionStructure#0" />
+                <element signature="n#!!block;n#buildQuestionLabel#0" />
+                <element signature="n#!!block;n#buildFillingRules#0" />
+                <element signature="n#!!block;n#fixString#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package-lock.json">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/routes/home.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="40" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -124,18 +110,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>express-validator</find>
-      <find>ELEA16a</find>
-      <find>cardiovascularEventOrTVPTEPOrFatalHospitalized</find>
-      <find>ELEA16d</find>
-      <find>eventOncologyHospitalizedOrFatal</find>
-      <find>realizationDate</find>
-      <find>var</find>
-      <find>[i]Este formulário determina a qualificação do evento (cardiovascular, cerebrovascular, diabetes, neoplasia ou insuficiência renal crônica ou de mortalidade) para revisão. Informações dos registros hospitalares (se evento hospitalizado) ou da Declaração de Óbito (se evento fatal) são necessárias.[/i]</find>
-      <find>eventLocation</find>
       <find>specifyEventLocation</find>
       <find>questionPage</find>
-      <find>basicQuestionGroup</find>
       <find>&lt;/basicQuestionGroup&gt;</find>
       <find>survey</find>
       <find>consol</find>
@@ -150,10 +126,20 @@
       <find>ELEA</find>
       <find>data</find>
       <find>autoCompl</find>
-      <find>[</find>
       <find>boo</find>
+      <find>basicQuestionGroup</find>
+      <find>hiddenQuestion</find>
       <find>decimalNumber</find>
+      <find>ELEA17f</find>
+      <find>boolean</find>
       <find>booleanQuestion</find>
+      <find>objectType</find>
+      <find>[/</find>
+      <find>[</find>
+      <find>metada</find>
+      <find>console.log</find>
+      <find>fixString</find>
+      <find>Number(</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -168,9 +154,11 @@
         <option value="$PROJECT_DIR$/config/server.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$USER_HOME$/Downloads/surveyTemplate (47).json" />
-        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.xml" />
         <option value="$USER_HOME$/Downloads/surveyTemplate (49).json" />
         <option value="$USER_HOME$/Downloads/surveyTemplate (50).json" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.xml" />
+        <option value="$USER_HOME$/Downloads/surveyTemplate (51).json" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_3.json" />
         <option value="$PROJECT_DIR$/app/controllers/convert.js" />
       </list>
     </option>
@@ -201,7 +189,9 @@
             </path>
             <path>
               <item name="otus-ehr-activity-converter" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="otus-ehr-activity-converter" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -259,15 +249,17 @@
       <workItem from="1559309967945" duration="18682000" />
       <workItem from="1559597878417" duration="8140000" />
       <workItem from="1559670148170" duration="12355000" />
-      <workItem from="1559836290691" duration="10682000" />
+      <workItem from="1559836290691" duration="29107000" />
+      <workItem from="1559934317524" duration="5875000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49859000" />
+    <option name="totallyTimeSpent" value="74159000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1080" y="838" width="1920" height="1035" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24986821" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -275,13 +267,13 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3289183" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.16887417" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.307947" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3289183" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.3289183" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3289183" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -297,7 +289,8 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app/controllers/convert.js</url>
           <line>77</line>
-          <option name="timeStamp" value="40" />
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="77" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -305,49 +298,56 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string>surveyJson</expression-string>
+        <expression-string>questions</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/([[][/]i])([/]i])/g, &quot;&lt;/i&gt;&quot;,&quot;&lt;i&gt;&quot;);</expression-string>
+        <expression-string>question.attributes.getNamedItem(&quot;choiceGroupId&quot;).nodeValue</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/([[][/]i])/g, &quot;&lt;/i&gt;&quot;);</expression-string>
+        <expression-string>choiceGroup.get(question.attributes.getNamedItem(&quot;choiceGroupId&quot;).nodeValue)</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/([[][/]i]/g), &quot;&lt;/i&gt;&quot;);</expression-string>
+        <expression-string>question.attributes.getNamedItem(&quot;choiceGroupId&quot;)</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/([[][/]i]/), &quot;&lt;/i&gt;&quot;);</expression-string>
+        <expression-string>question.attributes</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/[[][/]i]/g, &quot;&lt;/i&gt;&quot;);</expression-string>
+        <expression-string>question</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/[/]i]/g, &quot;&lt;/i&gt;&quot;);</expression-string>
+        <expression-string>choiceGroup</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/[/]/i]/g, &quot;&lt;/i&gt;&quot;);</expression-string>
+        <expression-string>ehrChoiceGroup.childNodes[i].attributes.getNamedItem(&quot;value&quot;).nodeValue</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>header.replace(/i]/g, &quot;&lt;/i&gt;&quot;);</expression-string>
+        <expression-string>ehrChoiceGroup.childNodes[i].attributes.getNamedItem(&quot;label&quot;).nodeValue</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>string.match([)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
     <expressions id="setValue">
@@ -377,26 +377,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="40" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.ejs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/surveyTemplate (47).json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
@@ -404,20 +384,6 @@
           <folding>
             <element signature="e#637#9919#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/ConversionDAO.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="62" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -468,56 +434,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
+    <entry file="file://$USER_HOME$/Downloads/surveyTemplate (51).json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="77" column="23" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="26" />
+        <state relative-caret-position="390">
+          <caret line="54" column="7" selection-start-line="50" selection-start-column="6" selection-end-line="54" selection-end-column="7" />
+          <folding>
+            <element signature="e#788#1327#0" />
+          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.ejs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="25" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="40" selection-start-line="6" selection-start-column="40" selection-end-line="6" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/ConversionDAO.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="62" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_3.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="1272" column="20" lean-forward="true" selection-end-line="1290" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_1.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+        <state relative-caret-position="1035">
+          <caret line="129" column="19" lean-forward="true" selection-start-line="129" selection-start-column="19" selection-end-line="129" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="219" column="78" selection-start-line="219" selection-start-column="78" selection-end-line="219" selection-end-column="78" />
           <folding>
-            <element signature="e#243#475#0" />
-            <element signature="e#481#773#0" />
-            <element signature="e#779#1394#0" />
-            <element signature="e#1400#2016#0" />
-            <element signature="e#2022#2272#0" />
-            <element signature="e#2278#2553#0" />
-            <element signature="e#2559#2705#0" />
-            <element signature="e#2711#2997#0" />
-            <element signature="e#3003#3161#0" />
-            <element signature="e#3167#3415#0" />
-            <element signature="e#3421#3718#0" />
-            <element signature="e#3724#4509#0" />
-            <element signature="e#4515#4900#0" />
-            <element signature="e#6183#7082#0" />
-            <element signature="e#8436#10835#0" />
-            <element signature="e#8495#8835#0" />
-            <element signature="e#8845#9718#0" />
-            <element signature="e#10373#10592#0" />
-            <element signature="e#10841#11858#0" />
-            <element signature="e#11864#12479#0" />
-            <element signature="e#12485#14692#0" />
-            <element signature="e#14698#16112#0" />
-            <element signature="e#16118#16846#0" />
-            <element signature="e#16852#17580#0" />
-            <element signature="e#17586#18314#0" />
-            <element signature="e#18320#19048#0" />
-            <element signature="e#19054#19782#0" />
-            <element signature="e#19788#20516#0" />
-            <element signature="e#20522#21250#0" />
-            <element signature="e#21256#21984#0" />
-            <element signature="e#21990#22718#0" />
-            <element signature="e#22724#23413#0" />
-            <element signature="e#23419#24150#0" />
-            <element signature="e#24156#24887#0" />
-            <element signature="e#24893#25624#0" />
-            <element signature="e#25630#26361#0" />
-            <element signature="e#26367#26874#0" />
-            <element signature="e#26880#27749#0" />
+            <element signature="n#!!block;n#buildChoiceGroup#0" />
+            <element signature="n#!!block;n#buildOptionStructure#0" />
+            <element signature="n#!!block;n#buildQuestionLabel#0" />
+            <element signature="n#!!block;n#buildFillingRules#0" />
+            <element signature="n#!!block;n#fixString#0" />
           </folding>
         </state>
       </provider>
