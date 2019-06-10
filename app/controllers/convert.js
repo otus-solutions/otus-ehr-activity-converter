@@ -226,6 +226,13 @@ function buildQuestionItem(question){
     questionItem.customID = question.attributes.getNamedItem("id").nodeValue;
     questionItem.QuestionName = question.attributes.getNamedItem("name").nodeValue;
 
+    if(question.attributes.getNamedItem("hiddenQuestion")){
+        questionItem.jump = {
+            targetQuestionName:question.attributes.getNamedItem("hiddenQuestion").nodeValue,
+            when:question.attributes.getNamedItem("visibleWhen").nodeValue
+        }
+    }
+
     if(question.tagName === "numericQuestion" ){
         questionItem.objectType = (question.attributes.getNamedItem("decimalNumber") && question.attributes.getNamedItem("decimalNumber").nodeValue === "false") ? "IntegerQuestion" : "DecimalQuestion"
     } else if(question.tagName === "textQuestion"){

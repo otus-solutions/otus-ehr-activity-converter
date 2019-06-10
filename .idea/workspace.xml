@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="da2b3bd8-51eb-4466-8229-478fd81d018f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/convert.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/convert.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/ConversionDAO.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/ConversionDAO.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +22,8 @@
             <file pinned="false" current-in-tab="true">
               <entry file="file://$USER_HOME$/Downloads/ELEA.xml">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="606">
-                    <caret line="3093" column="22" selection-start-line="3093" selection-start-column="16" selection-end-line="3093" selection-end-column="22" />
+                  <state relative-caret-position="1701">
+                    <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
                   </state>
                 </provider>
               </entry>
@@ -61,8 +61,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="158" column="89" selection-start-line="158" selection-start-column="89" selection-end-line="158" selection-end-column="89" />
+            <state relative-caret-position="332">
+              <caret line="230" column="92" selection-start-line="230" selection-start-column="92" selection-end-line="230" selection-end-column="92" />
               <folding>
                 <element signature="n#!!block;n#fillFirstQuestionInPageMap#0" />
                 <element signature="n#!!block;n#buildChoiceGroup#0" />
@@ -128,7 +128,6 @@
       <find>autoCompl</find>
       <find>boo</find>
       <find>basicQuestionGroup</find>
-      <find>hiddenQuestion</find>
       <find>decimalNumber</find>
       <find>ELEA17f</find>
       <find>boolean</find>
@@ -141,6 +140,7 @@
       <find>fixString</find>
       <find>Number(</find>
       <find>ELEA12</find>
+      <find>hiddenQuestion</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
@@ -270,7 +270,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77693000" />
+    <option name="totallyTimeSpent" value="79920000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1080" y="838" width="1920" height="1035" extended-state="6" />
@@ -283,7 +283,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3289183" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.41280353" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.23951435" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -310,9 +310,9 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app/controllers/convert.js</url>
-          <line>159</line>
+          <line>211</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="120" />
+          <option name="timeStamp" value="122" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -325,6 +325,26 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>question.attributes.getNamedItem(&quot;visibleWhen&quot;).nodeValue</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>question.attributes.getNamedItem(&quot;visibleWhen&quot;)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>question.attributes</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>question.attributes.getNamedItem(&quot;hiddenQuestion&quot;)</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>nextSibling.nextSibling</expression-string>
         <language-id>JavaScript</language-id>
@@ -352,21 +372,6 @@
       </expression>
       <expression>
         <expression-string>questions</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>nextSibling.parentNode.attributes.getNamedItem(&quot;nextPageId&quot;).nodeValue</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem(&quot;nextPageId&quot;).nodeValue)</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>survey.childNodes[i].childNodes[0]</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -530,15 +535,15 @@
     </entry>
     <entry file="file://$USER_HOME$/Downloads/ELEA.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="3093" column="22" selection-start-line="3093" selection-start-column="16" selection-end-line="3093" selection-end-column="22" />
+        <state relative-caret-position="1701">
+          <caret line="151" lean-forward="true" selection-start-line="151" selection-end-line="151" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="158" column="89" selection-start-line="158" selection-start-column="89" selection-end-line="158" selection-end-column="89" />
+        <state relative-caret-position="332">
+          <caret line="230" column="92" selection-start-line="230" selection-start-column="92" selection-end-line="230" selection-end-column="92" />
           <folding>
             <element signature="n#!!block;n#fillFirstQuestionInPageMap#0" />
             <element signature="n#!!block;n#buildChoiceGroup#0" />
