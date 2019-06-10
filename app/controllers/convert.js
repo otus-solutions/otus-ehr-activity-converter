@@ -19,9 +19,12 @@ let questionsDataTypeMap = new Map([
     ["GridTextQuestion",null]
 ]);
 let choiceGroup;
+let firstQuestionInPageMap;
+let idXnameQuestionCorrelation;
 module.exports.xmlToJson =function(application, req, res) {
 
     choiceGroup = new Map();
+    firstQuestionInPageMap = new Map();
 
     if (!req.files || !req.files.template_XML) {
         return res.status(400).send('No files were uploaded.');
@@ -70,6 +73,7 @@ module.exports.xmlToJson =function(application, req, res) {
                 if(header !== ""){
                     startNode = 1;
                 }
+                fillFirstQuestionInPageMap(firstQuestionInPageMap,survey.childNodes[i].childNodes[0]);
                 questions = getQuestions(questions,survey.childNodes[i].childNodes[startNode],header,branchNode);
             }
         }
@@ -77,6 +81,22 @@ module.exports.xmlToJson =function(application, req, res) {
     surveyJson.itemContainer = questions;
     res.status(200).render("home/index");
 };
+
+function fillFirstQuestionInPageMap(firstQuestionInPageMap,questionPageChild,questionPage){
+    if (!questionPage) {
+        questionPage = questionPageChild.parentNode;
+    }
+
+    if(questionPageChild.tagName !== "header" && questionPageChild.tagName !== "basicQuestionGroup"){
+        firstQuestionInPageMap.set(questionPage.attributes.getNamedItem("id").nodeValue,questionPageChild.attributes.getNamedItem("id").nodeValue);
+        if(questionPage.nextSibling){
+            fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPage.nextSibling.childNodes[0])
+        }
+    } else {
+        fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.nextSibling,questionPage)
+    }
+    return firstQuestionInPageMap;
+}
 
 function buildChoiceGroup(ehrChoiceGroup) {
     let choiceGroup = [];
@@ -118,26 +138,38 @@ function buildChoiceGroup(ehrChoiceGroup) {
 }
 
 function getQuestions(questions,nextSibling,header,branchNode) {
-        if(nextSibling.tagName && nextSibling.tagName !== "branch" && nextSibling.tagName !== "header") {
+        if(nextSibling.tagName && nextSibling.tagName !== "header") {
             if (nextSibling.tagName === "basicQuestionGroup") {
                 return getQuestions(questions, nextSibling.childNodes[0], header, branchNode);
             }
 
-            if (nextSibling.tagName === "booleanQuestion") {
-                let lastQuestionPosition = questions.length-1;
-                if(questions.length > 0 && questions[lastQuestionPosition].objectType === "CheckboxQuestion"){
-                    questions[lastQuestionPosition].options.push(buildOptionStructure(nextSibling));
-                } else {
+            if(nextSibling.tagName !== "branch") {
+                let lastQuestionPosition;
+                if (nextSibling.tagName === "booleanQuestion") {
+                    lastQuestionPosition = questions.length - 1;
+                    if (questions.length > 0 && questions[lastQuestionPosition].objectType === "CheckboxQuestion") {
+                        questions[lastQuestionPosition].options.push(buildOptionStructure(nextSibling));
+                    } else if (nextSibling.tagName) {
+                        questions.push(buildQuestionItem(nextSibling));
+                    }
+                } else if (nextSibling.tagName) {
                     questions.push(buildQuestionItem(nextSibling));
                 }
-            } else {
-                questions.push(buildQuestionItem(nextSibling));
+                lastQuestionPosition = questions.length - 1;
+                if(nextSibling.nextSibling && nextSibling.nextSibling.tagName !== "branch"){
+                    questions[lastQuestionPosition].defaultRoute = nextSibling.nextSibling.attributes.getNamedItem("id").nodeValue
+                }
             }
 
             if (nextSibling.nextSibling) {
                 return getQuestions(questions, nextSibling.nextSibling, header, branchNode);
             } else if (nextSibling.parentNode.tagName === "basicQuestionGroup" && nextSibling.parentNode.nextSibling) {
                 return getQuestions(questions, nextSibling.parentNode.nextSibling, header, branchNode);
+            } else if (nextSibling.parentNode.tagName === "questionPage"){
+                if(nextSibling.parentNode.attributes.getNamedItem("nextPageId")){
+                    let lastQuestionPosition = questions.length -1;
+                    questions[lastQuestionPosition].defaultRoute = firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue)
+                }
             }
         }
         return questions

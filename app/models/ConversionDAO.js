@@ -21,3 +21,4 @@ ConversionDAO.prototype.buildModel = function(oid, callback) {
 module.exports = function() {
   return ConversionDAO;
 };
+
