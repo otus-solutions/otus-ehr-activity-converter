@@ -67,14 +67,13 @@ module.exports.xmlToJson =function(application, req, res) {
             if (tagName === "choiceGroup") {
                 choiceGroup.set(survey.childNodes[i].attributes.getNamedItem("id").nodeValue,buildChoiceGroup(survey.childNodes[i]));
             } else if (tagName === "questionPage") {
-                let header = survey.childNodes[i].childNodes[0].tagName === "header" ? survey.childNodes[i].childNodes[0].firstChild.data : "";
-                let branchNode = survey.childNodes[i].childNodes[survey.childNodes[i].childNodes.length-1].tagName === "branch" ? survey.childNodes[i].childNodes[survey.childNodes[i].childNodes.length-1] : null;
+                let headerIsPresent = survey.childNodes[i].childNodes[0].tagName === "header";
                 let startNode = 0;
-                if(header !== ""){
+                if(headerIsPresent){
                     startNode = 1;
                 }
                 fillFirstQuestionInPageMap(firstQuestionInPageMap,survey.childNodes[i].childNodes[0]);
-                questions = getQuestions(questions,survey.childNodes[i].childNodes[startNode],header,branchNode);
+                questions = getQuestions(questions,survey.childNodes[i].childNodes[startNode]);
             }
         }
     });
@@ -137,10 +136,10 @@ function buildChoiceGroup(ehrChoiceGroup) {
     return choiceGroup
 }
 
-function getQuestions(questions,nextSibling,header,branchNode) {
+function getQuestions(questions,nextSibling,branchArray) {
         if(nextSibling.tagName && nextSibling.tagName !== "header") {
             if (nextSibling.tagName === "basicQuestionGroup") {
-                return getQuestions(questions, nextSibling.childNodes[0], header, branchNode);
+                return getQuestions(questions, nextSibling.childNodes[0]);
             }
 
             if(nextSibling.tagName !== "branch") {
@@ -156,23 +155,118 @@ function getQuestions(questions,nextSibling,header,branchNode) {
                     questions.push(buildQuestionItem(nextSibling));
                 }
                 lastQuestionPosition = questions.length - 1;
+
                 if(nextSibling.nextSibling && nextSibling.nextSibling.tagName !== "branch"){
                     questions[lastQuestionPosition].defaultRoute = nextSibling.nextSibling.attributes.getNamedItem("id").nodeValue
+                }
+            } else {
+                if(branchArray){
+                    branchArray.push(nextSibling);
+                } else {
+                    branchArray = [];
+                    branchArray.push(nextSibling);
                 }
             }
 
             if (nextSibling.nextSibling) {
-                return getQuestions(questions, nextSibling.nextSibling, header, branchNode);
+                return getQuestions(questions, nextSibling.nextSibling, branchArray);
             } else if (nextSibling.parentNode.tagName === "basicQuestionGroup" && nextSibling.parentNode.nextSibling) {
-                return getQuestions(questions, nextSibling.parentNode.nextSibling, header, branchNode);
+                return getQuestions(questions, nextSibling.parentNode.nextSibling, branchArray);
             } else if (nextSibling.parentNode.tagName === "questionPage"){
                 if(nextSibling.parentNode.attributes.getNamedItem("nextPageId")){
                     let lastQuestionPosition = questions.length -1;
-                    questions[lastQuestionPosition].defaultRoute = firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue)
+                    questions[lastQuestionPosition].defaultRoute = firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue);
+                    questions.push(buildPageLastQuestion(Array.from(firstQuestionInPageMap.keys()).indexOf(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue)+1, branchArray));
                 }
             }
         }
         return questions
+}
+
+function buildPageLastQuestion(pageIndex, branchArray) {
+    let lastQuestion = {
+        "value" : {
+            "ptBR" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "Voce completou a pagina " + pageIndex,
+                "formattedText" : "<i>Voce completou a pagina " + pageIndex + "</i><br>"
+            },
+            "enUS" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            },
+            "esES" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            }
+        },
+        "extents" : "SurveyItem",
+        "objectType" : "TextItem",
+        "templateID" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+        "customID" : "AUTOMATICGENERATEDQUESTIONCUSTON"+ pageIndex,
+        "dataType" : "String",
+        "routes" : []
+    };
+
+    if(branchArray && branchArray.length > 0){
+        branchArray.forEach(branchNode => {
+            let length = branchNode.childNodes.length;
+            let routeDestination = firstQuestionInPageMap.get(branchNode.attributes.getNamedItem("targetPageId").nodeValue);
+            let navigation = {
+                "extents" : "SurveyTemplateObject",
+                "objectType" : "Route",
+                "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+                "destination" : routeDestination,
+                "name" : "AUTOMATICGENERATEDQUESTION"+"_"+routeDestination,
+                "isDefault" : false,
+                "conditions" : []
+            };
+
+            let conditions = [];//<branch=route --- <rule>=condition --- <expression>=condition.rule
+            for (let i=0; i < length;i++){
+                let ruleLength = branchNode.childNodes[i].childNodes.length;
+                let rules = [];
+                for (let j=0; j < ruleLength; j++){
+                    let expression = branchNode.childNodes[i].childNodes[j];
+                    let isMetadata = false;
+
+                    let questionName = expression.attributes.getNamedItem("questionName").nodeValue;
+                    let regExp = /Metadata/gi;
+                    if(questionName.match("Metadata")){
+                        questionName = questionName.replace(regExp, '');
+                        isMetadata = true;
+                    }
+
+                    rules.push({
+                        "extents" : "SurveyTemplateObject",
+                        "objectType" : "Rule",
+                        "when" : questionName.nodeValue,
+                        "operator" : expression.attributes.getNamedItem("operator").nodeValue,
+                        "answer" : expression.attributes.getNamedItem("value").nodeValue,
+                        "isMetadata" : isMetadata
+                    });
+                }
+
+                navigation.conditions.push({
+                    "extents" : "StudioObject",
+                    "objectType" : "RouteCondition",
+                    "name" : "ROUTE_CONDITION_"+ (i+1),
+                    "rules" : rules
+                })
+            }
+            lastQuestion.routes.push(navigation)
+        });
+
+    }
+    return lastQuestion;
 }
 
 function buildOptionStructure(option) {
@@ -230,7 +324,7 @@ function buildQuestionItem(question){
         questionItem.jump = {
             targetQuestionName:question.attributes.getNamedItem("hiddenQuestion").nodeValue,
             when:question.attributes.getNamedItem("visibleWhen").nodeValue
-        }
+        };
     }
 
     if(question.tagName === "numericQuestion" ){
