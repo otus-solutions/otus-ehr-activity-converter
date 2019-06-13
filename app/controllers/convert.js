@@ -1,6 +1,7 @@
 let xmldom = require('xmldom');
 let xpath = require('xpath');
 let prettyData = require("pretty-data");
+
 let questionsDataTypeMap = new Map([
     ["ImageItem","String"],
     ["EmailQuestion","String"],
@@ -18,13 +19,24 @@ let questionsDataTypeMap = new Map([
     ["DecimalQuestion","Decimal"],
     ["GridTextQuestion",null]
 ]);
+
+let jumpValidationCorrelationMap = new Map([
+    ["EQ","equal"],
+    ["GT","grater"]
+]);
+
 let choiceGroup;
 let firstQuestionInPageMap;
-let idXnameQuestionCorrelation;
+let idXNameQuestionCorrelation;
+let inNavigationMap;
+let booleanCheckboxCorrelation;
 module.exports.xmlToJson =function(application, req, res) {
 
     choiceGroup = new Map();
     firstQuestionInPageMap = new Map();
+    idXNameQuestionCorrelation = new Map();
+    inNavigationMap = new Map();
+    booleanCheckboxCorrelation = new Map();
 
     if (!req.files || !req.files.template_XML) {
         return res.status(400).send('No files were uploaded.');
@@ -78,29 +90,234 @@ module.exports.xmlToJson =function(application, req, res) {
         }
     });
     surveyJson.itemContainer = questions;
+    surveyJson.navigationList = buildNavigation(questions);
+    fillInNavigation(surveyJson);
     res.status(200).render("home/index");
 };
+
+function fillInNavigation(surveyJson){
+    surveyJson.navigationList.forEach(navigation=>{
+        navigation.routes.forEach(route=>{
+            let inNavigation = inNavigationMap.get(route.destination);
+            if(inNavigation){
+                inNavigation.push(
+                    {
+                        "origin" : navigation.origin
+                    }
+                );
+                inNavigationMap.set(route.destination,inNavigation)
+            } else {
+                inNavigationMap.set(route.destination,[{
+                    "origin" : navigation.origin
+                }])
+            }
+        });
+    });
+
+    surveyJson.navigationList.forEach(navigation=>{
+        if(navigation.origin === "BEGIN NODE"){
+            navigation.inNavigations = []
+        } else {
+            navigation.inNavigations = inNavigationMap.get(navigation.origin);
+        }
+    })
+}
+
+function buildNavigation(questions) {
+    let itemContainerLength = questions.length;
+    let navigations = [];
+    navigations.push(
+        {
+            "extents" : "SurveyTemplateObject",
+            "objectType" : "Navigation",
+            "origin" : "BEGIN NODE",
+            "index" : 0,
+            "inNavigations" : [ ],
+            "isDefault" : false,
+            "routes" : [
+                {
+                    "extents" : "SurveyTemplateObject",
+                    "objectType" : "Route",
+                    "origin" : "BEGIN NODE",
+                    "destination" : questions[0].templateID,
+                    "name" : "BEGIN NODE_"+questions[0].templateID,
+                    "isDefault" : true,
+                    "conditions" : [ ]
+                }
+            ]
+        },
+        {
+            "extents" : "SurveyTemplateObject",
+            "objectType" : "Navigation",
+            "origin" : "END NODE",
+            "index" : 1,
+            "inNavigations" : [
+                null,
+                {
+                    "origin" : questions[itemContainerLength-1].templateID
+                }
+            ],
+            "isDefault" : false,
+            "routes" : [ ]
+        }
+        );
+    for (let i=0; i<itemContainerLength; i++){
+        let navigation = {
+            "extents" : "SurveyTemplateObject",
+            "objectType" : "Navigation",
+            "origin" : questions[i].templateID,
+            "index" : i+2,
+            "inNavigations" : [
+                {
+                    "origin" : "PASC14"
+                }
+            ],
+            "isDefault" : false,
+            "routes" : []
+        };
+
+        if (i === itemContainerLength-1){
+            navigation.routes.push(
+                {
+                    "extents" : "SurveyTemplateObject",
+                    "objectType" : "Route",
+                    "origin" : questions[i].templateID,
+                    "destination" : "END NODE",
+                    "name" : questions[i].templateID+"_END NODE",
+                    "isDefault" : true,
+                    "conditions" : [ ]
+                }
+            )
+        } else if(questions[i].insideJump){
+            if(idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) === questions[i+1].templateID){
+                navigation.routes.push(
+                    {
+                        "extents" : "SurveyTemplateObject",
+                        "objectType" : "Route",
+                        "origin" : questions[i].templateID,
+                        "destination" : questions[i+2].templateID,
+                        "name" : questions[i].templateID+"_"+questions[i+2].templateID,
+                        "isDefault" : true,
+                        "conditions" : [ ]
+                    }
+                )
+            } else {
+                navigation.routes.push(
+                    {
+                        "extents" : "SurveyTemplateObject",
+                        "objectType" : "Route",
+                        "origin" : questions[i].templateID,
+                        "destination" : questions[i+1].templateID,
+                        "name" : questions[i].templateID+"_"+questions[i+1].templateID,
+                        "isDefault" : true,
+                        "conditions" : [ ]
+                    }
+                )
+            }
+            navigation.routes.push(
+                {
+                    "extents" : "SurveyTemplateObject",
+                    "objectType" : "Route",
+                    "origin" : questions[i].templateID,
+                    "destination" : idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName),
+                    "name" :questions[i].templateID+"_"+idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName),
+                    "isDefault" : false,
+                    "conditions" : [
+                        {
+                            "extents" : "StudioObject",
+                            "objectType" : "RouteCondition",
+                            "name" : "ROUTE_CONDITION_0",
+                            "rules" : [
+                                {
+                                    "extents" : "SurveyTemplateObject",
+                                    "objectType" : "Rule",
+                                    "when" : questions[i].templateID,
+                                    "operator" : "equal",
+                                    "answer" : questions[i].insideJump.when,
+                                    "isMetadata" : false
+                                }
+                            ]
+                        }
+                    ]
+                }
+            )
+        } else if(!questions[i].routes){
+            navigation.routes.push(
+                {
+                    "extents" : "SurveyTemplateObject",
+                    "objectType" : "Route",
+                    "origin" : questions[i].templateID,
+                    "destination" : questions[i+1].templateID,
+                    "name" : questions[i].templateID+"_"+questions[i+1].templateID,
+                    "isDefault" : true,
+                    "conditions" : [ ]
+                }
+            )
+        }
+
+        if(questions[i].routes){
+            questions[i].routes.forEach(route=>{
+
+                let checkboxDestination = booleanCheckboxCorrelation.get(route.destination);
+                if(checkboxDestination){
+                    route = {
+                        "extents": "SurveyTemplateObject",
+                        "objectType": "Route",
+                        "origin": route.origin,
+                        "destination": checkboxDestination,
+                        "name": route.origin + "_" + checkboxDestination,
+                        "isDefault": route.isDefault,
+                        "conditions": route.conditions
+                    };
+                }
+                navigation.routes.push(route);
+            });
+        }
+        navigations.push(navigation);
+    }
+    return navigations;
+}
 
 function fillFirstQuestionInPageMap(firstQuestionInPageMap,questionPageChild,questionPage){
     if (!questionPage) {
         questionPage = questionPageChild.parentNode;
     }
 
-    if(questionPageChild.tagName !== "header" && questionPageChild.tagName !== "basicQuestionGroup"){
-        firstQuestionInPageMap.set(questionPage.attributes.getNamedItem("id").nodeValue,questionPageChild.attributes.getNamedItem("id").nodeValue);
+    if (questionPageChild.tagName !== "branch") {
+        if (questionPageChild.tagName === "header") {
+            return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.nextSibling, questionPage)
+        } else if (questionPageChild.tagName === "basicQuestionGroup" && !firstQuestionInPageMap.has(questionPageChild.attributes.getNamedItem("name").nodeValue)) {
+            return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.childNodes[0], questionPage)
+        } else if (questionPageChild.parentNode.tagName === "basicQuestionGroup" && !firstQuestionInPageMap.has(questionPageChild.parentNode.attributes.getNamedItem("name").nodeValue)) {
+            firstQuestionInPageMap.set(questionPageChild.parentNode.attributes.getNamedItem("name").nodeValue, questionPageChild.attributes.getNamedItem("id").nodeValue);
+            if(!firstQuestionInPageMap.has(questionPage.attributes.getNamedItem("id").nodeValue)){
+                firstQuestionInPageMap.set(questionPage.attributes.getNamedItem("id").nodeValue,questionPageChild.attributes.getNamedItem("id").nodeValue);
+            }
+            if(questionPageChild.parentNode.nextSibling){
+                return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.parentNode.nextSibling, questionPage)
+            }
+        }
+
+        if(!firstQuestionInPageMap.has(questionPage.attributes.getNamedItem("id").nodeValue)){
+            firstQuestionInPageMap.set(questionPage.attributes.getNamedItem("id").nodeValue,questionPageChild.attributes.getNamedItem("id").nodeValue);
+        }
+
+        if(questionPageChild.nextSibling){
+            return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.nextSibling, questionPage)
+        }
+
         if(questionPage.nextSibling){
-            fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPage.nextSibling.childNodes[0])
+            return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPage.nextSibling.childNodes[0])
         }
     } else {
-        fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.nextSibling,questionPage)
+        return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPage.nextSibling.childNodes[0])
     }
-    return firstQuestionInPageMap;
 }
 
 function buildChoiceGroup(ehrChoiceGroup) {
     let choiceGroup = [];
     let ehrChoiceGroupLength = ehrChoiceGroup.childNodes.length - 1;
-    for(let i = 0; i < ehrChoiceGroupLength; i++){
+    for(let i = 0; i <= ehrChoiceGroupLength; i++){
         choiceGroup.push({
             "extents" : "StudioObject",
             "objectType" : "AnswerOption",
@@ -147,18 +364,17 @@ function getQuestions(questions,nextSibling,branchArray) {
                 if (nextSibling.tagName === "booleanQuestion") {
                     lastQuestionPosition = questions.length - 1;
                     if (questions.length > 0 && questions[lastQuestionPosition].objectType === "CheckboxQuestion") {
+                        booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
                         questions[lastQuestionPosition].options.push(buildOptionStructure(nextSibling));
                     } else if (nextSibling.tagName) {
                         questions.push(buildQuestionItem(nextSibling));
+                        lastQuestionPosition = questions.length - 1;
+                        booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
                     }
                 } else if (nextSibling.tagName) {
                     questions.push(buildQuestionItem(nextSibling));
                 }
-                lastQuestionPosition = questions.length - 1;
-
-                if(nextSibling.nextSibling && nextSibling.nextSibling.tagName !== "branch"){
-                    questions[lastQuestionPosition].defaultRoute = nextSibling.nextSibling.attributes.getNamedItem("id").nodeValue
-                }
+                idXNameQuestionCorrelation.set(nextSibling.attributes.getNamedItem("name").nodeValue, nextSibling.attributes.getNamedItem("id").nodeValue);
             } else {
                 if(branchArray){
                     branchArray.push(nextSibling);
@@ -174,16 +390,14 @@ function getQuestions(questions,nextSibling,branchArray) {
                 return getQuestions(questions, nextSibling.parentNode.nextSibling, branchArray);
             } else if (nextSibling.parentNode.tagName === "questionPage"){
                 if(nextSibling.parentNode.attributes.getNamedItem("nextPageId")){
-                    let lastQuestionPosition = questions.length -1;
-                    questions[lastQuestionPosition].defaultRoute = firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue);
-                    questions.push(buildPageLastQuestion(Array.from(firstQuestionInPageMap.keys()).indexOf(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue)+1, branchArray));
+                    questions.push(buildPageLastQuestion(Array.from(firstQuestionInPageMap.keys()).indexOf(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue)+1, branchArray,firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue)));
                 }
             }
         }
         return questions
 }
 
-function buildPageLastQuestion(pageIndex, branchArray) {
+function buildPageLastQuestion(pageIndex, branchArray, defaultRoute) {
     let lastQuestion = {
         "value" : {
             "ptBR" : {
@@ -216,6 +430,18 @@ function buildPageLastQuestion(pageIndex, branchArray) {
         "routes" : []
     };
 
+    lastQuestion.routes.push(
+        {
+            "extents" : "SurveyTemplateObject",
+            "objectType" : "Route",
+            "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+            "destination" : defaultRoute,
+            "name" : "AUTOMATICGENERATEDQUESTION" + pageIndex+"_" + defaultRoute,
+            "isDefault" : true,
+            "conditions" : [ ]
+        }
+    );
+
     if(branchArray && branchArray.length > 0){
         branchArray.forEach(branchNode => {
             let length = branchNode.childNodes.length;
@@ -225,12 +451,11 @@ function buildPageLastQuestion(pageIndex, branchArray) {
                 "objectType" : "Route",
                 "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
                 "destination" : routeDestination,
-                "name" : "AUTOMATICGENERATEDQUESTION"+"_"+routeDestination,
+                "name" : "AUTOMATICGENERATEDQUESTION"+ pageIndex +"_"+routeDestination,
                 "isDefault" : false,
                 "conditions" : []
             };
-
-            let conditions = [];//<branch=route --- <rule>=condition --- <expression>=condition.rule
+            //<branch=route --- <rule>=condition --- <expression>=condition.rule
             for (let i=0; i < length;i++){
                 let ruleLength = branchNode.childNodes[i].childNodes.length;
                 let rules = [];
@@ -248,8 +473,8 @@ function buildPageLastQuestion(pageIndex, branchArray) {
                     rules.push({
                         "extents" : "SurveyTemplateObject",
                         "objectType" : "Rule",
-                        "when" : questionName.nodeValue,
-                        "operator" : expression.attributes.getNamedItem("operator").nodeValue,
+                        "when" : questionName,
+                        "operator" : jumpValidationCorrelationMap.get(expression.attributes.getNamedItem("operator").nodeValue),
                         "answer" : expression.attributes.getNamedItem("value").nodeValue,
                         "isMetadata" : isMetadata
                     });
@@ -321,7 +546,7 @@ function buildQuestionItem(question){
     questionItem.QuestionName = question.attributes.getNamedItem("name").nodeValue;
 
     if(question.attributes.getNamedItem("hiddenQuestion")){
-        questionItem.jump = {
+        questionItem.insideJump = {
             targetQuestionName:question.attributes.getNamedItem("hiddenQuestion").nodeValue,
             when:question.attributes.getNamedItem("visibleWhen").nodeValue
         };
@@ -329,6 +554,29 @@ function buildQuestionItem(question){
 
     if(question.tagName === "numericQuestion" ){
         questionItem.objectType = (question.attributes.getNamedItem("decimalNumber") && question.attributes.getNamedItem("decimalNumber").nodeValue === "false") ? "IntegerQuestion" : "DecimalQuestion"
+        questionItem.unit = {
+            "ptBR" : {
+                "extends" : "StudioObject",
+                    "objectType" : "Unit",
+                    "oid" : "",
+                    "plainText" : "",
+                    "formattedText" : ""
+            },
+            "enUS" : {
+                "extends" : "StudioObject",
+                    "objectType" : "Unit",
+                    "oid" : "",
+                    "plainText" : "",
+                    "formattedText" : ""
+            },
+            "esES" : {
+                "extends" : "StudioObject",
+                    "objectType" : "Unit",
+                    "oid" : "",
+                    "plainText" : "",
+                    "formattedText" : ""
+            }
+        }
     } else if(question.tagName === "textQuestion"){
         questionItem.objectType = "TextQuestion"
     } else if(question.tagName === "singleSelectionQuestion"){
@@ -340,7 +588,6 @@ function buildQuestionItem(question){
         questionItem.objectType = "CalendarQuestion";
     }else if(question.tagName === "booleanQuestion"){
         questionItem.objectType = "CheckboxQuestion";
-        questionItem.label = "";
         questionItem.options = [];
         questionItem.options.push(buildOptionStructure(question));
         questionItem.templateID ="CheckboxQuestion" + questionItem.templateID;
@@ -361,8 +608,9 @@ function buildQuestionLabel(question){
     let plainText = "";
     let formattedText = "";
 
-    if (question.tagName === "booleanQuestion" && header !== ""){
-
+    if (question.tagName === "booleanQuestion"){
+        plainText = header;
+        formattedText ="<div>" + header + "<br></div>"
     } else if(header !== ""){
         plainText = header + questionLabel;
         formattedText ="<div>" + header + "<br>" + questionLabel + "</div>"
@@ -415,7 +663,7 @@ function buildFillingRules(question){
 
     let maxLength = question.attributes.getNamedItem("maxLength");
     if(maxLength){
-        fillingRules.options.upperLimit = {
+        fillingRules.options.maxLength = {
             "data" : {
                 "reference" : Number(maxLength.value),
                 "canBeIgnored" : false
@@ -427,8 +675,8 @@ function buildFillingRules(question){
     }
 
     let minLength = question.attributes.getNamedItem("minLength");
-    if(maxLength){
-        fillingRules.options.upperLimit = {
+    if(minLength){
+        fillingRules.options.minLength = {
             "data" : {
                 "reference" : Number(minLength.value),
                 "canBeIgnored" : false
@@ -441,7 +689,7 @@ function buildFillingRules(question){
 
     let lowerLimit = question.attributes.getNamedItem("lowerLimit");
     if(lowerLimit){
-        fillingRules.options.upperLimit = {
+        fillingRules.options.lowerLimit = {
             "extends": "StudioObject",
             "objectType": "Rule",
             "validatorType": "lowerLimit",
