@@ -30,6 +30,7 @@ let firstQuestionInPageMap;
 let idXNameQuestionCorrelation;
 let inNavigationMap;
 let booleanCheckboxCorrelation;
+
 module.exports.xmlToJson =function(application, req, res) {
 
     choiceGroup = new Map();
@@ -152,7 +153,6 @@ function buildNavigation(questions) {
             "origin" : "END NODE",
             "index" : 1,
             "inNavigations" : [
-                null,
                 {
                     "origin" : questions[itemContainerLength-1].templateID
                 }
@@ -189,7 +189,8 @@ function buildNavigation(questions) {
                 }
             )
         } else if(questions[i].insideJump){
-            if(idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) === questions[i+1].templateID){
+            let insideJumpDestination =idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) ? idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) : firstQuestionInPageMap.get(questions[i].insideJump.targetQuestionName);
+            if(insideJumpDestination === questions[i+1].templateID){
                 navigation.routes.push(
                     {
                         "extents" : "SurveyTemplateObject",
@@ -219,8 +220,8 @@ function buildNavigation(questions) {
                     "extents" : "SurveyTemplateObject",
                     "objectType" : "Route",
                     "origin" : questions[i].templateID,
-                    "destination" : idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName),
-                    "name" :questions[i].templateID+"_"+idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName),
+                    "destination" : insideJumpDestination,
+                    "name" :questions[i].templateID+"_"+insideJumpDestination,
                     "isDefault" : false,
                     "conditions" : [
                         {
@@ -315,10 +316,14 @@ function fillFirstQuestionInPageMap(firstQuestionInPageMap,questionPageChild,que
 }
 
 function buildChoiceGroup(ehrChoiceGroup) {
-    let choiceGroup = [];
+    let choiceGroupMap = {};
+    choiceGroupMap.options = [];
+
+    let optionXNameMap = new Map();
+
     let ehrChoiceGroupLength = ehrChoiceGroup.childNodes.length - 1;
     for(let i = 0; i <= ehrChoiceGroupLength; i++){
-        choiceGroup.push({
+        choiceGroupMap.options.push({
             "extents" : "StudioObject",
             "objectType" : "AnswerOption",
             "dataType" : "Integer",
@@ -345,12 +350,15 @@ function buildChoiceGroup(ehrChoiceGroup) {
                         "formattedText" : ""
                 }
             },
-                "value" : i+1,
-                "extractionValue" : ehrChoiceGroup.childNodes[i].attributes.getNamedItem("value").nodeValue
-            })
-    }
+            "value" : i+1,
+            "extractionValue" : ehrChoiceGroup.childNodes[i].attributes.getNamedItem("value").nodeValue
+            });
 
-    return choiceGroup
+        optionXNameMap.set(ehrChoiceGroup.childNodes[i].attributes.getNamedItem("name").nodeValue,i+1)
+    }
+    choiceGroupMap.map = optionXNameMap;
+
+    return choiceGroupMap
 }
 
 function getQuestions(questions,nextSibling,branchArray) {
@@ -546,9 +554,10 @@ function buildQuestionItem(question){
     questionItem.QuestionName = question.attributes.getNamedItem("name").nodeValue;
 
     if(question.attributes.getNamedItem("hiddenQuestion")){
+        let visibleWhemValue = (question.tagName === "singleSelectionQuestion") ? choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue).map.get(question.attributes.getNamedItem("visibleWhen").nodeValue) : question.attributes.getNamedItem("visibleWhen").nodeValue
         questionItem.insideJump = {
             targetQuestionName:question.attributes.getNamedItem("hiddenQuestion").nodeValue,
-            when:question.attributes.getNamedItem("visibleWhen").nodeValue
+            when:visibleWhemValue
         };
     }
 
@@ -580,7 +589,7 @@ function buildQuestionItem(question){
     } else if(question.tagName === "textQuestion"){
         questionItem.objectType = "TextQuestion"
     } else if(question.tagName === "singleSelectionQuestion"){
-        questionItem.options = choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue);
+        questionItem.options = choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue).options;
         questionItem.objectType = "SingleSelectionQuestion";
     } else if(question.tagName === "autocompleteQuestion"){
         questionItem.objectType = "AutocompleteQuestion";
