@@ -20,6 +20,12 @@ let questionsDataTypeMap = new Map([
     ["GridTextQuestion",null]
 ]);
 
+let metaDataMap = new Map([
+    ["DOES_NOT_WANT_TO_ANSWER",1],
+    ["DOES_NOT_KNOW",2],
+    ["DOES_NOT_APPLY",3]
+]);
+
 let jumpValidationCorrelationMap = new Map([
     ["EQ","equal"],
     ["GT","grater"]
@@ -95,6 +101,246 @@ module.exports.xmlToJson =function(application, req, res) {
     fillInNavigation(surveyJson);
     res.status(200).render("home/index");
 };
+
+function getQuestions(questions,nextSibling,branchArray) {
+    if(nextSibling.tagName && nextSibling.tagName !== "header") {
+        if (nextSibling.tagName === "basicQuestionGroup") {
+            return getQuestions(questions, nextSibling.childNodes[0]);
+        }
+
+        if(nextSibling.tagName !== "branch") {
+            let lastQuestionPosition;
+            if (nextSibling.tagName === "booleanQuestion") {
+                lastQuestionPosition = questions.length - 1;
+                if (questions.length > 0 && questions[lastQuestionPosition].objectType === "CheckboxQuestion") {
+                    booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
+                    questions[lastQuestionPosition].options.push(buildOptionStructure(nextSibling));
+                } else if (nextSibling.tagName) {
+                    questions.push(buildQuestionItem(nextSibling));
+                    lastQuestionPosition = questions.length - 1;
+                    booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
+                }
+
+                if(nextSibling.attributes.getNamedItem("hiddenQuestion")){
+                    questions[lastQuestionPosition].insideJump = {
+                        targetQuestionName:nextSibling.attributes.getNamedItem("hiddenQuestion").nodeValue,
+                        when:nextSibling.attributes.getNamedItem("id").nodeValue
+                    }
+                }
+            } else if (nextSibling.tagName) {
+                questions.push(buildQuestionItem(nextSibling));
+            }
+            idXNameQuestionCorrelation.set(nextSibling.attributes.getNamedItem("name").nodeValue, {
+                id:nextSibling.attributes.getNamedItem("id").nodeValue,
+                type:nextSibling.tagName,
+                choiceGroupId:nextSibling.attributes.getNamedItem("choiceGroupId"),
+                metaDataGroupId:nextSibling.attributes.getNamedItem("metaDataGroupId")});
+        } else {
+            if(branchArray){
+                branchArray.push(nextSibling);
+            } else {
+                branchArray = [];
+                branchArray.push(nextSibling);
+            }
+        }
+
+        if (nextSibling.nextSibling) {
+            return getQuestions(questions, nextSibling.nextSibling, branchArray);
+        } else if (nextSibling.parentNode.tagName === "basicQuestionGroup" && nextSibling.parentNode.nextSibling) {
+            return getQuestions(questions, nextSibling.parentNode.nextSibling, branchArray);
+        } else if (nextSibling.parentNode.tagName === "questionPage"){
+            if(nextSibling.parentNode.attributes.getNamedItem("nextPageId")){
+                questions.push(buildPageLastQuestion(
+                    Array.from(firstQuestionInPageMap.keys()).indexOf(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue)+1,
+                    branchArray,
+                    firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue),
+                    idXNameQuestionCorrelation));
+            }
+        }
+    }
+    return questions
+}
+
+function buildQuestionItem(question){
+    let questionItem = {};
+    questionItem.objectType = "";
+    questionItem.label = buildQuestionLabel(question);
+    questionItem.metadata = {
+        "extents": "StudioObject",
+        "objectType": "MetadataGroup",
+        "options": []
+    };
+    if (question.attributes.getNamedItem("metaDataGroupId")){
+        questionItem.metadata.options = [{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":1,"extractionValue":".Q","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não quer responder","formattedText":"Não quer responder"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}},{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":2,"extractionValue":".S","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não sabe","formattedText":"Não sabe"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}},{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":3,"extractionValue":".A","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não se aplica","formattedText":"Não se aplica"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}},{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":4,"extractionValue":".F","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não há dados","formattedText":"Não há dados"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}}]
+    }
+    questionItem.fillingRules = buildFillingRules(question);
+    questionItem.extents = "SurveyItem";
+    questionItem.templateID = question.attributes.getNamedItem("id").nodeValue;
+    questionItem.customID = question.attributes.getNamedItem("id").nodeValue;
+    questionItem.QuestionName = question.attributes.getNamedItem("name").nodeValue;
+
+    if(question.attributes.getNamedItem("hiddenQuestion")){
+        let visibleWhenValue = (question.tagName === "singleSelectionQuestion") ? choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue).map.get(question.attributes.getNamedItem("visibleWhen").nodeValue) : question.attributes.getNamedItem("visibleWhen").nodeValue
+        questionItem.insideJump = {
+            targetQuestionName:question.attributes.getNamedItem("hiddenQuestion").nodeValue,
+            when:visibleWhenValue
+        };
+    }
+
+    if(question.tagName === "numericQuestion" ){
+        questionItem.objectType = (question.attributes.getNamedItem("decimalNumber") && question.attributes.getNamedItem("decimalNumber").nodeValue === "false") ? "IntegerQuestion" : "DecimalQuestion"
+        questionItem.unit = {
+            "ptBR" : {
+                "extends" : "StudioObject",
+                "objectType" : "Unit",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            },
+            "enUS" : {
+                "extends" : "StudioObject",
+                "objectType" : "Unit",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            },
+            "esES" : {
+                "extends" : "StudioObject",
+                "objectType" : "Unit",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            }
+        }
+    } else if(question.tagName === "textQuestion"){
+        questionItem.objectType = "TextQuestion"
+    } else if(question.tagName === "singleSelectionQuestion"){
+        questionItem.options = choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue).options;
+        questionItem.objectType = "SingleSelectionQuestion";
+    } else if(question.tagName === "autocompleteQuestion"){
+        questionItem.objectType = "AutocompleteQuestion";
+    } else if(question.tagName === "dateQuestion"){
+        questionItem.objectType = "CalendarQuestion";
+    }else if(question.tagName === "booleanQuestion"){
+        questionItem.objectType = "CheckboxQuestion";
+        questionItem.options = [];
+        questionItem.options.push(buildOptionStructure(question));
+        questionItem.templateID ="CheckboxQuestion" + questionItem.templateID;
+        questionItem.customID = "CheckboxQuestion" + questionItem.customID;
+
+    } else {
+        questionItem.objectType=question.tagName;
+    }
+
+    questionItem.dataType = questionsDataTypeMap.get(questionItem.objectType);
+
+    return questionItem;
+}
+
+function buildPageLastQuestion(pageIndex, branchArray, defaultRoute, idXNameQuestionCorrelation) {
+    let lastQuestion = {
+        "value" : {
+            "ptBR" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "Você completou a pagina " + pageIndex,
+                "formattedText" : "<i>Voce completou a pagina " + pageIndex + "</i><br>"
+            },
+            "enUS" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            },
+            "esES" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            }
+        },
+        "extents" : "SurveyItem",
+        "objectType" : "TextItem",
+        "templateID" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+        "customID" : "AUTOMATICGENERATEDQUESTIONCUSTON"+ pageIndex,
+        "dataType" : "String",
+        "routes" : []
+    };
+
+    lastQuestion.routes.push(
+        {
+            "extents" : "SurveyTemplateObject",
+            "objectType" : "Route",
+            "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+            "destination" : defaultRoute,
+            "name" : "AUTOMATICGENERATEDQUESTION" + pageIndex+"_" + defaultRoute,
+            "isDefault" : true,
+            "conditions" : [ ]
+        }
+    );
+
+    if(branchArray && branchArray.length > 0){
+        branchArray.forEach(branchNode => {
+            let length = branchNode.childNodes.length;
+            let routeDestination = firstQuestionInPageMap.get(branchNode.attributes.getNamedItem("targetPageId").nodeValue);
+            let navigation = {
+                "extents" : "SurveyTemplateObject",
+                "objectType" : "Route",
+                "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+                "destination" : routeDestination,
+                "name" : "AUTOMATICGENERATEDQUESTION"+ pageIndex +"_"+routeDestination,
+                "isDefault" : false,
+                "conditions" : []
+            };
+            //<branch=route --- <rule>=condition --- <expression>=condition.rule
+            for (let i=0; i < length;i++){
+                let ruleLength = branchNode.childNodes[i].childNodes.length;
+                let rules = [];
+                for (let j=0; j < ruleLength; j++){
+                    let expression = branchNode.childNodes[i].childNodes[j];
+                    let isMetadata = false;
+
+                    let questionName = expression.attributes.getNamedItem("questionName").nodeValue;
+                    let regExp = /Metadata/gi;
+                    if(questionName.match("Metadata")){
+                        questionName = questionName.replace(regExp, '');
+                        isMetadata = true;
+                    }
+
+                    let questionData = idXNameQuestionCorrelation.get(questionName);
+                    let questionId = questionData.id;
+                    let answer;
+                    if(isMetadata){
+                        answer = metaDataMap.get(expression.attributes.getNamedItem("value").nodeValue)
+                    } else {
+                        answer = questionData.type === "singleSelectionQuestion" ? choiceGroup.get(questionData.choiceGroupId.nodeValue).map.get(expression.attributes.getNamedItem("value").nodeValue) : expression.attributes.getNamedItem("value").nodeValue;
+                    }
+                    rules.push({
+                        "extents" : "SurveyTemplateObject",
+                        "objectType" : "Rule",
+                        "when" : questionId,
+                        "operator" : jumpValidationCorrelationMap.get(expression.attributes.getNamedItem("operator").nodeValue),
+                        "answer" : answer,
+                        "isMetadata" : isMetadata
+                    });
+                }
+
+                navigation.conditions.push({
+                    "extents" : "StudioObject",
+                    "objectType" : "RouteCondition",
+                    "name" : "ROUTE_CONDITION_"+ (i+1),
+                    "rules" : rules
+                })
+            }
+            lastQuestion.routes.push(navigation)
+        });
+
+    }
+    return lastQuestion;
+}
 
 function fillInNavigation(surveyJson){
     surveyJson.navigationList.forEach(navigation=>{
@@ -189,7 +435,7 @@ function buildNavigation(questions) {
                 }
             )
         } else if(questions[i].insideJump){
-            let insideJumpDestination =idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) ? idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) : firstQuestionInPageMap.get(questions[i].insideJump.targetQuestionName);
+            let insideJumpDestination =idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) ? idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName).id : firstQuestionInPageMap.get(questions[i].insideJump.targetQuestionName);
             if(insideJumpDestination === questions[i+1].templateID){
                 navigation.routes.push(
                     {
@@ -258,7 +504,6 @@ function buildNavigation(questions) {
 
         if(questions[i].routes){
             questions[i].routes.forEach(route=>{
-
                 let checkboxDestination = booleanCheckboxCorrelation.get(route.destination);
                 if(checkboxDestination){
                     route = {
@@ -361,147 +606,6 @@ function buildChoiceGroup(ehrChoiceGroup) {
     return choiceGroupMap
 }
 
-function getQuestions(questions,nextSibling,branchArray) {
-        if(nextSibling.tagName && nextSibling.tagName !== "header") {
-            if (nextSibling.tagName === "basicQuestionGroup") {
-                return getQuestions(questions, nextSibling.childNodes[0]);
-            }
-
-            if(nextSibling.tagName !== "branch") {
-                let lastQuestionPosition;
-                if (nextSibling.tagName === "booleanQuestion") {
-                    lastQuestionPosition = questions.length - 1;
-                    if (questions.length > 0 && questions[lastQuestionPosition].objectType === "CheckboxQuestion") {
-                        booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
-                        questions[lastQuestionPosition].options.push(buildOptionStructure(nextSibling));
-                    } else if (nextSibling.tagName) {
-                        questions.push(buildQuestionItem(nextSibling));
-                        lastQuestionPosition = questions.length - 1;
-                        booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
-                    }
-                } else if (nextSibling.tagName) {
-                    questions.push(buildQuestionItem(nextSibling));
-                }
-                idXNameQuestionCorrelation.set(nextSibling.attributes.getNamedItem("name").nodeValue, nextSibling.attributes.getNamedItem("id").nodeValue);
-            } else {
-                if(branchArray){
-                    branchArray.push(nextSibling);
-                } else {
-                    branchArray = [];
-                    branchArray.push(nextSibling);
-                }
-            }
-
-            if (nextSibling.nextSibling) {
-                return getQuestions(questions, nextSibling.nextSibling, branchArray);
-            } else if (nextSibling.parentNode.tagName === "basicQuestionGroup" && nextSibling.parentNode.nextSibling) {
-                return getQuestions(questions, nextSibling.parentNode.nextSibling, branchArray);
-            } else if (nextSibling.parentNode.tagName === "questionPage"){
-                if(nextSibling.parentNode.attributes.getNamedItem("nextPageId")){
-                    questions.push(buildPageLastQuestion(Array.from(firstQuestionInPageMap.keys()).indexOf(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue)+1, branchArray,firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue)));
-                }
-            }
-        }
-        return questions
-}
-
-function buildPageLastQuestion(pageIndex, branchArray, defaultRoute) {
-    let lastQuestion = {
-        "value" : {
-            "ptBR" : {
-                "extends" : "StudioObject",
-                "objectType" : "Label",
-                "oid" : "",
-                "plainText" : "Voce completou a pagina " + pageIndex,
-                "formattedText" : "<i>Voce completou a pagina " + pageIndex + "</i><br>"
-            },
-            "enUS" : {
-                "extends" : "StudioObject",
-                "objectType" : "Label",
-                "oid" : "",
-                "plainText" : "",
-                "formattedText" : ""
-            },
-            "esES" : {
-                "extends" : "StudioObject",
-                "objectType" : "Label",
-                "oid" : "",
-                "plainText" : "",
-                "formattedText" : ""
-            }
-        },
-        "extents" : "SurveyItem",
-        "objectType" : "TextItem",
-        "templateID" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
-        "customID" : "AUTOMATICGENERATEDQUESTIONCUSTON"+ pageIndex,
-        "dataType" : "String",
-        "routes" : []
-    };
-
-    lastQuestion.routes.push(
-        {
-            "extents" : "SurveyTemplateObject",
-            "objectType" : "Route",
-            "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
-            "destination" : defaultRoute,
-            "name" : "AUTOMATICGENERATEDQUESTION" + pageIndex+"_" + defaultRoute,
-            "isDefault" : true,
-            "conditions" : [ ]
-        }
-    );
-
-    if(branchArray && branchArray.length > 0){
-        branchArray.forEach(branchNode => {
-            let length = branchNode.childNodes.length;
-            let routeDestination = firstQuestionInPageMap.get(branchNode.attributes.getNamedItem("targetPageId").nodeValue);
-            let navigation = {
-                "extents" : "SurveyTemplateObject",
-                "objectType" : "Route",
-                "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
-                "destination" : routeDestination,
-                "name" : "AUTOMATICGENERATEDQUESTION"+ pageIndex +"_"+routeDestination,
-                "isDefault" : false,
-                "conditions" : []
-            };
-            //<branch=route --- <rule>=condition --- <expression>=condition.rule
-            for (let i=0; i < length;i++){
-                let ruleLength = branchNode.childNodes[i].childNodes.length;
-                let rules = [];
-                for (let j=0; j < ruleLength; j++){
-                    let expression = branchNode.childNodes[i].childNodes[j];
-                    let isMetadata = false;
-
-                    let questionName = expression.attributes.getNamedItem("questionName").nodeValue;
-                    let regExp = /Metadata/gi;
-                    if(questionName.match("Metadata")){
-                        questionName = questionName.replace(regExp, '');
-                        isMetadata = true;
-                    }
-
-                    rules.push({
-                        "extents" : "SurveyTemplateObject",
-                        "objectType" : "Rule",
-                        "when" : questionName,
-                        "operator" : jumpValidationCorrelationMap.get(expression.attributes.getNamedItem("operator").nodeValue),
-                        "answer" : expression.attributes.getNamedItem("value").nodeValue,
-                        "isMetadata" : isMetadata
-                    });
-                }
-
-                navigation.conditions.push({
-                    "extents" : "StudioObject",
-                    "objectType" : "RouteCondition",
-                    "name" : "ROUTE_CONDITION_"+ (i+1),
-                    "rules" : rules
-                })
-            }
-            lastQuestion.routes.push(navigation)
-        });
-
-    }
-    return lastQuestion;
-}
-
 function buildOptionStructure(option) {
     return {
         "extents": "StudioObject",
@@ -533,82 +637,6 @@ function buildOptionStructure(option) {
             }
         }
     }
-}
-
-function buildQuestionItem(question){
-    let questionItem = {};
-    questionItem.objectType = "";
-    questionItem.label = buildQuestionLabel(question);
-    questionItem.metadata = {
-        "extents": "StudioObject",
-            "objectType": "MetadataGroup",
-            "options": []
-    };
-    if (question.attributes.getNamedItem("metaDataGroupId")){
-        questionItem.metadata.options = [{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":1,"extractionValue":".Q","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não quer responder","formattedText":"Não quer responder"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}},{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":2,"extractionValue":".S","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não sabe","formattedText":"Não sabe"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}},{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":3,"extractionValue":".A","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não se aplica","formattedText":"Não se aplica"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}},{"extends":"StudioObject","objectType":"MetadataAnswer","dataType":"Integer","value":4,"extractionValue":".F","label":{"ptBR":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"Não há dados","formattedText":"Não há dados"},"enUS":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""},"esES":{"extends":"StudioObject","objectType":"Label","oid":"","plainText":"","formattedText":""}}}]
-    }
-    questionItem.fillingRules = buildFillingRules(question);
-    questionItem.extents = "SurveyItem";
-    questionItem.templateID = question.attributes.getNamedItem("id").nodeValue;
-    questionItem.customID = question.attributes.getNamedItem("id").nodeValue;
-    questionItem.QuestionName = question.attributes.getNamedItem("name").nodeValue;
-
-    if(question.attributes.getNamedItem("hiddenQuestion")){
-        let visibleWhemValue = (question.tagName === "singleSelectionQuestion") ? choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue).map.get(question.attributes.getNamedItem("visibleWhen").nodeValue) : question.attributes.getNamedItem("visibleWhen").nodeValue
-        questionItem.insideJump = {
-            targetQuestionName:question.attributes.getNamedItem("hiddenQuestion").nodeValue,
-            when:visibleWhemValue
-        };
-    }
-
-    if(question.tagName === "numericQuestion" ){
-        questionItem.objectType = (question.attributes.getNamedItem("decimalNumber") && question.attributes.getNamedItem("decimalNumber").nodeValue === "false") ? "IntegerQuestion" : "DecimalQuestion"
-        questionItem.unit = {
-            "ptBR" : {
-                "extends" : "StudioObject",
-                    "objectType" : "Unit",
-                    "oid" : "",
-                    "plainText" : "",
-                    "formattedText" : ""
-            },
-            "enUS" : {
-                "extends" : "StudioObject",
-                    "objectType" : "Unit",
-                    "oid" : "",
-                    "plainText" : "",
-                    "formattedText" : ""
-            },
-            "esES" : {
-                "extends" : "StudioObject",
-                    "objectType" : "Unit",
-                    "oid" : "",
-                    "plainText" : "",
-                    "formattedText" : ""
-            }
-        }
-    } else if(question.tagName === "textQuestion"){
-        questionItem.objectType = "TextQuestion"
-    } else if(question.tagName === "singleSelectionQuestion"){
-        questionItem.options = choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue).options;
-        questionItem.objectType = "SingleSelectionQuestion";
-    } else if(question.tagName === "autocompleteQuestion"){
-        questionItem.objectType = "AutocompleteQuestion";
-    } else if(question.tagName === "dateQuestion"){
-        questionItem.objectType = "CalendarQuestion";
-    }else if(question.tagName === "booleanQuestion"){
-        questionItem.objectType = "CheckboxQuestion";
-        questionItem.options = [];
-        questionItem.options.push(buildOptionStructure(question));
-        questionItem.templateID ="CheckboxQuestion" + questionItem.templateID;
-        questionItem.customID = "CheckboxQuestion" + questionItem.customID;
-
-    } else {
-        questionItem.objectType=question.tagName;
-    }
-
-    questionItem.dataType = questionsDataTypeMap.get(questionItem.objectType);
-
-    return questionItem;
 }
 
 function buildQuestionLabel(question){
