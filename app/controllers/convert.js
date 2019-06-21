@@ -36,6 +36,7 @@ let firstQuestionInPageMap;
 let idXNameQuestionCorrelation;
 let inNavigationMap;
 let booleanCheckboxCorrelation;
+let questionNameXParentNameCorrelation;
 
 module.exports.xmlToJson =function(application, req, res) {
 
@@ -44,6 +45,7 @@ module.exports.xmlToJson =function(application, req, res) {
     idXNameQuestionCorrelation = new Map();
     inNavigationMap = new Map();
     booleanCheckboxCorrelation = new Map();
+    questionNameXParentNameCorrelation = new Map();
 
     if (!req.files || !req.files.template_XML) {
         return res.status(400).send('No files were uploaded.');
@@ -85,14 +87,14 @@ module.exports.xmlToJson =function(application, req, res) {
             let tagName = survey.childNodes[i].tagName;
             if (tagName === "choiceGroup") {
                 choiceGroup.set(survey.childNodes[i].attributes.getNamedItem("id").nodeValue,buildChoiceGroup(survey.childNodes[i]));
-            } else if (tagName === "questionPage") {
+            } else if (tagName === "questionPage" || tagName === "finalPage") {
                 let headerIsPresent = survey.childNodes[i].childNodes[0].tagName === "header";
                 let startNode = 0;
                 if(headerIsPresent){
                     startNode = 1;
                 }
                 fillFirstQuestionInPageMap(firstQuestionInPageMap,survey.childNodes[i].childNodes[0]);
-                questions = getQuestions(questions,survey.childNodes[i].childNodes[startNode]);
+                questions = getQuestions(questions,survey.childNodes[i].childNodes[0]);
             }
         }
     });
@@ -103,40 +105,57 @@ module.exports.xmlToJson =function(application, req, res) {
 };
 
 function getQuestions(questions,nextSibling,branchArray) {
-    if(nextSibling.tagName && nextSibling.tagName !== "header") {
+    if(nextSibling.tagName === "header"){
+       if(!nextSibling.nextSibling){
+           questions.push(buildHeaderQuestionItem(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue,nextSibling.firstChild.nodeValue));
+       } else {
+           return getQuestions(questions, nextSibling.nextSibling, branchArray);
+       }
+    } else {
         if (nextSibling.tagName === "basicQuestionGroup") {
             return getQuestions(questions, nextSibling.childNodes[0]);
         }
 
-        if(nextSibling.tagName !== "branch") {
+        if (nextSibling.tagName !== "branch") {
             let lastQuestionPosition;
             if (nextSibling.tagName === "booleanQuestion") {
                 lastQuestionPosition = questions.length - 1;
                 if (questions.length > 0 && questions[lastQuestionPosition].objectType === "CheckboxQuestion") {
-                    booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
+                    booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue, questions[lastQuestionPosition].templateID);
                     questions[lastQuestionPosition].options.push(buildOptionStructure(nextSibling));
                 } else if (nextSibling.tagName) {
                     questions.push(buildQuestionItem(nextSibling));
                     lastQuestionPosition = questions.length - 1;
-                    booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue,questions[lastQuestionPosition].templateID);
+                    booleanCheckboxCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue, questions[lastQuestionPosition].templateID);
                 }
-
-                if(nextSibling.attributes.getNamedItem("hiddenQuestion")){
+                if (nextSibling.attributes.getNamedItem("hiddenQuestion")) {
                     questions[lastQuestionPosition].insideJump = {
-                        targetQuestionName:nextSibling.attributes.getNamedItem("hiddenQuestion").nodeValue,
-                        when:nextSibling.attributes.getNamedItem("id").nodeValue
+                        targetQuestionName: nextSibling.attributes.getNamedItem("hiddenQuestion").nodeValue,
+                        targetIsGroup : !!firstQuestionInPageMap.get(nextSibling.attributes.getNamedItem("hiddenQuestion").nodeValue),
+                        when: nextSibling.attributes.getNamedItem("id").nodeValue
                     }
                 }
             } else if (nextSibling.tagName) {
+                if(nextSibling.attributes.getNamedItem("infoLabel")){
+                    questions.push(buildHeaderQuestionItem(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue+nextSibling.attributes.getNamedItem("id").nodeValue,nextSibling.attributes.getNamedItem("infoLabel").nodeValue));
+                }
                 questions.push(buildQuestionItem(nextSibling));
+                if(nextSibling.attributes.getNamedItem("postInfoLabel")){
+                    questions.push(buildHeaderQuestionItem(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue+nextSibling.attributes.getNamedItem("id").nodeValue,nextSibling.attributes.getNamedItem("postInfoLabel").nodeValue));
+                }
             }
             idXNameQuestionCorrelation.set(nextSibling.attributes.getNamedItem("name").nodeValue, {
-                id:nextSibling.attributes.getNamedItem("id").nodeValue,
-                type:nextSibling.tagName,
-                choiceGroupId:nextSibling.attributes.getNamedItem("choiceGroupId"),
-                metaDataGroupId:nextSibling.attributes.getNamedItem("metaDataGroupId")});
+                id: nextSibling.attributes.getNamedItem("id").nodeValue,
+                type: nextSibling.tagName,
+                parentName: nextSibling.parentNode.attributes.getNamedItem("id"),
+                choiceGroupId: nextSibling.attributes.getNamedItem("choiceGroupId"),
+                metaDataGroupId: nextSibling.attributes.getNamedItem("metaDataGroupId")
+            });
+            questionNameXParentNameCorrelation.set(nextSibling.attributes.getNamedItem("id").nodeValue, {
+                parentName: nextSibling.parentNode.attributes.getNamedItem("id").nodeValue,
+            });
         } else {
-            if(branchArray){
+            if (branchArray) {
                 branchArray.push(nextSibling);
             } else {
                 branchArray = [];
@@ -148,13 +167,14 @@ function getQuestions(questions,nextSibling,branchArray) {
             return getQuestions(questions, nextSibling.nextSibling, branchArray);
         } else if (nextSibling.parentNode.tagName === "basicQuestionGroup" && nextSibling.parentNode.nextSibling) {
             return getQuestions(questions, nextSibling.parentNode.nextSibling, branchArray);
-        } else if (nextSibling.parentNode.tagName === "questionPage"){
-            if(nextSibling.parentNode.attributes.getNamedItem("nextPageId")){
+        } else if (nextSibling.parentNode.tagName === "questionPage") {
+            if (nextSibling.parentNode.attributes.getNamedItem("nextPageId")) {
                 questions.push(buildPageLastQuestion(
-                    Array.from(firstQuestionInPageMap.keys()).indexOf(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue)+1,
+                    Array.from(firstQuestionInPageMap.keys()).indexOf(nextSibling.parentNode.attributes.getNamedItem("id").nodeValue) + 1,
                     branchArray,
                     firstQuestionInPageMap.get(nextSibling.parentNode.attributes.getNamedItem("nextPageId").nodeValue),
-                    idXNameQuestionCorrelation));
+                    idXNameQuestionCorrelation)
+                );
             }
         }
     }
@@ -183,6 +203,7 @@ function buildQuestionItem(question){
         let visibleWhenValue = (question.tagName === "singleSelectionQuestion") ? choiceGroup.get(question.attributes.getNamedItem("choiceGroupId").nodeValue).map.get(question.attributes.getNamedItem("visibleWhen").nodeValue) : question.attributes.getNamedItem("visibleWhen").nodeValue
         questionItem.insideJump = {
             targetQuestionName:question.attributes.getNamedItem("hiddenQuestion").nodeValue,
+            targetIsGroup : !!firstQuestionInPageMap.get(question.attributes.getNamedItem("hiddenQuestion").nodeValue),
             when:visibleWhenValue
         };
     }
@@ -237,15 +258,15 @@ function buildQuestionItem(question){
     return questionItem;
 }
 
-function buildPageLastQuestion(pageIndex, branchArray, defaultRoute, idXNameQuestionCorrelation) {
-    let lastQuestion = {
+function buildHeaderQuestionItem(questionId,label) {
+    return  {
         "value" : {
             "ptBR" : {
                 "extends" : "StudioObject",
                 "objectType" : "Label",
                 "oid" : "",
-                "plainText" : "Você completou a pagina " + pageIndex,
-                "formattedText" : "<i>Voce completou a pagina " + pageIndex + "</i><br>"
+                "plainText" : fixPlainText(label),
+                "formattedText" : fixFormattedText(label)
             },
             "enUS" : {
                 "extends" : "StudioObject",
@@ -264,8 +285,41 @@ function buildPageLastQuestion(pageIndex, branchArray, defaultRoute, idXNameQues
         },
         "extents" : "SurveyItem",
         "objectType" : "TextItem",
-        "templateID" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
-        "customID" : "AUTOMATICGENERATEDQUESTIONCUSTON"+ pageIndex,
+        "templateID" : questionId,
+        "customID" : questionId,
+        "dataType" : "String"
+    };
+}
+
+function buildPageLastQuestion(pageIndex, branchArray, defaultRoute, idXNameQuestionCorrelation) {
+    let lastQuestion = {
+        "value" : {
+            "ptBR" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "Obrigado, vamos proceguir para a próxima etapa",
+                "formattedText" : "<i>Obrigado, vamos prosseguir para a próxima etapa</i><br>"
+            },
+            "enUS" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            },
+            "esES" : {
+                "extends" : "StudioObject",
+                "objectType" : "Label",
+                "oid" : "",
+                "plainText" : "",
+                "formattedText" : ""
+            }
+        },
+        "extents" : "SurveyItem",
+        "objectType" : "TextItem",
+        "templateID" : "AGQ"+ pageIndex,
+        "customID" : "AGOC"+ pageIndex,
         "dataType" : "String",
         "routes" : []
     };
@@ -274,9 +328,9 @@ function buildPageLastQuestion(pageIndex, branchArray, defaultRoute, idXNameQues
         {
             "extents" : "SurveyTemplateObject",
             "objectType" : "Route",
-            "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+            "origin" : "AGQ"+ pageIndex,
             "destination" : defaultRoute,
-            "name" : "AUTOMATICGENERATEDQUESTION" + pageIndex+"_" + defaultRoute,
+            "name" : "AGQ" + pageIndex+"_" + defaultRoute,
             "isDefault" : true,
             "conditions" : [ ]
         }
@@ -289,9 +343,9 @@ function buildPageLastQuestion(pageIndex, branchArray, defaultRoute, idXNameQues
             let navigation = {
                 "extents" : "SurveyTemplateObject",
                 "objectType" : "Route",
-                "origin" : "AUTOMATICGENERATEDQUESTION"+ pageIndex,
+                "origin" : "AGQ"+ pageIndex,
                 "destination" : routeDestination,
-                "name" : "AUTOMATICGENERATEDQUESTION"+ pageIndex +"_"+routeDestination,
+                "name" : "AGQ"+ pageIndex +"_"+routeDestination,
                 "isDefault" : false,
                 "conditions" : []
             };
@@ -435,32 +489,30 @@ function buildNavigation(questions) {
                 }
             )
         } else if(questions[i].insideJump){
-            let insideJumpDestination =idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) ? idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName).id : firstQuestionInPageMap.get(questions[i].insideJump.targetQuestionName);
-            if(insideJumpDestination === questions[i+1].templateID){
-                navigation.routes.push(
-                    {
-                        "extents" : "SurveyTemplateObject",
-                        "objectType" : "Route",
-                        "origin" : questions[i].templateID,
-                        "destination" : questions[i+2].templateID,
-                        "name" : questions[i].templateID+"_"+questions[i+2].templateID,
-                        "isDefault" : true,
-                        "conditions" : [ ]
-                    }
-                )
+            let insideJumpDestination = idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName) ? idXNameQuestionCorrelation.get(questions[i].insideJump.targetQuestionName).id : firstQuestionInPageMap.get(questions[i].insideJump.targetQuestionName);
+            let defaultRouteIndex = 0;
+            if(questions[i].insideJump.targetIsGroup){
+                do {
+                    defaultRouteIndex++;
+                } while (questionNameXParentNameCorrelation.get(questions[i+defaultRouteIndex].templateID).parentName === questions[i].insideJump.targetQuestionName)
+            } else if(insideJumpDestination === questions[i+1].templateID){
+                defaultRouteIndex = 2;
             } else {
-                navigation.routes.push(
-                    {
-                        "extents" : "SurveyTemplateObject",
-                        "objectType" : "Route",
-                        "origin" : questions[i].templateID,
-                        "destination" : questions[i+1].templateID,
-                        "name" : questions[i].templateID+"_"+questions[i+1].templateID,
-                        "isDefault" : true,
-                        "conditions" : [ ]
-                    }
-                )
+                defaultRouteIndex = 1;
             }
+
+            navigation.routes.push(
+                {
+                    "extents" : "SurveyTemplateObject",
+                    "objectType" : "Route",
+                    "origin" : questions[i].templateID,
+                    "destination" : questions[i+defaultRouteIndex].templateID,
+                    "name" : questions[i].templateID+"_"+questions[i+defaultRouteIndex].templateID,
+                    "isDefault" : true,
+                    "conditions" : [ ]
+                }
+            );
+
             navigation.routes.push(
                 {
                     "extents" : "SurveyTemplateObject",
@@ -530,9 +582,7 @@ function fillFirstQuestionInPageMap(firstQuestionInPageMap,questionPageChild,que
     }
 
     if (questionPageChild.tagName !== "branch") {
-        if (questionPageChild.tagName === "header") {
-            return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.nextSibling, questionPage)
-        } else if (questionPageChild.tagName === "basicQuestionGroup" && !firstQuestionInPageMap.has(questionPageChild.attributes.getNamedItem("name").nodeValue)) {
+        if (questionPageChild.tagName === "basicQuestionGroup" && !firstQuestionInPageMap.has(questionPageChild.attributes.getNamedItem("name").nodeValue)) {
             return fillFirstQuestionInPageMap(firstQuestionInPageMap, questionPageChild.childNodes[0], questionPage)
         } else if (questionPageChild.parentNode.tagName === "basicQuestionGroup" && !firstQuestionInPageMap.has(questionPageChild.parentNode.attributes.getNamedItem("name").nodeValue)) {
             firstQuestionInPageMap.set(questionPageChild.parentNode.attributes.getNamedItem("name").nodeValue, questionPageChild.attributes.getNamedItem("id").nodeValue);
@@ -545,7 +595,11 @@ function fillFirstQuestionInPageMap(firstQuestionInPageMap,questionPageChild,que
         }
 
         if(!firstQuestionInPageMap.has(questionPage.attributes.getNamedItem("id").nodeValue)){
-            firstQuestionInPageMap.set(questionPage.attributes.getNamedItem("id").nodeValue,questionPageChild.attributes.getNamedItem("id").nodeValue);
+            if(questionPageChild.tagName !== "header"){
+                firstQuestionInPageMap.set(questionPage.attributes.getNamedItem("id").nodeValue,questionPageChild.attributes.getNamedItem("id").nodeValue);
+            } else if(!questionPageChild.nextSibling){
+                firstQuestionInPageMap.set(questionPage.attributes.getNamedItem("id").nodeValue,questionPage.attributes.getNamedItem("id").nodeValue);
+            }
         }
 
         if(questionPageChild.nextSibling){
@@ -618,8 +672,8 @@ function buildOptionStructure(option) {
                 "extends": "StudioObject",
                 "objectType": "Label",
                 "oid": "",
-                "plainText": fixString(option.attributes.getNamedItem("label").nodeValue),
-                "formattedText": fixString(option.attributes.getNamedItem("label").nodeValue)
+                "plainText": fixPlainText(option.attributes.getNamedItem("label").nodeValue),
+                "formattedText": fixFormattedText(option.attributes.getNamedItem("label").nodeValue)
             },
             "enUS": {
                 "extends": "StudioObject",
@@ -640,7 +694,14 @@ function buildOptionStructure(option) {
 }
 
 function buildQuestionLabel(question){
-    let header = question.parentNode.firstChild.tagName === "header" ? question.parentNode.firstChild.firstChild.data : "";
+    let header ="";
+    if(question.parentNode.tagName === "basicQuestionGroup"){
+        header = question.parentNode.parentNode.firstChild.tagName === "header" ? question.parentNode.parentNode.firstChild.firstChild.data : ""
+    }
+    header = (question.parentNode.firstChild.tagName === "header") ? (header !== "") ? header + "<br>" + question.parentNode.firstChild.firstChild.data : question.parentNode.firstChild.firstChild.data : header;
+    if(question.parentNode.attributes.getNamedItem("label")){
+        header =  header !== "" ? header + "<br>" + question.parentNode.attributes.getNamedItem("label").nodeValue : question.parentNode.attributes.getNamedItem("label").nodeValue
+    }
     let questionLabel = question.attributes.getNamedItem("label").nodeValue;
     let plainText = "";
     let formattedText = "";
@@ -661,8 +722,8 @@ function buildQuestionLabel(question){
         "extends" : "StudioObject",
                 "objectType" : "Label",
                 "oid" : "",
-                "plainText" : fixString(plainText),
-                "formattedText" : fixString(formattedText)
+                "plainText" : fixPlainText(plainText),
+                "formattedText" : fixFormattedText(formattedText)
         },
         "enUS" : {
         "extends" : "StudioObject",
@@ -740,12 +801,28 @@ function buildFillingRules(question){
     return fillingRules;
 }
 
-function fixString(string){
+function fixFormattedText(string){
     string = string
         .replace(/\[i\]/g,"<i>")
         .replace(/\[\/i\]/g,"</i>")
         .replace(/\[b\]/g,"<b>")
         .replace(/\[\/b\]/g,"</b>")
-        .replace(/\[br\]/g,"<br>");
+        .replace(/\[br\]/g,"<br>")
+        .replace(/\n/g,"")
+        .replace(/\r/g,"")
+        .replace(/\t/g,"");
+    return string;
+}
+
+function fixPlainText(string){
+    string = string
+        .replace(/\[i\]/g,"")
+        .replace(/\[\/i\]/g,"")
+        .replace(/\[b\]/g,"")
+        .replace(/\[\/b\]/g,"")
+        .replace(/\[br\]/g,"")
+        .replace(/\n/g,"")
+        .replace(/\r/g,"")
+        .replace(/\t/g,"");
     return string;
 }

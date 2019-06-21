@@ -4,6 +4,7 @@
     <list default="true" id="da2b3bd8-51eb-4466-8229-478fd81d018f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/convert.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/convert.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/home/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/home/index.ejs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,12 +19,21 @@
     <window id="2">
       <content type="file-editors">
         <state>
-          <leaf>
-            <file pinned="false" current-in-tab="true">
+          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+            <file pinned="false" current-in-tab="false">
               <entry file="file://$USER_HOME$/Downloads/ELEA (1).xml">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="335">
-                    <caret line="3102" column="12" selection-start-line="3102" selection-start-column="12" selection-end-line="3102" selection-end-column="12" />
+                  <state relative-caret-position="43635">
+                    <caret line="2909" column="23" selection-start-line="2909" selection-start-column="19" selection-end-line="2909" selection-end-column="23" />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$USER_HOME$/Downloads/EASA.xml">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="435">
+                    <caret line="95" column="4" selection-start-line="95" selection-start-column="4" selection-end-line="98" selection-end-column="19" />
                   </state>
                 </provider>
               </entry>
@@ -39,7 +49,7 @@
         <entry file="file://$PROJECT_DIR$/app/controllers/home.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -47,20 +57,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1182">
-              <caret line="101" column="8" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+            <state relative-caret-position="244">
+              <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
               <folding>
-                <element signature="e#9040#9995#0" />
+                <element signature="n#!!block;n#getQuestions#0" />
+                <element signature="n#!!block;n#buildQuestionItem#0" />
+                <element signature="n#!!block;n#buildHeaderQuestionItem#0" />
+                <element signature="n#!!block;n#buildPageLastQuestion#0" />
                 <element signature="n#!!block;n#fillInNavigation#0" />
                 <element signature="n#!!block;n#buildNavigation#0" />
-                <element signature="e#4490#5148#0" />
-                <element signature="e#5158#5536#0" />
                 <element signature="n#!!block;n#fillFirstQuestionInPageMap#0" />
                 <element signature="n#!!block;n#buildChoiceGroup#0" />
                 <element signature="n#!!block;n#buildOptionStructure#0" />
-                <element signature="n#!!block;n#buildQuestionLabel#0" />
                 <element signature="n#!!block;n#buildFillingRules#0" />
-                <element signature="n#!!block;n#fixString#0" />
               </folding>
             </state>
           </provider>
@@ -69,21 +78,58 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/routes/home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/home/index.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/ConversionDAO.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../EASA_CONVERTED.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="1026" column="36" lean-forward="true" selection-start-line="1026" selection-start-column="36" selection-end-line="1026" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../converted_template.json">
+        <entry file="file://$PROJECT_DIR$/../ELEA_CONVERTED.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="15579" column="38" lean-forward="true" selection-start-line="15579" selection-start-column="38" selection-end-line="15579" selection-end-column="38" />
+            <state relative-caret-position="244">
+              <caret line="1536" column="40" lean-forward="true" selection-start-line="1536" selection-start-column="40" selection-end-line="1536" selection-end-column="40" />
               <folding>
-                <element signature="e#554#1748#0" />
-                <element signature="e#1768#5571#0" />
-                <element signature="e#2883312#2884634#0" />
+                <element signature="e#1542578#1547640#0" />
+                <element signature="e#1547646#1553555#0" />
+                <element signature="e#1553561#1561217#0" />
+                <element signature="e#1561223#1568990#0" />
+                <element signature="e#1569060#1569802#0" />
+                <element signature="e#1569822#1573625#0" />
+                <element signature="e#1573649#1574019#0" />
+                <element signature="e#1576772#1584505#0" />
               </folding>
             </state>
           </provider>
@@ -92,7 +138,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="870">
+            <state relative-caret-position="1815">
               <caret line="121" column="1" selection-start-line="121" selection-start-column="1" selection-end-line="121" selection-end-column="1" />
             </state>
           </provider>
@@ -102,39 +148,40 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>AUTOMATICGENERATEDQUESTION2_ELEA1e</find>
-      <find>AUTOMATICGENERATEDQUESTION_ELEA1e</find>
+      <find>END NODE</find>
+      <find>finalPage</find>
       <find>AUTOMATICGENERATEDQUESTION</find>
-      <find>AUTOMATICGENERATEDQUESTION2</find>
-      <find>defaul</find>
-      <find>ELEA14a</find>
-      <find>defaultRoute</find>
-      <find>AUTOMATICGENERATEDQUESTION2_</find>
-      <find>plainText</find>
-      <find>destin</find>
-      <find>insid</find>
-      <find>insi</find>
-      <find>hidde</find>
-      <find>ELEA1e_ELEA1e1</find>
-      <find>hiddenQuestion</find>
-      <find>voc</find>
+      <find>relac</find>
+      <find>firstQuestionInPageMap</find>
+      <find>defa</find>
+      <find>insidejump</find>
       <find>idXNameQuestionCorrelation</find>
-      <find>choice</find>
-      <find>choiceGroup</find>
-      <find>CheckboxQuestionELEA16a</find>
-      <find>metaDataGroupId</find>
-      <find>choiceGroupId</find>
-      <find>DONT_WANT_KNOW_APPLY</find>
-      <find>metadata</find>
-      <find>ELEA13</find>
-      <find>ACCEPT_ANSWER</find>
-      <find>questionData.</find>
+      <find>ELEA1e1</find>
+      <find>questionNameXParentNameCorrelation</find>
+      <find>ELEA1c</find>
+      <find>ELEA1e</find>
+      <find>este evento</find>
+      <find>ELEA1i</find>
+      <find>PAGE_166</find>
+      <find>ELEA1f</find>
+      <find>32</find>
+      <find>AGQ132</find>
+      <find>AGQ31</find>
+      <find>AGQ</find>
+      <find>EASA12b</find>
+      <find>EASA1</find>
+      <find>label</find>
+      <find>ª Transferência</find>
+      <find>4a. Códigos Diagnósticos CID-10</find>
+      <find>MORTE</find>
+      <find>basix</find>
+      <find>8. MORTE</find>
+      <find>8. M</find>
       <find>unde</find>
-      <find>&quot;isMetadata&quot;: true</find>
-      <find>questionData.choiceGroupId.nodeValue</find>
     </findStrings>
     <replaceStrings>
       <replace>let</replace>
+      <replace>fixFormattedText</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -160,9 +207,12 @@
         <option value="$USER_HOME$/Downloads/surveyTemplate (55).json" />
         <option value="$USER_HOME$/Downloads/ELEA.xml" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.json" />
+        <option value="$PROJECT_DIR$/../converted_template.json" />
+        <option value="$PROJECT_DIR$/app/views/home/index.ejs" />
         <option value="$USER_HOME$/Downloads/ELEA (1).xml" />
         <option value="$PROJECT_DIR$/app/controllers/convert.js" />
-        <option value="$PROJECT_DIR$/../converted_template.json" />
+        <option value="$PROJECT_DIR$/../ELEA_CONVERTED.json" />
+        <option value="$PROJECT_DIR$/../EASA_CONVERTED.json" />
       </list>
     </option>
   </component>
@@ -177,7 +227,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -210,6 +259,19 @@
             </path>
             <path>
               <item name="otus-ehr-activity-converter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="otus-ehr-activity-converter" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="otus-ehr-activity-converter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="otus-ehr-activity-converter" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="home" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="otus-ehr-activity-converter" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
             <path>
@@ -221,6 +283,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -280,12 +343,14 @@
       <workItem from="1560445938546" duration="13056000" />
       <workItem from="1560459723246" duration="1030000" />
       <workItem from="1560787777823" duration="2448000" />
-      <workItem from="1560790929432" duration="11236000" />
+      <workItem from="1560790929432" duration="26791000" />
+      <workItem from="1560967924805" duration="5406000" />
+      <workItem from="1561141501938" duration="752000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158113000" />
+    <option name="totallyTimeSpent" value="179826000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -306,7 +371,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3289183" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.36644593" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.29801324" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3289183" />
@@ -328,15 +393,30 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app/controllers/convert.js</url>
-          <line>101</line>
+          <line>103</line>
           <option name="timeStamp" value="206" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <condition expression="branchNode.childNodes[i].childNodes === null" language="JavaScript" />
           <url>file://$PROJECT_DIR$/app/controllers/convert.js</url>
-          <line>299</line>
-          <properties lambdaOrdinal="-1" />
+          <line>353</line>
           <option name="timeStamp" value="295" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <condition expression="questionPageChild.attributes.getNamedItem(&quot;id&quot;) === undefined" language="JavaScript" />
+          <url>file://$PROJECT_DIR$/app/controllers/convert.js</url>
+          <line>598</line>
+          <option name="timeStamp" value="302" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/controllers/convert.js</url>
+          <line>101</line>
+          <option name="timeStamp" value="310" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/controllers/convert.js</url>
+          <line>102</line>
+          <option name="timeStamp" value="319" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -347,12 +427,8 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="NodeJSConfigurationType">
-        <watch expression="questionPage.attributes.getNamedItem(&quot;id&quot;).nodeValue" />
-        <watch expression="nextSibling.parentNode.attributes.getNamedItem(&quot;nextPageId&quot;).nodeValue" />
-        <watch expression="questionPageChild.attributes[&quot;0&quot;].nodeValue" />
-        <watch expression="route.destination" />
-        <watch expression="defaultRoute" />
-        <watch expression="nextSibling.attributes" />
+        <watch expression="header" />
+        <watch expression="question.parentNode.parentNode.firstChild.tagName" />
       </configuration>
     </watches-manager>
   </component>
@@ -411,6 +487,26 @@
     </expressions>
     <expressions id="breakpointCondition">
       <expression>
+        <expression-string>questions[i].insideJump.targetIsGroup === true</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>question.attributes.getNamedItem(&quot;label&quot;) === undefined</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>questionPageChild.attributes.getNamedItem(&quot;id&quot;) === undefined</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>questionPage.nextSibling === null</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>branchNode.childNodes[i].childNodes === null</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -432,31 +528,6 @@
       </expression>
       <expression>
         <expression-string>route.destination === &quot;ELEA14a&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>nextSibling.attributes.getNamedItem(&quot;id&quot;).nodeValue === &quot;ELEA14a&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>questionPage.attributes.getNamedItem(&quot;id&quot;).nodeValue === &quot;PAGE_171&quot;</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>questionPageChild.nextSibling === null</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>questionPageChild.parentNode.nextSibling === null</expression-string>
-        <language-id>JavaScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>questionPageChild.childNodes[0] === null</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -485,47 +556,52 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>questionData.choiceGroupId.nodeValue</expression-string>
+        <expression-string>question.parentNode.parentNode.firstChild</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choiceGroup.get(questionData.choiceGroupId.nodeValue).map.get(expression.attributes.getNamedItem(&quot;value&quot;).nodeValue)</expression-string>
+        <expression-string>question.parentNode.parentNode.firstChild.tagName === &quot;header&quot;</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choiceGroup.get(questionData.choiceGroupId.nodeValue).get(expression.attributes.getNamedItem(&quot;value&quot;).nodeValue)</expression-string>
+        <expression-string>question.parentNode.parentNode</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choiceGroup.get(questionData.choiceGroupId.nodeValue)</expression-string>
+        <expression-string>fixPlainText(plainText)</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>choiceGroup</expression-string>
+        <expression-string>question.parentNode.attributes.getNamedItem(&quot;label&quot;)</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>idXNameQuestionCorrelation.get(questionName)</expression-string>
+        <expression-string>question.parentNode.attributes</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>rules</expression-string>
+        <expression-string>surveyJson</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>idXNameQuestionCorrelation</expression-string>
+        <expression-string>i+defaultRouteIndex</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>nextSibling.attributes.getNamedItem(&quot;id&quot;).nodeValue</expression-string>
+        <expression-string>questions[i+defaultRouteIndex]</expression-string>
+        <language-id>JavaScript</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>questions[i+defaultRouteIndex].templateID</expression-string>
         <language-id>JavaScript</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -612,9 +688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.ejs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -643,13 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-48000">
           <caret line="1124" column="17" lean-forward="true" selection-start-line="1124" selection-start-column="17" selection-end-line="1124" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/ConversionDAO.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
@@ -758,62 +824,111 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/home.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/express-fileupload/lib/processMultipart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+        <state relative-caret-position="1170">
+          <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../converted_template.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="75190" column="30" selection-start-line="75190" selection-start-column="26" selection-end-line="75190" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/home.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/ConversionDAO.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
+        <state relative-caret-position="1815">
           <caret line="121" column="1" selection-start-line="121" selection-start-column="1" selection-end-line="121" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/ELEA (1).xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="3102" column="12" selection-start-line="3102" selection-start-column="12" selection-end-line="3102" selection-end-column="12" />
+        <state relative-caret-position="43635">
+          <caret line="2909" column="23" selection-start-line="2909" selection-start-column="19" selection-end-line="2909" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/EASA.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="95" column="4" selection-start-line="95" selection-start-column="4" selection-end-line="98" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/convert.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1182">
-          <caret line="101" column="8" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+        <state relative-caret-position="244">
+          <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
           <folding>
-            <element signature="e#9040#9995#0" />
+            <element signature="n#!!block;n#getQuestions#0" />
+            <element signature="n#!!block;n#buildQuestionItem#0" />
+            <element signature="n#!!block;n#buildHeaderQuestionItem#0" />
+            <element signature="n#!!block;n#buildPageLastQuestion#0" />
             <element signature="n#!!block;n#fillInNavigation#0" />
             <element signature="n#!!block;n#buildNavigation#0" />
-            <element signature="e#4490#5148#0" />
-            <element signature="e#5158#5536#0" />
             <element signature="n#!!block;n#fillFirstQuestionInPageMap#0" />
             <element signature="n#!!block;n#buildChoiceGroup#0" />
             <element signature="n#!!block;n#buildOptionStructure#0" />
-            <element signature="n#!!block;n#buildQuestionLabel#0" />
             <element signature="n#!!block;n#buildFillingRules#0" />
-            <element signature="n#!!block;n#fixString#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../converted_template.json">
+    <entry file="file://$PROJECT_DIR$/../EASA_CONVERTED.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="15579" column="38" lean-forward="true" selection-start-line="15579" selection-start-column="38" selection-end-line="15579" selection-end-column="38" />
+        <state relative-caret-position="154">
+          <caret line="1026" column="36" lean-forward="true" selection-start-line="1026" selection-start-column="36" selection-end-line="1026" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ELEA_CONVERTED.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="1536" column="40" lean-forward="true" selection-start-line="1536" selection-start-column="40" selection-end-line="1536" selection-end-column="40" />
           <folding>
-            <element signature="e#554#1748#0" />
-            <element signature="e#1768#5571#0" />
-            <element signature="e#2883312#2884634#0" />
+            <element signature="e#1542578#1547640#0" />
+            <element signature="e#1547646#1553555#0" />
+            <element signature="e#1553561#1561217#0" />
+            <element signature="e#1561223#1568990#0" />
+            <element signature="e#1569060#1569802#0" />
+            <element signature="e#1569822#1573625#0" />
+            <element signature="e#1573649#1574019#0" />
+            <element signature="e#1576772#1584505#0" />
           </folding>
         </state>
       </provider>
