@@ -1,0 +1,19 @@
+{
+  "name": "ehr2otus",
+  "version": "1.0.0",
+  "description": "EHR to Otus Template Conversion",
+  "main": "main.js",
+  "scripts": {
+    "parser": "node main.js"
+  },
+  "author": "Flávia Pereira",
+  "license": "ISC",
+  "dependencies": {
+    "custom-env": "^1.0.2",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
+    "load-json-file": "^6.2.0",
+    "path": "^0.12.7",
+    "xml2js": "^0.4.22"
+  }
+}
