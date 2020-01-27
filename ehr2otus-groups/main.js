@@ -2,7 +2,6 @@
 const xml2js = require('xml2js');
 const FileHandler = require('./code/FileHandler');
 const EhrQuestionnaire = require("./code/EhrQuestionnaire");
-//const globalVars = require('./code/globalVars');//.
 const otusTemplateReader = require('./code/assert/otusTemplateReader');
 const ehrTemplateFilter = require('./code/assert/ehrTemplateFilter');
 const assertRoutes = require('./code/assert/assertRoutes');
@@ -78,6 +77,10 @@ function getFilteredTemplateFilename(acronym) {
     return acronym+"-filtered.json";
 }
 
+function getFilteredTemplateManuallyEditedFilename(acronym) {
+    return acronym+"-filtered-manually-edited.json";
+}
+
 function readEhrXMLAndFilter(templateInfo){
     const xmlFilePath = process.cwd() + "/input/" + templateInfo.filename;
     let ehrTemplate = xml2json(xmlFilePath).survey;
@@ -86,7 +89,7 @@ function readEhrXMLAndFilter(templateInfo){
 }
 
 function openEhrFilteredTemplate(acronym){
-    FileHandler.readJsonSync(outputDirPath + getFilteredTemplateFilename(acronym));
+    return FileHandler.readJsonSync(outputDirPath + getFilteredTemplateManuallyEditedFilename(acronym));
 }
 
 function writeOutputJsonFile(filename, content){
@@ -97,11 +100,13 @@ function writeOutputJsonFile(filename, content){
 
 function makeConversionEhr2OtusTemplate(templateInfo){
 
-    // readEhrXMLAndFilter(templateInfo);
+    //readEhrXMLAndFilter(templateInfo);
     const ehrTemplate = openEhrFilteredTemplate(templateInfo.acronym);
 
     const ehr = new EhrQuestionnaire();
     ehr.readFromJsonObj(ehrTemplate);
+    FileHandler.write(outputDirPath + "xray.txt", ehr.takeXray());
+
     // writeOutputJsonFile(templateInfo.acronym+"-readed.json", ehr);
 
     //const oid = "eleaOtusSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOltiYmFjYzM1MC1lNDdjLTExZTktOGVmNy02MTUwOTJlYjNkOTFdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==";

@@ -6,7 +6,7 @@ function extractRules(questionPage){
     return {};
 }
 
-let basicQuestionGroupId = undefined;
+let basicQuestionGroupId = [];
 let basicQuestionGroupCounter = 0;
 
 function extractQuestionsFromBasicGroup(questionArr, outputQuestions){
@@ -14,18 +14,19 @@ function extractQuestionsFromBasicGroup(questionArr, outputQuestions){
         if(key === 'basicQuestionGroup'){
             for(let question of subQuestionArr){
                 if(basicQuestionGroupCounter === 0) {
-                    basicQuestionGroupId = question.id;
+                    basicQuestionGroupId.push(question.id);
                 }
                 basicQuestionGroupCounter++;
                 const subSubQuestionArr = Object.entries(question).filter(([key,value]) => key.includes('Question'));
                 extractQuestionsFromBasicGroup(subSubQuestionArr, outputQuestions);
                 basicQuestionGroupCounter--;
+                basicQuestionGroupId.pop();
             }
         }
         else{
             for (let question of subQuestionArr){
                 question['type'] = key;
-                question['basicGroup'] = basicQuestionGroupId;
+                question['basicGroup'] = basicQuestionGroupId[basicQuestionGroupId.length-1];
                 outputQuestions.push(question);
             }
         }
@@ -70,12 +71,11 @@ function extractQuestionsFromArrays(template, filterLevel){
     return {
         metaDataGroup: template.metaDataGroup,
         choiceGroup: template.choiceGroup,
-        questionPages: outputQuestionPages
+        questionPage: outputQuestionPages
     };
 }
 
 
 module.exports = {
-    filterTemplate: filterTemplate,
     extractQuestionsFromArrays: extractQuestionsFromArrays
 };

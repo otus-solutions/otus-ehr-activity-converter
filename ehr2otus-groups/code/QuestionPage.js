@@ -1,7 +1,6 @@
 const globalVars = require('./globalVars');
 
 const AutoCompleteQuestion = require('./questions/AutoCompleteQuestion');
-const BasicQuestionGroup = require('./questions/BasicQuestionGroup');
 const BooleanQuestion = require('./questions/BooleanQuestion');
 const DateQuestion = require('./questions/DateQuestion');
 const NumericQuestion = require('./questions/NumericQuestion');
@@ -11,33 +10,6 @@ const HiddenQuestionGroup = require("./HiddenQuestionGroup");
 
 const NavigationHandler = require('./NavigationHandler');
 const Branch = require('./Branch');
-
-let _basicQuestionGroupStack = {
-    stack: [],
-    size: 0,
-    reset: function () {
-        this.stack = [];
-        this.size = 0
-    },
-    push: function (basicQuestionGroup) {
-        this.stack.push(basicQuestionGroup);
-        this.size++;
-    },
-    pop: function () {
-        this.stack.pop();
-        if(this.size > 0) {
-            this.size--;
-        }
-    },
-    getTop: function () {
-        return this.stack[this.size-1];
-    },
-    addQuestionId: function (questionId) {
-        if(this.size > 0){
-            this.getTop().addQuestionId(questionId);
-        }
-    }
-};
 
 const OTUS_QUESTIONS_LIST = globalVars.OTUS_TEMPLATE_ATTRIBUTES.QUESTIONS;
 const OTUS_NAVIGATION_LIST = globalVars.OTUS_TEMPLATE_ATTRIBUTES.NAVIGATION_LIST;
@@ -53,6 +25,8 @@ class QuestionPage {
         this.splitedQuestions = [];
         this.basicQuestionGroups = {};
         this.hiddenQuestions = [];
+
+        this.hiddenIndexes = [];
     }
 
     // toJSON(){
@@ -101,7 +75,9 @@ class QuestionPage {
         this.nextPageId = ehrQuestionPageObj.nextPageId;
 
         this._readQuestions(ehrQuestionPageObj.questions);
-        _basicQuestionGroupStack.reset();
+        this._reorganizeQuestionsThatHiddenQuestion2();
+
+        this._setCutIndexes();
 
         //this._readRules(ehrQuestionPageObj);
     }
@@ -117,13 +93,14 @@ class QuestionPage {
         };
         try {
             for (let questionObj of questionObjsArr) {
-                if (questionObj.basicGroup) {
-                    this.basicQuestionGroups[questionObj.basicGroup] = '';
-                }
                 let questionClazz = questionFuncDict[questionObj.type];
                 let question = new questionClazz(questionObj, this.id);
                 this.questions.push(question);
                 globalVars.dictQuestionNameId[question.name] = question.id;
+
+                if (questionObj.basicGroup) {
+                   this. _addQuestionInQuestionGroup(question.id, question.basicGroup);
+                }
 
                 if(question.hiddenQuestion){
                     this.hiddenQuestions.push({
@@ -135,6 +112,88 @@ class QuestionPage {
         }
         catch (e) {
             console.log(e);
+            throw e;
+        }
+    }
+
+    _addQuestionInQuestionGroup(questionId, basicQuestionGroupId){
+        try{
+            this.basicQuestionGroups[basicQuestionGroupId].push(questionId);
+        }
+        catch(e){
+            if(this.basicQuestionGroups[basicQuestionGroupId]){
+                throw e;
+            }
+            this.basicQuestionGroups[basicQuestionGroupId] = [questionId];
+        }
+    }
+
+    _getBasicGroupFirstQuestion(basicQuestionGroupId){
+        return this.basicQuestionGroups[basicQuestionGroupId][0];
+    }
+
+    _getBasicGroupLastQuestion(basicQuestionGroupId){
+        const basicGroup = this.basicQuestionGroups[basicQuestionGroupId];
+        return basicGroup[basicGroup.length-1];
+    }
+
+    _reorganizeQuestionsThatHiddenQuestion2(){
+        if(this.hiddenQuestions.length > 0) console.log("\n"+this.id);
+
+        this.hiddenIndexes = [];
+        for(let hiddenQuestion of this.hiddenQuestions){
+
+            let hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
+            const id = hiddenQuestion.hiddenBy;
+
+            let index = this._indexOfQuestionById(id);
+            let hiddenIndex = this._indexOfQuestionById(hiddenQuestionId);
+
+            if(hiddenIndex < 0){
+                const id = this._getBasicGroupFirstQuestion(hiddenQuestion.hidden);
+                hiddenIndex = this._indexOfQuestionById(id);
+                console.log(`hiddenQuestion is a basicGroup: ${hiddenQuestionId} ${id} ${hiddenIndex}`);
+            }
+
+            console.log(`${id} (${index}) hide ${hiddenQuestion.hidden} (${hiddenIndex})`);//.
+
+            if(hiddenIndex == index-1){
+                [this.questions[index], this.questions[hiddenIndex]] = [this.questions[hiddenIndex], this.questions[index]];
+                hiddenIndex = index;
+            }
+            else if(hiddenIndex != index+1){
+                console.log(`${hiddenQuestionId} ${hiddenQuestion.hidden} (${hiddenIndex}) hidden by ${id} (${index})`);//.
+            }
+
+            this.hiddenIndexes.push(hiddenIndex); // new position of hiddenQuestion
+        }
+
+        if(this.hiddenIndexes.length > 0){
+            console.log("hiddenIndexes: ", this.hiddenIndexes.join(", "));
+        }
+
+        // if(Object.values(this.basicQuestionGroups).length > 0){
+        //     console.log(this.id + "\n" + JSON.stringify(this.basicQuestionGroups, null, 4));
+        // }        
+    }
+
+    _setCutIndexes(){
+        const lastPageQuestionIndex = this.questions.length-1;
+        let groupCutIndexes = [];
+        for(let [id,arr] of Object.entries(this.basicQuestionGroups)){
+            let n = arr.length;
+            if(n > 1){
+                const lastGroupQuestionIndex = this._indexOfQuestionById(arr[n-1]);
+                const nextIndex = lastGroupQuestionIndex ;
+                if(!this.hiddenIndexes.includes(nextIndex) && nextIndex != lastPageQuestionIndex){
+                    groupCutIndexes.push(nextIndex);
+                    console.log(`cut at index ${nextIndex} after Basic Group ${id}`);//.
+                }
+            }
+        }
+
+        if(groupCutIndexes.length > 0){
+            console.log("groupCutIndexes = " + groupCutIndexes.join(", ") + "\n");
         }
     }
 
@@ -148,43 +207,23 @@ class QuestionPage {
         }
     }
 
-    _reorganizeQuestionsThatHiddenQuestion2(){
-        let hiddenIndexes = [];
-        for(let hiddenQuestion of this.hiddenQuestions){
-            let hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
-            const id = hiddenQuestion.hiddenBy;
-            let index = this._indexOfQuestionById(id);
-            let hiddenIndex = -1;
-            try{
-                hiddenIndex = this._indexOfQuestionById(hiddenQuestionId);
-            }
-            catch(e){
-                if(hiddenQuestionId.contains("Group")){
-
+    takeXray(){
+        let content = this.id + "\n";
+        //console.log(this.id);
+        for (let i = 0; i < this.questions.length; i++) {
+            const questionId = this.questions[i].id;
+            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
+            let isInSomeBasicGroup = "";
+            for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
+                if(arr.includes(questionId)){
+                    isInSomeBasicGroup = "\t" + id;
+                    break;
                 }
             }
-
-            if(hiddenIndex < index){
-                console.log(`\ncase hiddenIndex < index`);//.
-                this.questions = this.questions.slice(0,index+1).filter(q => q.id !== hiddenQuestionId) // until index
-                    .concat([this.questions[hiddenIndex]])
-                    .concat(this.questions.slice(index+1, this.questions.length-1)) // questions after hiddenIndex
-            }
-            else if(hiddenIndex > index + 1){
-                console.log(`\ncase hiddenIndex > index + 1`);//.
-                this.questions = this.questions.slice(0,index).filter(q => q.id !== hiddenQuestionId) // until index
-                    .concat([this.questions[hiddenIndex]])
-                    .concat(this.questions.slice(index+1, this.questions.length-1)) // questions after index+1
-            }
-
-            hiddenIndexes.push(index); // new position of hiddenQuestion
-
-            console.log(`${this.id}: ${hiddenQuestionId} (${hiddenIndex}) hidden by ${id} (${index})`);//.
+            //console.log(`\t${questionId} ${isInSomeBasicGroup} ${isHiddenBySomebody}`);
+            content += `\t(${i})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
         }
-
-        if(hiddenIndexes.length > 0){
-            console.log(this.id, this.questions.map(q => q.id).join(", "));
-        }
+        return content;
     }
 
     /* -----------------------------------------------------
@@ -208,95 +247,6 @@ class QuestionPage {
                 otusStudioTemplate[OTUS_GROUP_LIST].push(this._getOtusGroupListObj());
             }
         // }
-    }
-
-    _reorganizeQuestionsThatHiddenQuestion(){
-        for(let question of this.questions){
-            question.replaceHiddenQuestionInfo(this.basicQuestionGroups);
-        }
-
-        let questionsThatHideOthers = this._getQuestionsWithHiddenQuestion();
-        if(questionsThatHideOthers.length === 0){
-            return;
-        }
-        let questionThatHideIndexes = [];
-        let hiddenQuestionIndexes = [];
-        let lastBasicQuestionGroupIndexes = [];
-
-        for(let question of questionsThatHideOthers) {
-            let index = this._indexOfQuestionById(question.id);
-            let hiddenIndex = this._indexOfQuestionById(question.hiddenQuestion.id);
-            let basicQuestionGroup = this._getBasicQuestionGroupThatIncludes(question.hiddenQuestion.id);
-            let lastQuestionId = (basicQuestionGroup?
-                basicQuestionGroup.getLastQuestionId() :
-                question.hiddenQuestion.id);
-
-            if (index > hiddenIndex) { // swap questions and indexes
-                [this.questions[index], this.questions[hiddenIndex]] = [this.questions[hiddenIndex], this.questions[index]];
-                [index, hiddenIndex] = [hiddenIndex, index];
-            }
-            else if(hiddenIndex > index+1 && hiddenIndex < this.questions.length) {
-                this._moveQuestion(question, question.hiddenQuestion.id, lastQuestionId);
-                index = this._indexOfQuestionById(question.id);
-                hiddenIndex = this._indexOfQuestionById(question.hiddenQuestion.id);
-            }
-
-            console.log(`${this.id} (${this.questions.length-1}): ${question.id} (${index}) hide (${hiddenIndex}) ${question.hiddenQuestion.id}`);//.
-
-            questionThatHideIndexes.push(index);
-            hiddenQuestionIndexes.push(hiddenIndex);
-            lastBasicQuestionGroupIndexes.push(this._indexOfQuestionById(lastQuestionId));
-        }
-
-        const numQuestions = this.questions.length;
-
-        if(hiddenQuestionIndexes.includes(numQuestions-1)){
-            const lastHiddenQuestionIndex = hiddenQuestionIndexes[hiddenQuestionIndexes.length-1];
-            const lastHiddenQuestion = this.questions[lastHiddenQuestionIndex].id;
-            for(let branch of this.branches){
-                const expressions = branch.extractExpressionsWithQuestionId(lastHiddenQuestion);
-                if(expressions.length > 0){
-                    branch.setOrigin(lastHiddenQuestion);
-                }
-            }
-        }
-
-        let questionIndex = 0;
-        for (let i = 0; i < hiddenQuestionIndexes.length; i++) {
-            const startIndex = hiddenQuestionIndexes[i];
-            const endIndex = lastBasicQuestionGroupIndexes[i];
-
-            const sliceStart = this.questions.slice(questionIndex, startIndex)
-                                             .map(q => q.extractIdIndexObj());
-            this.splitedQuestions.push(sliceStart);
-            questionIndex = endIndex+1;
-
-            const questionThatHideAnother = this.questions[questionThatHideIndexes[i]];
-            const sliceHidden = this.questions.slice(startIndex, endIndex + 1)
-                                              .map(q => q.extractIdIndexObj());
-            const nextQuestionId = this._getNextQuestionId(endIndex);
-            const hiddenGroup = new HiddenQuestionGroup(sliceHidden, questionThatHideAnother, nextQuestionId);
-            this.splitedQuestions.push(hiddenGroup);
-        }
-
-        if(questionIndex <= numQuestions-1){
-            const sliceEnd = this.questions.slice(questionIndex, numQuestions)
-                                              .map(q => q.extractIdIndexObj());
-            this.splitedQuestions.push(sliceEnd);
-        }
-    }
-
-    _moveQuestion(newPrevQuestion, firstQuestionId, lastQuestionId){
-        const prevIndex = this._indexOfQuestionById(newPrevQuestion.id);
-        const firstIndex = this._indexOfQuestionById(firstQuestionId);
-        const lastIndex = (lastQuestionId? this._indexOfQuestionById(lastQuestionId) : firstIndex);
-
-        const sliceStart = this.questions.slice(0, prevIndex+1);
-        const sliceMiddle = this.questions.slice(prevIndex+1, firstIndex);
-        const sliceHiddenToMove = this.questions.slice(firstIndex, lastIndex+1);
-        const sliceEnd = this.questions.slice(lastIndex+1, this.questions.length-1);
-
-        this.questions = sliceStart.concat(sliceHiddenToMove, sliceMiddle, sliceEnd);
     }
 
     /*

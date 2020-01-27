@@ -10,11 +10,10 @@ class EndPage extends QuestionPage{
     }
 
     readFromJsonObj(ehrEndPageObj){
-        const questionObjArr = ehrEndPageObj["booleanQuestion"];
+        const questionObjArr = ehrEndPageObj.questions;
         for (let questionObj of questionObjArr) {
             let question = new BooleanQuestion(questionObj, this.id);
             this.questions.push(question);
-
         }
     }
 

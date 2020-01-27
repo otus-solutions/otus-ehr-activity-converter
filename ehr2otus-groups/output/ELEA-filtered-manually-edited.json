@@ -1,0 +1,4812 @@
+{
+    "metaDataGroup": [
+        {
+            "metaDataValue": [
+                "DOES_NOT_WANT_TO_ANSWER",
+                "DOES_NOT_KNOW",
+                "DOES_NOT_APPLY"
+            ],
+            "id": "DONT_WANT_KNOW_APPLY"
+        },
+        {
+            "metaDataValue": [
+                "DOES_NOT_WANT_TO_ANSWER",
+                "DOES_NOT_KNOW",
+                "DOES_NOT_APPLY",
+                "ACCEPT_ANSWER"
+            ],
+            "id": "DONT_WANT_KNOW_APPLY_ACCEPT"
+        }
+    ],
+    "choiceGroup": [
+        {
+            "choice": [
+                {
+                    "name": "HOSPITAL",
+                    "label": "Hospital",
+                    "value": "1"
+                },
+                {
+                    "name": "MEDICAL_CLINIC",
+                    "label": "Consultório/Clínica Médica",
+                    "value": "2"
+                },
+                {
+                    "name": "EMERGENCY_CARE",
+                    "label": "Pronto Atendimento",
+                    "value": "3"
+                },
+                {
+                    "name": "SPECIALIZED_INSTITUIONS",
+                    "label": "Instituições de Longa Permanência/Instituições Especializadas",
+                    "value": "4"
+                },
+                {
+                    "name": "HOME_OR_PUBLIC_PLACE",
+                    "label": "Casa ou Local Público",
+                    "value": "5"
+                },
+                {
+                    "name": "OTHER",
+                    "label": "Outros",
+                    "value": "6"
+                }
+            ],
+            "id": "EventLocation"
+        },
+        {
+            "choice": [
+                {
+                    "name": "AUTHORIZED_ACCESS",
+                    "label": "Localizado e acesso autorizado",
+                    "value": "1"
+                },
+                {
+                    "name": "UNAUTHORIZED_ACCESS",
+                    "label": "Acesso não autorizado",
+                    "value": "2"
+                },
+                {
+                    "name": "EXISTING_HOSPITALIZATION",
+                    "label": "Internação existente, mas prontuário não foi encontrado no estabelecimento de saúde",
+                    "value": "3"
+                },
+                {
+                    "name": "EVENT_DOES_NOT_EXIST",
+                    "label": "Evento não existente segundo documentação do estabelecimento de saúde",
+                    "value": "4"
+                }
+            ],
+            "id": "StatusOfRecords"
+        },
+        {
+            "choice": [
+                {
+                    "name": "YES",
+                    "label": "Sim",
+                    "value": "1"
+                },
+                {
+                    "name": "DOES_NOT_APPLY_THIS_INVESTIGATION",
+                    "label": "Não se aplica nesta investigação",
+                    "value": "0"
+                }
+            ],
+            "id": "YesNoDoesntApplyThisInvestigation"
+        },
+        {
+            "choice": [
+                {
+                    "name": "YES_HOSPITAL",
+                    "label": "Sim, hospitalar",
+                    "value": "1"
+                },
+                {
+                    "name": "YES_NOT_HOSPITAL",
+                    "label": "Sim, não hospitalar",
+                    "value": "2"
+                },
+                {
+                    "name": "NO",
+                    "label": "Não",
+                    "value": "0"
+                }
+            ],
+            "id": "ThisEventIsDeath"
+        },
+        {
+            "choice": [
+                {
+                    "name": "YES",
+                    "label": "Sim",
+                    "value": "1"
+                },
+                {
+                    "name": "NO",
+                    "label": "Não",
+                    "value": "0"
+                }
+            ],
+            "id": "YesNo"
+        },
+        {
+            "choice": [
+                {
+                    "name": "NO",
+                    "label": "Não. Inferior a 24h e NÃO é procedimento cardiovascular de interesse",
+                    "value": "1"
+                },
+                {
+                    "name": "YES",
+                    "label": "Sim. Superior a 24h ou procedimento cardiovascular de interesse",
+                    "value": "0"
+                }
+            ],
+            "id": "NoYesHospitalization"
+        },
+        {
+            "choice": [
+                {
+                    "name": "LIVE",
+                    "label": "Vivo",
+                    "value": "1"
+                },
+                {
+                    "name": "DEAD",
+                    "label": "Morto",
+                    "value": "2"
+                }
+            ],
+            "id": "VitalStatus"
+        },
+        {
+            "choice": [
+                {
+                    "name": "YES",
+                    "label": "Sim",
+                    "value": "1"
+                },
+                {
+                    "name": "NO",
+                    "label": "Não",
+                    "value": "0"
+                },
+                {
+                    "name": "WITHOUT_INFORMATION",
+                    "label": "Sem informação",
+                    "value": "2"
+                }
+            ],
+            "id": "YesNoWithout"
+        },
+        {
+            "choice": [
+                {
+                    "name": "YES",
+                    "label": "Sim",
+                    "value": "1"
+                },
+                {
+                    "name": "YES_WITH_OTHER_NOTIFICATION",
+                    "label": "Sim, mas já inserido em outra notificação",
+                    "value": "2"
+                },
+                {
+                    "name": "NO",
+                    "label": "Não",
+                    "value": "0"
+                }
+            ],
+            "id": "YesNoWithOtherNotification"
+        },
+        {
+            "choice": [
+                {
+                    "name": "DEEP_VEIN_THROMBOSIS",
+                    "label": "[b]Trombose Venosa Profunda (TVP)[/b]: obstrução venosa profunda, tromboembolismo pulmonar, duplex-scan de membros, doppler de membros, tratamento com anticoagulantes",
+                    "value": "1"
+                },
+                {
+                    "name": "ONCOLOGY",
+                    "label": "[b]Oncológico[/b]: quimioterapia, radioterapia, demais tratamentos (fator de crescimento de colônia de neutrófilos, eritropoietina, etc.)",
+                    "value": "2"
+                },
+                {
+                    "name": "CHRONIC_KIDNEY_DISEASE",
+                    "label": "[b]Doença renal crônica[/b]: insuficiência renal, doença renal estágio final, hemodiálise, diálise peritoneal, CAPD ou DPAC, uso de eritropoietina.",
+                    "value": "3"
+                }
+            ],
+            "id": "IsThisAnEvent"
+        },
+        {
+            "choice": [
+                {
+                    "name": "HOSPITAL",
+                    "label": "Hospital",
+                    "value": "1"
+                },
+                {
+                    "name": "EMERGENCY_CARE",
+                    "label": "Pronto atendimento",
+                    "value": "2"
+                },
+                {
+                    "name": "OTHER_HEALTH_INSTITUTION",
+                    "label": "Outro estabelecimento de saúde",
+                    "value": "4"
+                },
+                {
+                    "name": "OUTSIDE_HOSPITAL",
+                    "label": "Fora do hospital",
+                    "value": "3"
+                }
+            ],
+            "id": "DeathLocation"
+        }
+    ],
+    "questionPage": [
+        {
+            "id": "PAGE_001",
+            "nextPageId": "PAGE_002",
+            "header": [
+                "[i]Este formulário determina a qualificação do evento (cardiovascular, cerebrovascular, diabetes, neoplasia ou insuficiência renal crônica ou de mortalidade) para revisão. Informações dos registros hospitalares (se evento hospitalizado) ou da Declaração de Óbito (se evento fatal) são necessárias.[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEAIDI",
+                    "name": "investigationId",
+                    "label": "ID DA INVESTIGAÇÃO:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "maxLength": "10",
+                    "minLength": "10",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA1",
+                    "name": "eventLocation",
+                    "choiceGroupId": "EventLocation",
+                    "label": "[b]1. Localização do Evento/Morte:[/b]",
+                    "hiddenQuestion": "specifyEventLocation",
+                    "visibleWhen": "OTHER",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "id": "ELEA1qou",
+                    "name": "specifyEventLocation",
+                    "label": "Especifique:",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_002",
+            "nextPageId": "PAGE_170",
+            "header": [
+                "[b]1.1[/b] Registre o CNES e o nome do estabelecimento onde ocorreu o evento/óbito, e o endereço do local quando o CNES não estiver disponível ou não se aplicar."
+            ],
+            "questions": [
+                {
+                    "id": "ELEA1a",
+                    "name": "cnes",
+                    "lowerLimit": "0",
+                    "label": "CNES:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA1b",
+                    "name": "localName",
+                    "label": "Nome do Local:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA1c",
+                    "name": "registerAdress",
+                    "label": "Registrar Endereço",
+                    "hiddenQuestion": "adressEstablishment",
+                    "visibleWhen": "true",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "id": "ELEA1c1",
+                    "name": "adressEstablishment",
+                    "label": "Endereço:",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA1d",
+                    "name": "statusOfRecords",
+                    "choiceGroupId": "StatusOfRecords",
+                    "label": "Situação do prontuário:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_003",
+            "nextPageId": "PAGE_004",
+            "questions": [
+                {
+                    "name": "thisEventIsDeath",
+                    "choiceGroupId": "ThisEventIsDeath",
+                    "id": "ELEA1f",
+                    "label": "[b]1.3[/b] Este evento é um óbito?",
+                    "hiddenQuestion": "eventOutpatientNonFatal",
+                    "visibleWhen": "NO",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "eventOutpatientNonFatal",
+                    "choiceGroupId": "YesNo",
+                    "id": "ELEA1g",
+                    "label": "[b]1.4[/b] Este é um evento ambulatorial não fatal?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "id": "ELEA1e",
+                    "name": "registerInformant",
+                    "choiceGroupId": "YesNoDoesntApplyThisInvestigation",
+                    "label": "[b]1.2[/b] Registrar informante?",
+                    "hiddenQuestion": "ELEA1eGroup",
+                    "visibleWhen": "YES",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "informantName",
+                    "id": "ELEA1e1",
+                    "label": "Nome do Informante",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA1eGroup"
+                },
+                {
+                    "name": "relationWithTheParticipant",
+                    "id": "ELEA1e2",
+                    "label": "Relação com o participante",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA1eGroup"
+                },
+                {
+                    "name": "informantAdress",
+                    "id": "ELEA1e3",
+                    "label": "Endereço",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA1eGroup"
+                },
+                {
+                    "name": "informantPhone",
+                    "id": "ELEA1e4",
+                    "pattern": "(((\\\\([0-9]{2}\\\\))|[0-9]{2})[ ]?[0-9]{4}[- ]?[0-9]{4})?",
+                    "label": "Telefone",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA1eGroup"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_004",
+            "nextPageId": "PAGE_006",
+            "questions": [
+                {
+                    "name": "durationOfTheHospitalrEventWasLessThan",
+                    "choiceGroupId": "NoYesHospitalization",
+                    "id": "ELEA1h",
+                    "label": "[b]1.5[/b] A duração deste evento hospitalar foi inferior a 24 horas?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_005",
+            "nextPageId": "PAGE_170",
+            "questions": [
+                {
+                    "name": "thisEventRelatesToTVP",
+                    "choiceGroupId": "YesNo",
+                    "id": "ELEA1i",
+                    "label": "[b]1.6[/b] Este evento está relacionado à TVP, câncer ou doença renal crônica?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_006",
+            "nextPageId": "PAGE_170",
+            "header": [
+                "[b]2. Eventos Hospitalizados Fatais e Não-Fatais[/b]"
+            ],
+            "questions": [
+                {
+                    "name": "dateOfAdmissionEventsHospitalizedFatalAndNonFatal",
+                    "maxdate": "realizationDate",
+                    "id": "ELEA2a",
+                    "label": "Data da Internação:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "dateOfDischargeEventsHospitalizedFatalAndNonFatal",
+                    "maxdate": "realizationDate",
+                    "id": "ELEA2b",
+                    "label": "Data da Alta/Morte:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "eventDateIsPriorToTheDateOfTheBaseline",
+                    "choiceGroupId": "YesNo",
+                    "id": "ELEA2c",
+                    "label": "A data do evento é anterior à data da linha de base?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "hiddenQuestion": "isThisInternationInsertedInOtherNotification",
+                    "visibleWhen": "NO",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "id": "ELEA2d",
+                    "name": "isThisInternationInsertedInOtherNotification",
+                    "choiceGroupId": "YesNo",
+                    "label": "Essa internação por essa doença ou condição já foi inserida em outra notificação?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_007",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "name": "vitalStatusAtDischargeA3",
+                    "choiceGroupId": "VitalStatus",
+                    "id": "ELEA3",
+                    "label": "[b]3. Status Vital na Alta[/b]",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "cidCodesPresentInTheForms",
+                    "id": "ELEA4",
+                    "decimalNumber": "false",
+                    "label": "Quantos códigos CID-10 estão presentes no prontuário?",
+                    "infoLabel": "IMPORTANTE: Registre os códigos CID apenas se eles estiverem descritos na documentação hospitalar. O investigador não deverá traduzir os diagnósticos descritos para os códigos da CID.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion",
+                    "basicGroup": "ELEA4Group"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_008",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4aCode",
+                    "id": "ELEA4a",
+                    "label": "1. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4a1",
+                    "name": "alreadyEnteredInAnotherNotification1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_009",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4bCode",
+                    "id": "ELEA4b",
+                    "label": "2. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4b1",
+                    "name": "alreadyEnteredInAnotherNotification2",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_010",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4cCode",
+                    "id": "ELEA4c",
+                    "label": "3. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4c1",
+                    "name": "alreadyEnteredInAnotherNotification3",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_011",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4dCode",
+                    "id": "ELEA4d",
+                    "label": "4. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4d1",
+                    "name": "alreadyEnteredInAnotherNotification4",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_012",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4eCode",
+                    "id": "ELEA4e",
+                    "label": "5. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4e1",
+                    "name": "alreadyEnteredInAnotherNotification5",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_013",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4fCode",
+                    "id": "ELEA4f",
+                    "label": "6. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4f1",
+                    "name": "alreadyEnteredInAnotherNotification6",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_014",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4gCode",
+                    "id": "ELEA4g",
+                    "label": "7. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4g1",
+                    "name": "alreadyEnteredInAnotherNotification7",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_015",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4hCode",
+                    "id": "ELEA4h",
+                    "label": "8. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4h1",
+                    "name": "alreadyEnteredInAnotherNotification8",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_016",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4iCode",
+                    "id": "ELEA4i",
+                    "label": "9. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4i1",
+                    "name": "alreadyEnteredInAnotherNotification9",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_017",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4jCode",
+                    "id": "ELEA4j",
+                    "label": "10. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4j1",
+                    "name": "alreadyEnteredInAnotherNotification10",
+                    "label": "Já inserido em outra notificação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_018",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4kCode",
+                    "id": "ELEA4k",
+                    "label": "11. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4k1",
+                    "name": "alreadyEnteredInAnotherNotification11",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_019",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4lCode",
+                    "id": "ELEA4l",
+                    "label": "12. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4l1",
+                    "name": "alreadyEnteredInAnotherNotification12",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_020",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4mCode",
+                    "id": "ELEA4m",
+                    "label": "13. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4m1",
+                    "name": "alreadyEnteredInAnotherNotification13",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_021",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4nCode",
+                    "id": "ELEA4n",
+                    "label": "14. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4n1",
+                    "name": "alreadyEnteredInAnotherNotification14",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_022",
+            "nextPageId": "PAGE_023",
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4oCode",
+                    "id": "ELEA4o",
+                    "label": "15. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4o1",
+                    "name": "alreadyEnteredInAnotherNotification15",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_023",
+            "nextPageId": "PAGE_034",
+            "header": [
+                "[b]5. Diagnóstico de Alta[/b][br]\r\n\t\t\t[i]Registre todos os diagnósticos na alta (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "howManyTextDiagnosesArePresentInTheMedicalRecord",
+                    "id": "ELEA5",
+                    "decimalNumber": "false",
+                    "label": "Quantos diagnósticos em texto estão presentes no prontuário?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_024",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisA",
+                    "id": "ELEA5a",
+                    "label": "1. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_025",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisB",
+                    "id": "ELEA5b",
+                    "label": "2. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_026",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisC",
+                    "id": "ELEA5c",
+                    "label": "3. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_027",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisD",
+                    "id": "ELEA5d",
+                    "label": "4. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_028",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisE",
+                    "id": "ELEA5e",
+                    "label": "5. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_029",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisF",
+                    "id": "ELEA5f",
+                    "label": "6. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_030",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisG",
+                    "id": "ELEA5g",
+                    "label": "7. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_031",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisH",
+                    "id": "ELEA5h",
+                    "label": "8. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_032",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisI",
+                    "id": "ELEA5i",
+                    "label": "9. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_033",
+            "nextPageId": "PAGE_034",
+            "questions": [
+                {
+                    "name": "diagnosisJ",
+                    "id": "ELEA5j",
+                    "label": "10. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_034",
+            "nextPageId": "PAGE_045",
+            "header": [
+                "[b]6. Procedimentos[/b][br]\r\n\t\t\t[i]Registre todos os procedimentos (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, no sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA6",
+                    "name": "howManyProceduresInTextArePresentInTheRecords",
+                    "label": "Quantos procedimentos em texto estão presentes no prontuário?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_035",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6a",
+                    "name": "proceduresA",
+                    "label": "1. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_036",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6b",
+                    "name": "proceduresB",
+                    "label": "2. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_037",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6c",
+                    "name": "proceduresC",
+                    "label": "3. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_038",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6d",
+                    "name": "proceduresD",
+                    "label": "4. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_039",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6e",
+                    "name": "proceduresE",
+                    "label": "5. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_040",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6f",
+                    "name": "proceduresF",
+                    "label": "6. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_041",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6g",
+                    "name": "proceduresG",
+                    "label": "7. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_042",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6h",
+                    "name": "proceduresH",
+                    "label": "8. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_043",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6i",
+                    "name": "proceduresI",
+                    "label": "9. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_044",
+            "nextPageId": "PAGE_045",
+            "questions": [
+                {
+                    "id": "ELEA6j",
+                    "name": "proceduresJ",
+                    "label": "10. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_045",
+            "nextPageId": "PAGE_046",
+            "questions": [
+                {
+                    "name": "theParticipantWasTransferredToAnotherHealthFacilityA2e7",
+                    "id": "ELEA2e7",
+                    "choiceGroupId": "YesNo",
+                    "label": "[b]7.[/b] O participante foi transferido para outro estabelecimento de saúde?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_046",
+            "nextPageId": "PAGE_167",
+            "header": [
+                "[b]1ª Transferência:[/b]"
+            ],
+            "questions": [
+                {
+                    "lowerLimit": "0",
+                    "name": "cnesCode",
+                    "id": "ELEA2e1",
+                    "label": "CNES",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "name": "localNameA2e2",
+                    "id": "ELEA2e2",
+                    "label": "Nome do Local",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "name": "dateOfAdmissionFirstTransfer",
+                    "id": "ELEA2e3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da Internação:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "dateHighDeathFirstTransfer",
+                    "id": "ELEA2e4",
+                    "maxdate": "realizationDate",
+                    "label": "Data da Alta/Morte:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "thisHospitalizationForThisConditionHasBeenInsertedIntoAnotherNotification",
+                    "id": "ELEA2d1",
+                    "choiceGroupId": "YesNo",
+                    "label": "Essa internação por essa doença ou condição já foi inserida em outra notificação?",
+                    "hiddenQuestion": "statusOfRecords1d1",
+                    "visibleWhen": "NO",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "statusOfRecords1d1",
+                    "id": "ELEA1d1",
+                    "choiceGroupId": "StatusOfRecords",
+                    "label": "Situação do prontuário:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_047",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "vitalStatusAtDischargeA3a",
+                    "choiceGroupId": "VitalStatus",
+                    "id": "ELEA3a",
+                    "label": "[b]3a. Status Vital na Alta[/b]",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "cidCodesPresentInTheFormsA4aa",
+                    "id": "ELEA4aa",
+                    "decimalNumber": "false",
+                    "label": "Quantos códigos CID-10 estão presentes no prontuário?",
+                    "infoLabel": "IMPORTANTE: Registre os códigos CID apenas se eles estiverem descritos na documentação hospitalar. O investigador não deverá traduzir os diagnósticos descritos para os códigos da CID.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion",
+                    "basicGroup": "ELEA4aaGroup"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_048",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4aa1Code",
+                    "id": "ELEA4aa1",
+                    "label": "1. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4a1a",
+                    "name": "alreadyEnteredInAnotherNotification1A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_049",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ab1Code",
+                    "id": "ELEA4ab1",
+                    "label": "2. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4ab1a",
+                    "name": "alreadyEnteredInAnotherNotification2A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_050",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ac1Code",
+                    "id": "ELEA4ac1",
+                    "label": "3. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4ac1a",
+                    "name": "alreadyEnteredInAnotherNotification3A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_051",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ad1Code",
+                    "id": "ELEA4ad1",
+                    "label": "4. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4d1a",
+                    "name": "alreadyEnteredInAnotherNotification4A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_052",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ae1Code",
+                    "id": "ELEA4ae1",
+                    "label": "5. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4e1a",
+                    "name": "alreadyEnteredInAnotherNotification5A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_053",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4af1Code",
+                    "id": "ELEA4af1",
+                    "label": "6. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4f1a",
+                    "name": "alreadyEnteredInAnotherNotification6A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_054",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ag1Code",
+                    "id": "ELEA4ag1",
+                    "label": "7. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4g1a",
+                    "name": "alreadyEnteredInAnotherNotification7A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_055",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ah1Code",
+                    "id": "ELEA4ah1",
+                    "label": "8. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4h1a",
+                    "name": "alreadyEnteredInAnotherNotification8A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_056",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ai1Code",
+                    "id": "ELEA4ai1",
+                    "label": "9. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4i1a",
+                    "name": "alreadyEnteredInAnotherNotification9A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_057",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4aj1Code",
+                    "id": "ELEA4aj1",
+                    "label": "10. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4j1a",
+                    "name": "alreadyEnteredInAnotherNotification10A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_058",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ak1Code",
+                    "id": "ELEA4ak1",
+                    "label": "11. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4k1a",
+                    "name": "alreadyEnteredInAnotherNotification11A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_059",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4al1Code",
+                    "id": "ELEA4al1",
+                    "label": "12. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4l1a",
+                    "name": "alreadyEnteredInAnotherNotification12A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_060",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4am1Code",
+                    "id": "ELEA4am1",
+                    "label": "13. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4m1a",
+                    "name": "alreadyEnteredInAnotherNotification13A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_061",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4an1Code",
+                    "id": "ELEA4an1",
+                    "label": "14. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4n1a",
+                    "name": "alreadyEnteredInAnotherNotification14A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_062",
+            "nextPageId": "PAGE_063",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4ao1Code",
+                    "id": "ELEA4ao1",
+                    "label": "15. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4o1a",
+                    "name": "alreadyEnteredInAnotherNotification15A4aa1",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_063",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i][br]\r\n\t\t\t[br]\r\n\t\t\t[b]5a. Diagnóstico de Alta[/b][br]\r\n\t\t\t[br]\r\n\t\t\t[i]Registre todos os diagnósticos na alta (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidCodesPresentInTheFormsA5aa",
+                    "id": "ELEA5aa",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "label": "Quantos diagnósticos em texto estão presentes no prontuário?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_064",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5a1",
+                    "id": "ELEA5a1",
+                    "label": "1. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_065",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5b1",
+                    "id": "ELEA5b1",
+                    "label": "2. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_066",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5c1",
+                    "id": "ELEA5c1",
+                    "label": "3. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_067",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5d1",
+                    "id": "ELEA5d1",
+                    "label": "4. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_068",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5e1",
+                    "id": "ELEA5e1",
+                    "label": "5. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_069",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5f1",
+                    "id": "ELEA5f1",
+                    "label": "6. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_070",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5g1",
+                    "id": "ELEA5g1",
+                    "label": "7. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_071",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5h1",
+                    "id": "ELEA5h1",
+                    "label": "8. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_072",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5i1",
+                    "id": "ELEA5i1",
+                    "label": "9. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_073",
+            "nextPageId": "PAGE_074",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnosisA5j1",
+                    "id": "ELEA5j1",
+                    "label": "10. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_074",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i][br]\r\n\t\t\t[br]\r\n\t\t\t[b]6a. Procedimentos[/b][br]\r\n\t\t\t[i]Registre todos os procedimentos (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, no sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA6aa",
+                    "name": "textProcedimentsPresentA6aa",
+                    "label": "Quantos procedimentos em texto estão presentes no prontuário?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_075",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6a1",
+                    "id": "ELEA6a1",
+                    "label": "1. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_076",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6b1",
+                    "id": "ELEA6b1",
+                    "label": "2. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_077",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6c1",
+                    "id": "ELEA6c1",
+                    "label": "3. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_078",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6d1",
+                    "id": "ELEA6d1",
+                    "label": "4. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_079",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6e1",
+                    "id": "ELEA6e1",
+                    "label": "5. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_080",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6f1",
+                    "id": "ELEA6f1",
+                    "label": "6. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_081",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6g1",
+                    "id": "ELEA6g1",
+                    "label": "7. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_082",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6h1",
+                    "id": "ELEA6h1",
+                    "label": "8. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_083",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6i1",
+                    "id": "ELEA6i1",
+                    "label": "9. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_084",
+            "nextPageId": "PAGE_085",
+            "header": [
+                "[i]1ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6j1",
+                    "id": "ELEA6j1",
+                    "label": "10. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_085",
+            "nextPageId": "PAGE_086",
+            "questions": [
+                {
+                    "name": "theParticipantWasTransferredToAnotherHealthFacility",
+                    "id": "ELEA2e7a",
+                    "choiceGroupId": "YesNo",
+                    "label": "[b]7a.[/b] O participante foi transferido para outro estabelecimento de saúde (há 2ª transferência)?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_086",
+            "nextPageId": "PAGE_167",
+            "header": [
+                "[b]2ª Transferência:[/b]"
+            ],
+            "questions": [
+                {
+                    "name": "cnesCodeA2e1a",
+                    "id": "ELEA2e1a",
+                    "lowerLimit": "0",
+                    "label": "CNES",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "name": "localNameA2e2a",
+                    "id": "ELEA2e2a",
+                    "label": "Nome do Local",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "name": "dateOfAdmissionA2e2a",
+                    "id": "ELEA2e3a",
+                    "maxdate": "realizationDate",
+                    "label": "Data da Internação:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "dateHighDeathA2e4a",
+                    "id": "ELEA2e4a",
+                    "maxdate": "realizationDate",
+                    "label": "Data da Alta/Morte:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "thisHospitalizationForThisConditionHasBeenInsertedIntoAnotherNotificationA2d2",
+                    "id": "ELEA2d2",
+                    "choiceGroupId": "YesNo",
+                    "label": "Essa internação por essa doença ou condição já foi inserida em outra notificação?",
+                    "hiddenQuestion": "statusOfRecords1d2",
+                    "visibleWhen": "NO",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "statusOfRecords1d2",
+                    "id": "ELEA1d2",
+                    "choiceGroupId": "StatusOfRecords",
+                    "label": "Situação do prontuário:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_087",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "vitalStatusA3b",
+                    "id": "ELEA3b",
+                    "choiceGroupId": "VitalStatus",
+                    "label": "[b]3b. Status Vital na Alta[b]",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "id": "ELEA4ab",
+                    "name": "cidCodesPresentInTheFormsA4ab",
+                    "label": "Quantos códigos CID-10 estão presentes no prontuário?",
+                    "infoLabel": "IMPORTANTE: Registre os códigos CID apenas se eles estiverem descritos na documentação hospitalar. O investigador não deverá traduzir os diagnósticos descritos para os códigos da CID.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion",
+                    "basicGroup": "ELEA4abGroup"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_088",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4a2Code",
+                    "id": "ELEA4a2",
+                    "label": "1. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4a2a",
+                    "name": "alreadyEnteredInAnotherNotification1a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_089",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4b2Code",
+                    "id": "ELEA4b2",
+                    "label": "2. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4b2a",
+                    "name": "alreadyEnteredInAnotherNotification2a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_090",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4c2Code",
+                    "id": "ELEA4c2",
+                    "label": "3. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4c2a",
+                    "name": "alreadyEnteredInAnotherNotification3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_091",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4d2Code",
+                    "id": "ELEA4d2",
+                    "label": "4. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4d2a",
+                    "name": "alreadyEnteredInAnotherNotification4a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_092",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4e2Code",
+                    "id": "ELEA4e2",
+                    "label": "5. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4e2a",
+                    "name": "alreadyEnteredInAnotherNotification5a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_093",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4f2Code",
+                    "id": "ELEA4f2",
+                    "label": "6. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4f2a",
+                    "name": "alreadyEnteredInAnotherNotification6a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_094",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4g2Code",
+                    "id": "ELEA4g2",
+                    "label": "7. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4g2a",
+                    "name": "alreadyEnteredInAnotherNotification7a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_095",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4h2Code",
+                    "id": "ELEA4h2",
+                    "label": "8. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4h2a",
+                    "name": "alreadyEnteredInAnotherNotification8a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_096",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4i2Code",
+                    "id": "ELEA4i2",
+                    "label": "9. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4i2a",
+                    "name": "alreadyEnteredInAnotherNotification9a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_097",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4j2Code",
+                    "id": "ELEA4j2",
+                    "label": "10. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4j2a",
+                    "name": "alreadyEnteredInAnotherNotification10a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_098",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4k2Code",
+                    "id": "ELEA4k2",
+                    "label": "11. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4k2a",
+                    "name": "alreadyEnteredInAnotherNotification11a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_099",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4l2Code",
+                    "id": "ELEA4l2",
+                    "label": "12. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4l2a",
+                    "name": "alreadyEnteredInAnotherNotification12a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_100",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4m2Code",
+                    "id": "ELEA4m2",
+                    "label": "13. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4m2a",
+                    "name": "alreadyEnteredInAnotherNotification13a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_101",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4n2Code",
+                    "id": "ELEA4n2",
+                    "label": "14. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4n2a",
+                    "name": "alreadyEnteredInAnotherNotification14a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_102",
+            "nextPageId": "PAGE_103",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "name": "cid4o2Code",
+                    "id": "ELEA4o2",
+                    "label": "15. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "id": "ELEA4o2a",
+                    "name": "alreadyEnteredInAnotherNotification15a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_103",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i][br]\r\n\t\t\t[br]\r\n\t\t\t[b]5b. Diagnóstico de Alta[/b][br]\r\n\t\t\t[i]Registre todos os diagnósticos na alta (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5ab",
+                    "lowerLimit": "0",
+                    "name": "howManyTextDiagnosesArePresentInTheChart",
+                    "label": "Quantos diagnósticos em texto estão presentes no prontuário?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_104",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5a2",
+                    "name": "diagnossisA2",
+                    "label": "1. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_105",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5b2",
+                    "name": "diagnossisB2",
+                    "label": "2. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_106",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5c2",
+                    "name": "diagnossisC2",
+                    "label": "3. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_107",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5d2",
+                    "name": "diagnossisD2",
+                    "label": "4. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_108",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5e2",
+                    "name": "diagnossisE2",
+                    "label": "5. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_109",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5f2",
+                    "name": "diagnossisF2",
+                    "label": "6. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_110",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5g2",
+                    "name": "diagnossisG2",
+                    "label": "7. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_111",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5h2",
+                    "name": "diagnossisH2",
+                    "label": "8. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_112",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5i2",
+                    "name": "diagnossisI2",
+                    "label": "9. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_113",
+            "nextPageId": "PAGE_114",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5j2",
+                    "name": "diagnossisJ2",
+                    "label": "10. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_114",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i][br]\r\n\t\t\t\t[br]\r\n\t\t\t\t[b]6b. Procedimentos[/b][br]\r\n\t\t\t\t[i]Registre todos os procedimentos (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, no sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA6ab",
+                    "lowerLimit": "0",
+                    "name": "howManyProceduresInTextArePresentInTheChart",
+                    "label": "Quantos procedimentos em texto estão presentes no prontuário?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_115",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA2",
+                    "id": "ELEA6a2",
+                    "label": "1. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_116",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureB2",
+                    "id": "ELEA6b2",
+                    "label": "2. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_117",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureC2",
+                    "id": "ELEA6c2",
+                    "label": "3. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_118",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureD2",
+                    "id": "ELEA6d2",
+                    "label": "4. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_119",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureE2",
+                    "id": "ELEA6e2",
+                    "label": "5. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_120",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureF2",
+                    "id": "ELEA6f2",
+                    "label": "6. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_121",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureG2",
+                    "id": "ELEA6g2",
+                    "label": "7. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_122",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureH2",
+                    "id": "ELEA6h2",
+                    "label": "8. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_123",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureI2",
+                    "id": "ELEA6i2",
+                    "label": "9. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_124",
+            "nextPageId": "PAGE_125",
+            "header": [
+                "[i]2ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureJ2",
+                    "id": "ELEA6j2",
+                    "label": "10. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_125",
+            "nextPageId": "PAGE_126",
+            "questions": [
+                {
+                    "name": "theParticipantHasBeenTrasferedToOtherCenter",
+                    "id": "ELEA2e7b",
+                    "choiceGroupId": "YesNo",
+                    "label": "[b]7b.[/b] O participante foi transferido para outro estabelecimento de saúde (há 3ª transferência)?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_126",
+            "nextPageId": "PAGE_167",
+            "header": [
+                "[b]3ª Transferência:[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA2e1b",
+                    "name": "cnesCodeA2e1b",
+                    "lowerLimit": "0",
+                    "label": "CNES",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "name": "localNameA2e2b",
+                    "id": "ELEA2e2b",
+                    "label": "Nome do Local",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "name": "dateOfAdmissionA2e3b",
+                    "id": "ELEA2e3b",
+                    "maxdate": "realizationDate",
+                    "label": "Data da Internação:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "dateHighDeathA2e4b",
+                    "id": "ELEA2e4b",
+                    "maxdate": "realizationDate",
+                    "label": "Data da Alta/Morte:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "thisHospitalizationForThisConditionHasBeenInsertedIntoAnotherNotificationA2d3",
+                    "id": "ELEA2d3",
+                    "choiceGroupId": "YesNo",
+                    "hiddenQuestion": "statusOfRecords1d3",
+                    "visibleWhen": "NO",
+                    "label": "Essa internação por essa doença ou condição já foi inserida em outra notificação?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "statusOfRecords1d3",
+                    "label": "Situação do prontuário:",
+                    "id": "ELEA1d3",
+                    "choiceGroupId": "StatusOfRecords",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_127",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "vitalStatusA3c",
+                    "id": "ELEA3c",
+                    "choiceGroupId": "VitalStatus",
+                    "label": "[b]3c. Status Vital na Alta[/b]",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "id": "ELEA4ac",
+                    "lowerLimit": "0",
+                    "infoLabel": "IMPORTANTE: Registre os códigos CID apenas se eles estiverem descritos na documentação hospitalar. O investigador não deverá traduzir os diagnósticos descritos para os códigos da CID.",
+                    "name": "howManyCID10ArePresentInTheChart",
+                    "label": "Quantos códigos CID-10 estão presentes no prontuário?",
+                    "decimalNumber": "false",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion",
+                    "basicGroup": "ELEA4acGroup"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_128",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4a3",
+                    "id": "ELEA4a3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "1. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification01A4a3",
+                    "id": "ELEA4a3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_129",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4b3",
+                    "id": "ELEA4b3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "2. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification02A4a3",
+                    "id": "ELEA4b3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_130",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4c3",
+                    "id": "ELEA4c3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "3. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification03A4a3",
+                    "id": "ELEA4c3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_131",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4d3",
+                    "id": "ELEA4d3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "4. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification04A4a3",
+                    "id": "ELEA4d3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_132",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4e3",
+                    "id": "ELEA4e3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "5. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification05A4a3",
+                    "id": "ELEA4e3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_133",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4f3",
+                    "id": "ELEA4f3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "6. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification06A4a3",
+                    "id": "ELEA4f3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_134",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4g3",
+                    "id": "ELEA4g3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "7. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification07A4a3",
+                    "id": "ELEA4g3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_135",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4h3",
+                    "id": "ELEA4h3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "8. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification08A4a3",
+                    "id": "ELEA4h3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_136",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4i3",
+                    "id": "ELEA4i3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "9. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification09A4a3",
+                    "id": "ELEA4i3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_137",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4j3",
+                    "id": "ELEA4j3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "10. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification10A4a3",
+                    "id": "ELEA4j3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_138",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4k3",
+                    "id": "ELEA4k3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "11. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification11A4a3",
+                    "id": "ELEA4k3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_139",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4l3",
+                    "id": "ELEA4l3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "12. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification12A4a3",
+                    "id": "ELEA4l3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_140",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4m3",
+                    "id": "ELEA4m3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "13. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification13A4a3",
+                    "id": "ELEA4m3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_141",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4n3",
+                    "id": "ELEA4n3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "14. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification14A4a3",
+                    "id": "ELEA4n3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_142",
+            "nextPageId": "PAGE_143",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "cidA4o3",
+                    "id": "ELEA4o3",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "15. CID:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion"
+                },
+                {
+                    "name": "alreadyEnteredInAnotherNotification15A4a3",
+                    "id": "ELEA4o3a",
+                    "label": "Já inserido em outra notificação / Diagnóstico secundário nesta internação",
+                    "type": "booleanQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_143",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i][br]\r\n\t\t\t[br]\r\n\t\t\t[b]5c. Diagnóstico de Alta[/b][br]\r\n\t\t\t[i]Registre todos os diagnósticos na alta (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA5ac",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "name": "howManyTextDiagnosesArePresentInTheMedicalRecord5ac",
+                    "label": "Quantos diagnósticos em texto estão presentes no prontuário?",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_144",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5a3",
+                    "id": "ELEA5a3",
+                    "label": "1. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_145",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5b3",
+                    "id": "ELEA5b3",
+                    "label": "2. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_146",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5c3",
+                    "id": "ELEA5c3",
+                    "label": "3. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_147",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5d3",
+                    "id": "ELEA5d3",
+                    "label": "4. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_148",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5e3",
+                    "id": "ELEA5e3",
+                    "label": "5. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_149",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5f3",
+                    "id": "ELEA5f3",
+                    "label": "6. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_150",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5g3",
+                    "id": "ELEA5g3",
+                    "label": "7. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_151",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5h3",
+                    "id": "ELEA5h3",
+                    "label": "8. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_152",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5i3",
+                    "id": "ELEA5i3",
+                    "label": "9. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_153",
+            "nextPageId": "PAGE_154",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "diagnossisA5j3",
+                    "id": "ELEA5j3",
+                    "label": "10. Diagnóstico (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_154",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i][br]\r\n\t\t\t[br]\r\n\t\t\t[b]6c. Procedimentos[/b][br]\r\n\t\t\t[i]Registre todos os procedimentos (TEXTO) na ordem em que estão listados na página inicial do registro hospitalar, no sumário de alta ou outra fonte.[/i]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA6ac",
+                    "lowerLimit": "0",
+                    "name": "howManyTextDiagnosesArePresentInTheMedicalRecord6ac",
+                    "label": "Quantos procedimentos em texto estão presentes no prontuário?",
+                    "decimalNumber": "false",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_155",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6a3",
+                    "id": "ELEA6a3",
+                    "label": "1. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_156",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6b3",
+                    "id": "ELEA6b3",
+                    "label": "2. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_157",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6c3",
+                    "id": "ELEA6c3",
+                    "label": "3. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_158",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6d3",
+                    "id": "ELEA6d3",
+                    "label": "4. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_159",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6e3",
+                    "id": "ELEA6e3",
+                    "label": "5. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_160",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6f3",
+                    "id": "ELEA6f3",
+                    "label": "6. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_161",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6g3",
+                    "id": "ELEA6g3",
+                    "label": "7. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_162",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6h3",
+                    "id": "ELEA6h3",
+                    "label": "8. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_163",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6i3",
+                    "id": "ELEA6i3",
+                    "label": "9. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_164",
+            "nextPageId": "PAGE_165",
+            "header": [
+                "[i]3ª Transferência[/i]"
+            ],
+            "questions": [
+                {
+                    "name": "procedureA6j3",
+                    "id": "ELEA6j3",
+                    "label": "10. Procedimento (TEXTO)",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_165",
+            "nextPageId": "PAGE_167",
+            "questions": [
+                {
+                    "name": "theParticipantWasTransferredToAnotherHealthFacilityA2e1d",
+                    "id": "ELEA2e7c",
+                    "label": "[b]7c.[/b] O participante foi transferido para outro estabelecimento de saúde (há 4ª transferência)?",
+                    "choiceGroupId": "YesNo",
+                    "postInfoLabel": "Se 'Sim' (houve transferência adicional), cheque se já não existe uma notificação inicial da hospitalização correspondente. Se não existir, registre ela como um novo evento (Questão 13 deste formulário). Nesse caso, o novo evento quando investigado deverá ser acoplado a esta investigação.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_166",
+            "nextPageId": "PAGE_167",
+            "header": [
+                "[b]8. Mortes[/b]"
+            ],
+            "questions": [
+                {
+                    "name": "dateOfDeadA10a",
+                    "id": "ELEA10a",
+                    "maxdate": "realizationDate",
+                    "label": "[b]8A.[/b] Data da Morte",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                },
+                {
+                    "id": "ELEA10b",
+                    "name": "numberOfDeathDeclaration",
+                    "lowerLimit": "0",
+                    "label": "[b]8B.[/b] Número da Declaração de Óbito",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "name": "necropsyWasPerformed",
+                    "id": "ELEA10c",
+                    "choiceGroupId": "YesNoWithout",
+                    "label": "[b]8C.[/b] Foi feita necropsia?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "theDeathWasConfirmedByACoronerMedicalExaminer",
+                    "id": "ELEA10d",
+                    "choiceGroupId": "YesNoWithout",
+                    "label": "[b]8D.[/b] A morte foi comprovada por um Médico Legista/Médico Examinador?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "supplementaryExamination",
+                    "id": "ELEA10e1",
+                    "choiceGroupId": "YesNoWithout",
+                    "label": "Exame complementar:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion",
+                    "basicGroup": "ELEA10e1Group"
+                },
+                {
+                    "name": "surgery",
+                    "id": "ELEA10e2",
+                    "choiceGroupId": "YesNoWithout",
+                    "label": "Cirurgia:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion",
+                    "basicGroup": "ELEA10e1Group"
+                },
+                {
+                    "name": "imediateCause",
+                    "id": "ELEA10f1",
+                    "label": "A. Causa imediata:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "infoLabel": "IMPORTANTE: Registre os códigos CID apenas se eles estiverem descritos na declaração de óbito. O investigador não deverá traduzir os diagnósticos descritos para os códigos da CID.",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "dueToOrAsAConsequenceOff2",
+                    "id": "ELEA10f2",
+                    "label": "B. Devido a ou como consequência de:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "dueToOrAsAConsequenceOff3",
+                    "id": "ELEA10f3",
+                    "label": "C. Devido a ou como consequência de:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "dueToOrAsAConsequenceOff4",
+                    "id": "ELEA10f4",
+                    "label": "D. Devido a ou como consequência de:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid1a",
+                    "id": "ELEA10f1a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid2a",
+                    "id": "ELEA10f2a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid3a",
+                    "id": "ELEA10f3a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid4a",
+                    "id": "ELEA10f4a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "e1",
+                    "id": "ELEA10f5",
+                    "label": "E1.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "e2",
+                    "id": "ELEA10f6",
+                    "label": "E2.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "e3",
+                    "id": "ELEA10f7",
+                    "label": "E3.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "e4",
+                    "id": "ELEA10f8",
+                    "label": "E4.",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid5a",
+                    "id": "ELEA10f5a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid6a",
+                    "id": "ELEA10f6a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid7a",
+                    "id": "ELEA10f7a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                },
+                {
+                    "name": "cid8a",
+                    "id": "ELEA10f8a",
+                    "itemValue": "cid",
+                    "backingBean": "cidView",
+                    "completeMethod": "complete",
+                    "label": "CID",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "autocompleteQuestion",
+                    "basicGroup": "ELEA10f1Group"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_167",
+            "nextPageId": "PAGE_169",
+            "questions": [
+                {
+                    "name": "someOfThisWordsArePresentInTheRecord",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "id": "ELEA8b",
+                    "choiceGroupId": "YesNoWithOtherNotification",
+                    "label": "[b]10A.[/b] Alguma das seguintes [b]palavras ou frases[/b] é mencionada ou sugerida no [b]prontuário ou sumário de alta ou declaração de óbito?[/b][br]\r\n\t\t\t\t[br]\r\n\t\t\t\tIAM, infarto, angina, doença cardíaca isquêmica, coronariopatia, angina instável, insuficiência coronariana, parada cardíaca, arritmias, fibrilação atrial (FA), doença aterosclerótica cardíaca, ICC, insuficiência cardíaca, cardiomiopatia, aterosclerose, DVP, edema pulmonar agudo, aneurisma aórtico ou aneurismas não especificados na questão 8C,[br]\r\n\t\t\t\t[br]\r\n\t\t\t\tDAP, IAP – insuficiência arterial periférica, insuficiência arterial, claudicação, pulso fraco, pulso ausente, [i]Bypass[/i], revascularização (de membros), cianose, lesão trófica, isquemia (de membros), extremidades frias, mal perfurante plantar,[br]\t\t\t\t\r\n\t\t\t\t[br]\r\n\t\t\t\tTEP – tromboembolismo pulmonar, TVP – trombose venosa profunda, TEV – tromboembolismo venoso, TE (diagnóstico), trombose/trombótico, embolia/embólico, tromboembolia/tromboembólico/tromboembolismo, coágulo, edema assimétrico, falha de enchimento (tomografia), alteração ou falta de compressibilidade (Doppler),[br]\r\n\t\t\t\t[br]\r\n\t\t\t\tUnidade Coronariana (UCO), cateterização ou cateterismo cardíaco, cirurgia de revascularização do miocárdio(CRVM), [i]stent[/i] coronariano, CK-MB elevada, angiografia coronariana, angioplastia cardíaca, arterioplastia, endarterectomia, amputação de membro inferior, angioplastia em membros inferiores, revascularização de membros inferiores, transplante cardíaco, instalação de circuito de circulação extracorpórea, amputação.",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "someOfThisWordsArePresentInTheRecord2",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "id": "ELEA8c",
+                    "choiceGroupId": "YesNoWithOtherNotification",
+                    "label": "[b]10B.[/b] Alguma das seguintes [b]palavras ou frases[/b] é mencionada ou sugerida no [b]prontuário ou sumário de alta ou declaração de óbito?[/b][br]\r\n\t\t\t[br]\r\n\t\t\tAVE, AVC, AIT, infarto cerebral, doença cerebrovascular, embolia cerebral, síndrome ou infarto lacunar, hemorragia cerebral, hemorragia subaracnóidea, trombose cerebral,[br]\r\n\t\t\t[br]\r\n\t\t\tendarterectomia de carótida, TC/RM mostrando novos achados cerebrovasculares, tratamento cirúrgico de isquemia cerebral, [i]stent[/i] intracraniano, angioplastia de vasos do pescoço ou troncos supra aórticos, aneurisma cerebral, aneurisma de carótida ou de troncos supra aórticos.",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "someOfThisWordsArePresentInTheRecord3",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "id": "ELEA8d",
+                    "choiceGroupId": "YesNoWithOtherNotification",
+                    "label": "[b]10C.[/b] Alguma das seguintes [b]palavras ou frases[/b] é mencionada ou sugerida no [b]prontuário ou no sumário de alta ou declaração de óbito?[/b][br]\r\n\t\t\t[br]\r\n\t\t\tEvento agudo relacionado a diabetes (mellitus), diabetes descompensado, descompensação diabética, cetoacidose diabética, coma diabético, coma hiperosmolar não cetótico, retinopatia diabética, coma hiperglicêmico, pé diabético, mal perfurante plantar, amputação.",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "someOfThisWordsArePresentInTheRecord4",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "id": "ELEA8e",
+                    "choiceGroupId": "YesNoWithOtherNotification",
+                    "label": "[b]10D.[/b] Alguma das seguintes [b]palavras ou frases[/b] é mencionada ou sugerida no [b]prontuário ou sumário de alta ou declaração de óbito?[/b][br]\r\n\t\t\t[br]\r\n\t\t\tNeoplasia maligna, tumor maligno, câncer, caquexia neoplásica, lesão invasiva, quimioterapia, radioterapia, tratamento cirúrgico de neoplasia maligna/tumor maligno/câncer.",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "someOfThisWordsArePresentInTheRecord5",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "id": "ELEA8f",
+                    "choiceGroupId": "YesNoWithOtherNotification",
+                    "label": "[b]10E.[/b] Alguma das seguintes [b]palavras ou frases[/b] é mencionada ou sugerida no [b]prontuário ou no sumário de alta ou declaração de óbito?[/b][br]\r\n\t\t\t[br]\r\n\t\t\tInsuficiência renal, doença renal crônica, doença renal estágio final, doença renal crônica terminal, insuficiência renal aguda, hemodiálise, diálise peritoneal, CAPD ou DPAC.",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_168",
+            "nextPageId": "PAGE_169",
+            "header": [
+                "[b]9. Eventos não fatais em pacientes ambulatoriais.[/b]"
+            ],
+            "questions": [
+                {
+                    "name": "isThisAnEvent",
+                    "id": "ELEA9a",
+                    "choiceGroupId": "IsThisAnEvent",
+                    "label": "Este é um evento:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "theEventDateIsPriorToBaselineA9c",
+                    "id": "ELEA9c",
+                    "choiceGroupId": "YesNo",
+                    "label": "A data do evento é anterior à linha de base?",
+                    "hiddenQuestion": "thisEventHasAlreadyBeenInsertedIntoAnotherNotificationA9d",
+                    "visibleWhen": "NO",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "thisEventHasAlreadyBeenInsertedIntoAnotherNotificationA9d",
+                    "id": "ELEA9d",
+                    "choiceGroupId": "YesNo",
+                    "label": "Esse evento já foi inserido em outra notificação?",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "dateOfEventA9b",
+                    "id": "ELEA9b",
+                    "label": "Data do Evento",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "maxdate": "realizationDate",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_169",
+            "nextPageId": "PAGE_170",
+            "questions": [
+                {
+                    "name": "thisEventMustBeCoupledWithOtherPreviousResearch",
+                    "id": "ELEA11",
+                    "choiceGroupId": "YesNo",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "label": "[b]11.[/b] Este evento deve ser acoplado à outra investigação prévia?",
+                    "hiddenQuestion": "informTheIDOfThePrimaryResearch",
+                    "visibleWhen": "YES",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "informTheIDOfThePrimaryResearch",
+                    "id": "ELEA11a",
+                    "label": "Informar o [b]ID da investigação[/b] primária:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "maxLength": "10",
+                    "minLength": "10",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_170",
+            "nextPageId": "PAGE_171",
+            "questions": [
+                {
+                    "name": "theEventReportedWasConfirmed",
+                    "id": "ELEA12",
+                    "choiceGroupId": "YesNo",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "label": "[b]12.[/b] O evento relatado na notificação inicial foi confirmado pela documentação que foi reunida\tpela equipe de investigação?",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "someOtherEventNotNotifiedByTheFollowUpInterview",
+                    "id": "ELEA13",
+                    "choiceGroupId": "YesNo",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "label": "[b]13.[/b] Algum outro evento, [b]não notificado pela entrevista de seguimento, não englobado na(s) internação(ões) aqui relatada(s),[/b] foi identificado durante esta investigação?",
+                    "type": "singleSelectionQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_171",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]14.[/b] Qual(is) evento(s), [b]não notificado pela entrevista de seguimento, não englobado na(s)\tinternação(ões) aqui relatada(s),[/b] foi(ram) identificado(s) durante esta investigação?"
+            ],
+            "questions": [
+                {
+                    "name": "stroke",
+                    "id": "ELEA14a",
+                    "label": "Acidente Vascular Cerebral",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "transientIschaemicAttack",
+                    "id": "ELEA14b",
+                    "label": "Ataque Isquêmico Transitório",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "cancer14c",
+                    "id": "ELEA14c",
+                    "label": "Câncer",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "angina",
+                    "id": "ELEA14d",
+                    "label": "Angina",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "diabetes",
+                    "id": "ELEA14e",
+                    "label": "Diabetes",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "peripheralVascularDisease",
+                    "id": "ELEA14f",
+                    "label": "Doença Vascular Periférica",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "acuteMyocardialInfarction",
+                    "id": "ELEA14g",
+                    "label": "Infarto Agudo do Miocárdio",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "heartFailure",
+                    "id": "ELEA14h",
+                    "label": "Insuficiência Cardíaca",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "renalFailure14i",
+                    "id": "ELEA14i",
+                    "label": "Insuficiência Renal",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "obstructionCarotid",
+                    "id": "ELEA14j",
+                    "label": "Obstrução da Carótida",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "deepVeinThrombosis14k",
+                    "id": "ELEA14k",
+                    "label": "Trombose Venosa Profunda",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "other",
+                    "id": "ELEA14l",
+                    "label": "Outro",
+                    "hiddenQuestion": "howA14lq",
+                    "visibleWhen": "true",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "howA14lq",
+                    "id": "ELEA14lq",
+                    "label": "Qual?",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA14aGroup"
+                },
+                {
+                    "name": "cancer14m",
+                    "id": "ELEA14m",
+                    "label": "Câncer",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14mGroup"
+                },
+                {
+                    "name": "renalFailure14n",
+                    "id": "ELEA14n",
+                    "label": "Insuficiência Renal",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14mGroup"
+                },
+                {
+                    "name": "deepVeinThrombosis14o",
+                    "id": "ELEA14o",
+                    "label": "Trombose Venosa Profunda",
+                    "type": "booleanQuestion",
+                    "basicGroup": "ELEA14mGroup"
+                },
+                {
+                    "name": "death15",
+                    "id": "ELEA15",
+                    "choiceGroupId": "YesNo",
+                    "label": "[b]Óbito?[/b]",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "hasObservationA16",
+                    "id": "ELEA16",
+                    "label": "Há observação/comentário relevante a ser considerado para investigação dessa nova notificação?",
+                    "hiddenQuestion": "howA16q",
+                    "visibleWhen": "true",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "howA16q",
+                    "id": "ELEA16q",
+                    "label": "Qual?",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_172",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Acidente Vascular Cerebral[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14a1",
+                    "name": "hospitalNameA14a1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14a2",
+                    "name": "cnesA14a2",
+                    "label": "CNES",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14a4",
+                    "name": "periodOfAdmissionA14a4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14a3",
+                    "name": "dateOfAdmissionA14a3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_173",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Ataque Isquêmico Transitório[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14b1",
+                    "name": "hospitalNameA14b1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14b2",
+                    "name": "cnesA14b2",
+                    "label": "CNES",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "lowerLimit": "0",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14b4",
+                    "name": "periodOfAdmissionA14b4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14b3",
+                    "name": "dateOfAdmissionA14b3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_174",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Câncer - Hospitalar[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14c1",
+                    "name": "hospitalNameA14c1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14c2",
+                    "name": "cnesA14c2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14c4",
+                    "name": "periodOfAdmissionA14c4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14c3",
+                    "name": "dateOfAdmissionA14c3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_175",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Angina[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14d1",
+                    "name": "hospitalNameA14d1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14d2",
+                    "name": "cnesA14d2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14d4",
+                    "name": "periodOfAdmissionA14d4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14d3",
+                    "name": "dateOfAdmissionA14d3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_176",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Diabetes[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14e1",
+                    "name": "hospitalNameA14e1",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "label": "Nome do hospital",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14e2",
+                    "name": "cnesA14e2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14e4",
+                    "name": "periodOfAdmissionA14e4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14e3",
+                    "name": "dateOfAdmissionA14e3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_177",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Doença Vascular Periférica[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14f1",
+                    "name": "hospitalNameA14f1",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "label": "Nome do hospital",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14f2",
+                    "name": "cnesA14f2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14f4",
+                    "name": "periodOfAdmissionA14f4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14f3",
+                    "name": "dateOfAdmissionA14f3",
+                    "maxdate": "realizationDate",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "label": "Data da internação",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_178",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Infarto Agudo do Miocárdio[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14g1",
+                    "name": "hospitalNameA14g1",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "label": "Nome do hospital",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14g2",
+                    "name": "cnesA14g2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14g4",
+                    "name": "periodOfAdmissionA14g4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14g3",
+                    "name": "dateOfAdmissionA14g3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_179",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Insuficiência Cardíaca[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14h1",
+                    "name": "hospitalNameA14h1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14h2",
+                    "name": "cnesA14h2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14h4",
+                    "name": "periodOfAdmissionA14h4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14h3",
+                    "name": "dateOfAdmissionA14h3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_180",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Insuficiência Renal - Hospitalar[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14i1",
+                    "name": "hospitalNameA14i1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14i2",
+                    "name": "cnesA14i2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14i4",
+                    "name": "periodOfAdmissionA14i4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14i3",
+                    "name": "dateOfAdmissionA14i3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_181",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Obstrução da Carótida[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14j1",
+                    "name": "hospitalNameA14j1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14j2",
+                    "name": "cnesA14j2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14j4",
+                    "name": "periodOfAdmissionA14j4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14j3",
+                    "name": "dateOfAdmissionA14j3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_182",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Trombose Venosa Profunda[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14k1",
+                    "name": "hospitalNameA14k1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14k2",
+                    "name": "cnesA14k2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14k4",
+                    "name": "periodOfAdmissionA14k4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14k3",
+                    "name": "dateOfAdmissionA14k3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_183",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Outro - Hospitalar[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14l1",
+                    "name": "hospitalNameA14l1",
+                    "label": "Nome do hospital",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                },
+                {
+                    "id": "ELEA14l2",
+                    "name": "cnesA14l2",
+                    "label": "CNES",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14l4",
+                    "name": "periodOfAdmissionA14l4",
+                    "label": "Duração da internação (dias):",
+                    "decimalNumber": "false",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion"
+                },
+                {
+                    "id": "ELEA14l3",
+                    "name": "dateOfAdmissionA14l3",
+                    "maxdate": "realizationDate",
+                    "label": "Data da internação",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_184",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Câncer - Não hospitalar[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14m1",
+                    "name": "dateOfEventA14m1",
+                    "maxdate": "realizationDate",
+                    "label": "Data provável do evento:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_185",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Insuficiência Renal - Não hospitalar[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14n1",
+                    "name": "dateOfEventA14n1",
+                    "maxdate": "realizationDate",
+                    "label": "Data provável do evento:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_186",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Trombose Venosa Profunda - Não hospitalar[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA14o1",
+                    "name": "dateOfEventA14o1",
+                    "maxdate": "realizationDate",
+                    "label": "Data provável do evento:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "dateQuestion"
+                }
+            ]
+        },
+        {
+            "id": "PAGE_187",
+            "nextPageId": "END_PAGE",
+            "header": [
+                "[b]Óbito[/b]"
+            ],
+            "questions": [
+                {
+                    "id": "ELEA15a",
+                    "name": "dateOfDeathA15a",
+                    "label": "Data do óbito:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "maxdate": "realizationDate",
+                    "type": "dateQuestion"
+                },
+                {
+                    "name": "deathLocation",
+                    "id": "ELEA15b",
+                    "choiceGroupId": "DeathLocation",
+                    "label": "Local do óbito:",
+                    "hiddenQuestion": "ELEA15bHiddenGroup",
+                    "visibleWhen": "HOSPITAL,EMERGENCY_CARE,OTHER_HEALTH_INSTITUTION",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "singleSelectionQuestion"
+                },
+                {
+                    "name": "nameOfTheHealthFacility",
+                    "id": "ELEA15c",
+                    "label": "Nome do estabelecimento de saúde:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion",
+                    "basicGroup": "ELEA15bHiddenGroup"
+                },
+                {
+                    "id": "ELEA15d",
+                    "name": "cnesA15d",
+                    "label": "CNES:",
+                    "lowerLimit": "0",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY_ACCEPT",
+                    "type": "numericQuestion",
+                    "basicGroup": "ELEA15bHiddenGroup"
+                },
+                {
+                    "name": "deathNotes",
+                    "id": "ELEA15e",
+                    "label": "Notas do óbito:",
+                    "metaDataGroupId": "DONT_WANT_KNOW_APPLY",
+                    "type": "textQuestion"
+                }
+            ]
+        },
+        {
+            "id": "END_PAGE",
+            "header": [
+                "[i]Obrigado.[/i][br]\r\n\t\t\t[br]\r\n\t\t\t[br]\r\n\t\t\t[b]Condições relacionadas na investigação[/b]"
+            ],
+            "questions": [
+                {
+                    "name": "cardiovascularEventOrTVPTEPOrFatalHospitalized",
+                    "id": "ELEA16a",
+                    "label": "Evento Cardiovascular ou TVP/TEP Hospitalizado ou Fatal",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "fatalHospitalizedOrCerebrovascularEvent",
+                    "id": "ELEA16b",
+                    "label": "Evento Cerebrovascular Hospitalizado ou Fatal",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "diabetesHospitalizedAndFatalEvent",
+                    "id": "ELEA16c",
+                    "label": "Evento Diabetes Hospitalizado ou Fatal",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventOncologyHospitalizedOrFatal",
+                    "id": "ELEA16d",
+                    "label": "Evento Oncológico Hospitalizado ou Fatal",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventChronicKidneyDiseaseOrFatalHospitalized",
+                    "id": "ELEA16e",
+                    "label": "Evento Doença Renal Crônica Hospitalizado ou Fatal",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "anotherCauseForFatalEvent",
+                    "id": "ELEA16f",
+                    "label": "Evento Fatal por Outra Causa",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventHospitalNonfatalForAnotherCause",
+                    "id": "ELEA16g",
+                    "label": "Evento Hospitalar Não Fatal por Outra Causa",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventAmbulatoryDVT",
+                    "id": "ELEA16h",
+                    "label": "Evento TVP Ambulatorial",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventAmbulatoryOncology",
+                    "id": "ELEA16i",
+                    "label": "Evento Oncológico Ambulatorial",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventAmbulatoryChronicKidneyDisease",
+                    "id": "ELEA16j",
+                    "label": "Evento Doença Renal Crônica Ambulatorial",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventBeforeTheBaseline",
+                    "id": "ELEA17a",
+                    "label": "Evento anterior à linha de base",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventDoesNotExistInformationFromTheHealthCenter",
+                    "id": "ELEA17b",
+                    "label": "Evento não existente segundo informações do estabelecimento de saúde",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "eventBeyondTheInterestOfTheProject",
+                    "id": "ELEA17c",
+                    "label": "Não se trata de evento de interesse ELSA",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "permanenceLessThanTwentyFourHours",
+                    "id": "ELEA17d",
+                    "label": "Permanência em estabelecimento de saúde inferior a 24h (não relacionada à TVP ou câncer ou doença renal crônica)",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "existingEventInAnotherInvestigation",
+                    "id": "ELEA17e",
+                    "label": "Evento já inserido em outra investigação",
+                    "type": "booleanQuestion"
+                },
+                {
+                    "name": "unauthorizedAccessToMedicalRecordsOrNotFound",
+                    "id": "ELEA17f",
+                    "label": "Acesso ao prontuário não autorizado ou prontuário não encontrado",
+                    "type": "booleanQuestion"
+                }
+            ]
+        }
+    ]
+}

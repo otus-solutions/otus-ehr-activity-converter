@@ -23,12 +23,6 @@ class FileHandler {
 
     static getFileName(path) {
         return pathPkg.parse(path).name;
-        // pathPkg.parse(path) Returns:
-        // { root: '/',
-        //   dir: '/home/user/dir',
-        //   base: 'file.txt',
-        //   ext: '.txt',
-        //   name: 'file' }
     }
 
     static read(path){

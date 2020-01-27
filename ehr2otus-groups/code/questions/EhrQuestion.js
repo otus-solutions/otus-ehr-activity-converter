@@ -1,5 +1,4 @@
 const globalVars = require('../globalVars');
-//const HiddenQuestion = require('./questions/HiddenQuestion');
 
 let currIndex = globalVars.FIRST_QUESTION_INDEX;
 
@@ -14,6 +13,7 @@ class EhrQuestion {
         this.questionType = questionType;
         this.dataType = dataType;
         this.index = currIndex++;
+        this.basicGroup = ehrQuestionObj.basicGroup;
         this.hiddenQuestion = this._extractHiddenQuestion(ehrQuestionObj);
     }
 

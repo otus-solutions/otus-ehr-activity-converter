@@ -1,0 +1,47 @@
+PAGE_001
+ELEA1 (1) hide specifyEventLocation (2)
+hiddenIndexes:  2
+
+PAGE_002
+ELEA1c (2) hide adressEstablishment (3)
+hiddenIndexes:  3
+
+PAGE_003
+ELEA1f (0) hide eventOutpatientNonFatal (1)
+hiddenQuestion is a basicGroup: undefined ELEA1e1 3
+ELEA1e (2) hide ELEA1eGroup (3)
+hiddenIndexes:  1, 3
+
+PAGE_006
+ELEA2c (2) hide isThisInternationInsertedInOtherNotification (3)
+hiddenIndexes:  3
+
+PAGE_046
+ELEA2d1 (4) hide statusOfRecords1d1 (5)
+hiddenIndexes:  5
+
+PAGE_086
+ELEA2d2 (4) hide statusOfRecords1d2 (5)
+hiddenIndexes:  5
+
+PAGE_126
+ELEA2d3 (4) hide statusOfRecords1d3 (5)
+hiddenIndexes:  5
+
+PAGE_168
+ELEA9c (1) hide thisEventHasAlreadyBeenInsertedIntoAnotherNotificationA9d (2)
+hiddenIndexes:  2
+
+PAGE_169
+ELEA11 (0) hide informTheIDOfThePrimaryResearch (1)
+hiddenIndexes:  1
+
+PAGE_171
+ELEA14l (11) hide howA14lq (12)
+ELEA16 (17) hide howA16q (18)
+hiddenIndexes:  12, 18
+
+PAGE_187
+hiddenQuestion is a basicGroup: undefined ELEA15c 2
+ELEA15b (1) hide ELEA15bHiddenGroup (2)
+hiddenIndexes:  2

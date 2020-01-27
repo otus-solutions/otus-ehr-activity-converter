@@ -84,6 +84,14 @@ class EhrQuestionnaire {
         this.endPage.readFromJsonObj(ehrEndPageObj);
     }
 
+    takeXray(){
+        let content = "";
+        for (let question of this.questionPages) {
+            content += question.takeXray() + "\n";
+        }
+        return content;
+    }
+
     toOtusStudioTemplate(emptyOtusStudioTemplate){
         const firstQuestionId = this.getFirstQuestionPage.getFirstQuestion().id;
         emptyOtusStudioTemplate["navigationList"].push(
