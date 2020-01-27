@@ -1,6 +1,12 @@
 const globalVars = require('./globalVars');
+const NavigationHandler = require('./NavigationHandler');
 
-class ExpressionEhr {
+const operatorDict = {
+    "EQ": "equal",
+    "GT": "greater"
+};
+
+class Expression {
 
     constructor(questionId, ehrExpressionObj){
         this.questionId = questionId;
@@ -24,7 +30,7 @@ class ExpressionEhr {
         this.value = value;
     }
 
-    toOtusStudioObj(){
+    toOtusTemplate(){
         if(!this.isMetadata) {
             const isNumValue = !isNaN(parseInt(this.value));
             const isBoolValue = (this.value === 'true' || this.value === 'false');
@@ -32,22 +38,12 @@ class ExpressionEhr {
                 this.value = globalVars.choiceGroups.findChoiceLabelInAllChoiceGroup(this.value);
             }
         }
+        return NavigationHandler.getExpressionObject(this.questionId, operatorDict[this.operator], this.value, this.isMetadata);
+    }
 
-        const operatorDict = {
-            "EQ": "equal",
-            "GT": "greater"
-        };
-        
-        return {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Rule",
-            "when": this.questionId,
-            "operator": operatorDict[this.operator],
-            "answer": this.value,
-            "isMetadata": this.isMetadata,
-            "isCustom": true
-        };
+    toJSON(){
+        return `${this.questionId} ${this.operator} ${this.value}`;
     }
 }
 
-module.exports = ExpressionEhr;
+module.exports = Expression;

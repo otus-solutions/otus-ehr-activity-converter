@@ -51,8 +51,6 @@ class EhrQuestionnaire {
     }
 
     readFromJsonObj(ehrTemplate){
-        ehrTemplate = ehrTemplate["survey"];
-
         for(let metadataObj of ehrTemplate["metaDataGroup"]){
             let id = metadataObj["id"];
             this.metaDataGroups[id] = metadataObj["metaDataValue"];

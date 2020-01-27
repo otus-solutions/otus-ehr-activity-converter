@@ -6,7 +6,7 @@ class DateQuestion extends EhrQuestion{
         super(jsonObject, pageId,"CalendarQuestion","LocalDate");
     }
 
-    toOtusStudioObj(){
+    toOtusTemplate(){
         return this.getOtusStudioQuestionHeader();
     }
 

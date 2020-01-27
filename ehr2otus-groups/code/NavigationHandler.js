@@ -44,6 +44,10 @@ class NavigationHandler {
         };
     }
 
+    static getDefaultRouteObj(originQuestionId, destinationQuestionId){
+        return NavigationHandler._getRouteObject(originQuestionId, destinationQuestionId);
+    }
+
     static _getRouteObject(originTemplateId, destinationTemplateId, isDefault=true, conditions=[]){
         return {
             "extents": "SurveyTemplateObject",
@@ -56,24 +60,13 @@ class NavigationHandler {
         };
     }
 
-    static getDefaultRouteObj(originQuestionId, destinationQuestionId){
-        return NavigationHandler._getRouteObject(originQuestionId, destinationQuestionId);
-    }
-
-    static getNonDefaultRoutesObj(originQuestionId, destinationQuestionId, expressions){
-        const conditions = [
-            {
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": "ROUTE_CONDITION_0",
-                "rules": expressions
-            }
-        ];
-        return NavigationHandler._getRouteObject(originQuestionId, destinationQuestionId, false, conditions);
-    }
-
-    static navigationListQuestionNode(questionInfo, prevQuestionInfo, nextQuestionInfo){
-
+    static getConditionRouteObj(index, rulesArr){
+        return {
+            "extents": "StudioObject",
+            "objectType": "RouteCondition",
+            "name": `ROUTE_CONDITION_${index}`,
+            "rules": rulesArr
+        };
     }
 
     static getNavigationListQuestionElementObj(questionId, questionIndex, inNavigationsArr, routesArr){
@@ -86,6 +79,33 @@ class NavigationHandler {
             "routes": routesArr
         }
     }
+
+    static getExpressionObject(questionId, operator, answer, isMetadata, isCustom=true){
+        return {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Rule",
+            "when": questionId,
+            "operator": operator,
+            "answer": answer,
+            "isMetadata": isMetadata,
+            "isCustom": isCustom
+        };
+    }
 }
 
 module.exports = NavigationHandler;
+
+/*
+    static getNonDefaultRoutesObj(originQuestionId, destinationQuestionId, index, expressions){
+        const conditions = [
+            {
+                "extents": "StudioObject",
+                "objectType": "RouteCondition",
+                "name": `ROUTE_CONDITION_${index}`,
+                "rules": expressions
+            }
+        ];
+        return NavigationHandler._getRouteObject(originQuestionId, destinationQuestionId, false, conditions);
+    }
+
+ */

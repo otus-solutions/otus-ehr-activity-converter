@@ -7,7 +7,7 @@ class AutoCompleteQuestion extends EhrQuestion {
         this.itemValue = ehrQuestionObj.itemValue;
     }
 
-    toOtusStudioObj(){
+    toOtusTemplate(){
         let questionObj = this.getOtusStudioQuestionHeader();
         questionObj['dataSources'] = [this.itemValue];
         return questionObj;

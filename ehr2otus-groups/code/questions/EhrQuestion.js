@@ -26,8 +26,9 @@ class EhrQuestion {
         if(this.hiddenQuestion){
             obj['hiddenQuestion'] =  {
                 id: this.hiddenQuestion.id,
+                name: this.hiddenQuestion.name,
                 isVisibleWhenThisAnswerIs: this.hiddenQuestion.isVisibleWhenThisAnswerIs
-            }
+            };
         }
         return obj;
     }
@@ -61,7 +62,7 @@ class EhrQuestion {
     }
 
     // Must be implemented by children classes
-    toOtusStudioObj(){
+    toOtusTemplate(){
 
     }
 

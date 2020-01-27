@@ -14,7 +14,7 @@ class SingleSelectionQuestion extends EhrQuestion {
             this.hiddenQuestionIsVisibleWhenMyAnswerIs);
     }
     
-    toOtusStudioObj(){
+    toOtusTemplate(){
         let questionObj = this.getOtusStudioQuestionHeader();
         const choiceGroupObjArr = choiceGroups.choiceObj[this.choiceGroupId];
         let options = [];

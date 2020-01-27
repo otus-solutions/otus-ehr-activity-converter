@@ -8,7 +8,7 @@ class TextQuestion extends EhrQuestion{
         this.maxLength = parseInt(ehrQuestionObj["maxLength"]);
     }
 
-    toOtusStudioObj(){
+    toOtusTemplate(){
         if(this.name.toLowerCase().includes("phone") || this.label.toLowerCase().includes("telefone")){
             this.questionType = "PhoneQuestion";
             this.dataType = "Integer";

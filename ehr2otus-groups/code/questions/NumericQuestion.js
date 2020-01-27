@@ -8,7 +8,7 @@ class NumericQuestion extends EhrQuestion{
         this.upperLimit = parseInt(ehrQuestionObj["upperLimit"]);
     }
 
-    toOtusStudioObj(){
+    toOtusTemplate(){
         let questionObj = this.getOtusStudioQuestionHeader();
         const limits = {
             "lowerLimit": this.lowerLimit,

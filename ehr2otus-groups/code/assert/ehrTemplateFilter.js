@@ -6,12 +6,6 @@ function extractRules(questionPage){
     return {};
 }
 
-function filterTemplate(template){
-    template = template.survey;
-    const [questions, rules] = extractQuestions(template.questionPage);
-    return new AssertTemplate(questions, rules);
-}
-
 let basicQuestionGroupId = undefined;
 let basicQuestionGroupCounter = 0;
 
@@ -73,7 +67,11 @@ function extractQuestionsFromArrays(template, filterLevel){
         //     console.log(questionPage.id, questionPage.branch.length);
         // }
     }
-    return outputQuestionPages;
+    return {
+        metaDataGroup: template.metaDataGroup,
+        choiceGroup: template.choiceGroup,
+        questionPages: outputQuestionPages
+    };
 }
 
 

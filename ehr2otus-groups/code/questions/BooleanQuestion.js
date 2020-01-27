@@ -6,7 +6,7 @@ class BooleanQuestion extends EhrQuestion{
         super(ehrQuestionObj, pageId, "CheckboxQuestion", "Array");
     }
 
-    toOtusStudioObj(){
+    toOtusTemplate(){
         let questionObj = this.getOtusStudioQuestionHeader();
         let checkboxOption = {
             "extents": "SurveyItem",
