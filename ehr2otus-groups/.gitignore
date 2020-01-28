@@ -2,6 +2,7 @@
 .idea/*
 node_modules/*
 output/*
+code_backup/*
 # files
 input/*.xml
 package-lock.json
