@@ -82,6 +82,14 @@ class EhrQuestionnaire {
 
         const ehrEndPageObj = ehrTemplate.questionPage.filter((questionPage) => questionPage.id === this.endPage.id)[0];
         this.endPage.readFromJsonObj(ehrEndPageObj);
+
+        this._readRoutes();
+    }
+
+    _readRoutes(){
+        for(let ehrQuestionPage of this.questionPages){
+            ehrQuestionPage.setRoutesByCutIndexes();
+        }
     }
 
     resume(){

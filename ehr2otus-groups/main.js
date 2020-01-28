@@ -106,7 +106,7 @@ function makeConversionEhr2OtusTemplate(templateInfo){
     const ehr = new EhrQuestionnaire();
     ehr.readFromJsonObj(ehrTemplate);
     //FileHandler.write(outputDirPath + templateInfo.acronym + "-resume.txt", ehr.resume());
-    FileHandler.write(outputDirPath + templateInfo.acronym + "-resumeWithCuts.txt", ehr.resumeWithCuts());
+    //FileHandler.write(outputDirPath + templateInfo.acronym + "-resumeWithCuts.txt", ehr.resumeWithCuts());
 
     // writeOutputJsonFile(templateInfo.acronym+"-readed.json", ehr);
 

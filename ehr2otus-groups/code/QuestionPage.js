@@ -10,6 +10,8 @@ const HiddenQuestionGroup = require("./HiddenQuestionGroup");
 
 const NavigationHandler = require('./NavigationHandler');
 const Branch = require('./Branch');
+const Route = require('./Route');
+const Expression = require('./Expression');
 
 const OTUS_QUESTIONS_LIST = globalVars.OTUS_TEMPLATE_ATTRIBUTES.QUESTIONS;
 const OTUS_NAVIGATION_LIST = globalVars.OTUS_TEMPLATE_ATTRIBUTES.NAVIGATION_LIST;
@@ -28,6 +30,7 @@ class QuestionPage {
 
         this.hiddenIndexes = [];
         this.cutIndexes = [];
+        this.routes = {};
     }
 
     // toJSON(){
@@ -139,50 +142,27 @@ class QuestionPage {
     }
 
     _reorganizeQuestionsThatHiddenQuestion2(){
-        if(this.hiddenQuestions.length > 0) console.log("\n"+this.id);
-
-        this.hiddenIndexes = [];
         for(let hiddenQuestion of this.hiddenQuestions){
-
-            let hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
             const id = hiddenQuestion.hiddenBy;
-
-            let index = this._indexOfQuestionById(id);
+            const hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
+            const index = this._indexOfQuestionById(id);
             let hiddenIndex = this._indexOfQuestionById(hiddenQuestionId);
 
             if(hiddenIndex < 0){
                 const id = this._getBasicGroupFirstQuestion(hiddenQuestion.hidden);
                 hiddenIndex = this._indexOfQuestionById(id);
-                console.log(`hiddenQuestion is a basicGroup: ${hiddenQuestionId} ${id} ${hiddenIndex}`);
             }
-
-            console.log(`${id} (${index}) hide ${hiddenQuestion.hidden} (${hiddenIndex})`);//.
 
             if(hiddenIndex === index-1){
                 [this.questions[index], this.questions[hiddenIndex]] = [this.questions[hiddenIndex], this.questions[index]];
                 hiddenIndex = index;
             }
-            else if(hiddenIndex !== index+1){
-                console.log(`${hiddenQuestionId} ${hiddenQuestion.hidden} (${hiddenIndex}) hidden by ${id} (${index})`);//.
-            }
 
-            this.hiddenIndexes.push(hiddenIndex); // new position of hiddenQuestion
+            this.hiddenIndexes.push(hiddenIndex);
         }
-
-        if(this.hiddenIndexes.length > 0){
-            console.log("hiddenIndexes: ", this.hiddenIndexes.join(", "));
-        }
-
-        // if(Object.values(this.basicQuestionGroups).length > 0){
-        //     console.log(this.id + "\n" + JSON.stringify(this.basicQuestionGroups, null, 4));
-        // }        
     }
 
     _setCutIndexes(){
-        if(this.id === 'PAGE_166'){
-            console.log('here');
-        }
-
         const lastPageQuestionIndex = this.questions.length-1;
         let groupCutIndexes = [];
         for(let [id,arr] of Object.entries(this.basicQuestionGroups)){
@@ -190,7 +170,7 @@ class QuestionPage {
             if(n > 1){
                 const firstIndex = this._indexOfQuestionById(arr[0]);
                 if(this.hiddenIndexes.includes(firstIndex)){
-                    console.log(`remove ${firstIndex} from hiddenIndexes`);
+                    // console.log(`remove ${firstIndex} from hiddenIndexes`);
                     this.hiddenIndexes = this.hiddenIndexes.filter(x => x !== firstIndex);
                 }
                 if(firstIndex-1 >= 0){
@@ -200,7 +180,7 @@ class QuestionPage {
                 const lastIndex = this._indexOfQuestionById(arr[n-1]);
                 if(!this.hiddenIndexes.includes(lastIndex) && lastIndex !== lastPageQuestionIndex){
                     groupCutIndexes.push(lastIndex);
-                    console.log(`cut at index ${lastIndex} after Basic Group ${id}`);//.
+                    // console.log(`cut at index ${lastIndex} after Basic Group ${id}`);//.
                 }
             }
         }
@@ -212,17 +192,17 @@ class QuestionPage {
             }
         }
 
-        this.cutIndexes = this.cutIndexes.concat(groupCutIndexes).sort();
+        this.cutIndexes = this.cutIndexes.filter(x => x < lastPageQuestionIndex && !groupCutIndexes.includes(x))
+            .concat(groupCutIndexes).sort();
 
-        if(this.hiddenIndexes.length > 0){
-            console.log("hiddenIndexes =   " + this.hiddenIndexes.join(", "));
-        }
-        if(groupCutIndexes.length > 0){
-            console.log("groupCutIndexes = " + groupCutIndexes.join(", "));
-        }
-        if(this.cutIndexes.length > 0){
-            console.log("cutIndexes =      " + this.cutIndexes.join(", "));
-        }
+        //.
+        // let str = (this.hiddenIndexes.length === 0 ? "" : "hiddenIndexes =   " + this.hiddenIndexes.join(", ") + '\n');
+        // str += (groupCutIndexes.length === 0 ? "" :  "groupCutIndexes = " + groupCutIndexes.join(", ") + '\n');
+        // str += (this.cutIndexes.length === 0 ? "" : "cutIndexes =      " + this.cutIndexes.join(", ") + '\n');
+        // if(str.length > 0){
+        //     console.log('FINAL:\n' + str);
+        // }
+        //.
     }
 
     resume(){
@@ -265,6 +245,36 @@ class QuestionPage {
             }
         }
         return content;
+    }
+
+    _addNewRoute(originIndex, targetIndex, conditions){
+        const originId = this.questions[originIndex].id;
+        const targetId = this._getNextQuestionId(targetIndex-1);// -1 coz method look for arg+1
+        try{
+            this.routes[originId].push(new Route(originId, targetId, conditions));
+        }catch (e) {
+            this.routes[originId] = [new Route(originId, targetId, conditions)];
+        }
+    }
+
+    setRoutesByCutIndexes(){
+        // called when read all questionnaire
+        const n = this.questions.length;
+        for (let i = 0; i < n-1; i++) {
+            if(this.hiddenIndexes.includes(i+1)){
+                this._addNewRoute(i, i+2);
+
+                let question = this.questions[i];//.
+                const expression = new Expression(question.id);
+                expression.setValueAndOperator(question.hiddenQuestion.isVisibleWhenThisAnswerIs);
+                this._addNewRoute(i, i+1, [expression]);
+            }
+            else{
+                this._addNewRoute(i, i+1);
+            }
+        }
+        this._addNewRoute(n-1, n);
+        console.log(JSON.stringify(this.routes, null, 4) + '\n');//.
     }
 
     _readRules(ehrQuestionPage){
