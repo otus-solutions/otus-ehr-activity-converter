@@ -4,22 +4,10 @@ const NavigationHandler = require('./NavigationHandler');
 
 class Condition {
 
-    constructor(questionPageId, ehrRule){
-        this.originPageId = questionPageId;
-        this.origin = "";
-        this.targetPageId = "";
-        this.target = "";
-        this.rules = [];
-        if(ehrRule) {
-            this.targetPageId = ehrRule.targetPageId;
-            this._extractExpressions(ehrRule);
-        }
-    }
-
-    addEqualExpression(questionId, value){
-        let expression = new Expression(questionId);
-        expression.setValueAndOperator(value);
-        this.rules.push(expression);
+    constructor(ehrExpressions){
+        this.rules = ehrExpressions;
+        
+        this._extractExpressions(ehrRule);
     }
 
     _extractExpressions(ehrRule){
@@ -39,22 +27,6 @@ class Condition {
         return (
             otherRule.originPageId === this.originPageId &&
             otherRule.targetPageId === this.targetPageId);
-    }
-
-    setOrigin(originQuestionId){
-        if(this.origin === ""){
-            this.origin = originQuestionId;
-        }
-    }
-
-    setOriginAndTargetQuestionIds(originQuestionId, targetQuestionId){
-        this.setOrigin(originQuestionId);
-        if(this.targetPageId === globalVars.END_PAGE_ID){
-            this.target = globalVars.DEFAULT_NODES.END.id;
-        }
-        else{
-            this.target = targetQuestionId;
-        }
     }
 
     toOtusTemplate(){

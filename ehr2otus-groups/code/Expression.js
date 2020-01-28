@@ -1,6 +1,8 @@
 const globalVars = require('./globalVars');
 const NavigationHandler = require('./NavigationHandler');
 
+const EHR_EQUAL = "EQ";
+
 const operatorDict = {
     "EQ": "equal",
     "GT": "greater"
@@ -8,24 +10,22 @@ const operatorDict = {
 
 class Expression {
 
-    constructor(questionId, ehrExpressionObj){
+    constructor(questionId, operator, value, isMetadata=false){
         this.questionId = questionId;
-        if(ehrExpressionObj) {
-            this.questionName = ehrExpressionObj.questionName;//.
-            this.operator = ehrExpressionObj.operator;
-            this.value = ehrExpressionObj.value;
-            this.isMetadata = (ehrExpressionObj.questionName.includes("Metadata"));
-        }
+        this.operator = operator;
+        this.value = value;
+        this.isMetadata = isMetadata;
+    }
+
+    static equalOperator(){
+        return EHR_EQUAL;
     }
 
     toJSON(){
-        if(this.isMetadata){
-            return `${this.questionName} ${this.operator} ${this.value}`;
-        }
         return `${this.questionId} ${this.operator} ${this.value}`;
     }
 
-    setValueAndOperator(value, operator="EQ"){
+    setValueAndOperator(value, operator=EHR_EQUAL){
         this.operator = operator;
         this.value = value;
     }
@@ -40,10 +40,7 @@ class Expression {
         }
         return NavigationHandler.getExpressionObject(this.questionId, operatorDict[this.operator], this.value, this.isMetadata);
     }
-
-    toJSON(){
-        return `${this.questionId} ${this.operator} ${this.value}`;
-    }
+    
 }
 
 module.exports = Expression;

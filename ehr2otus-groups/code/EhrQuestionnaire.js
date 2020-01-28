@@ -83,29 +83,9 @@ class EhrQuestionnaire {
         const ehrEndPageObj = ehrTemplate.questionPage.filter((questionPage) => questionPage.id === this.endPage.id)[0];
         this.endPage.readFromJsonObj(ehrEndPageObj);
 
-        this._readRoutes();
-    }
-
-    _readRoutes(){
         for(let ehrQuestionPage of this.questionPages){
-            ehrQuestionPage.setRoutesByCutIndexes();
+            ehrQuestionPage.setRoutes();
         }
-    }
-
-    resume(){
-        let content = "";
-        for (let question of this.questionPages) {
-            content += question.resume() + "\n";
-        }
-        return content;
-    }
-
-    resumeWithCuts(){
-        let content = "";
-        for (let question of this.questionPages) {
-            content += question.resumeWithCuts() + "\n";
-        }
-        return content;
     }
 
     toOtusStudioTemplate(emptyOtusStudioTemplate){
@@ -132,6 +112,27 @@ class EhrQuestionnaire {
             return null;
         }
         return this.questionPages[i-1].id;
+    }
+
+
+    /*
+     * Debug
+     */
+
+   resume(){
+        let content = "";
+        for (let question of this.questionPages) {
+            content += question.resume() + "\n";
+        }
+        return content;
+    }
+
+    resumeWithCuts(){
+        let content = "";
+        for (let question of this.questionPages) {
+            content += question.resumeWithCuts() + "\n";
+        }
+        return content;
     }
 
 }

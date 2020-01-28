@@ -1,4 +1,5 @@
-const ANDExpression = require('./ANDExpression');
+const globalVars = require('./globalVars');
+const Expression = require('./Expression');
 const NavigationHandler = require('./NavigationHandler');
 
 /* Its a AND expression in EHR template */
@@ -6,7 +7,13 @@ const NavigationHandler = require('./NavigationHandler');
 class Rule {
 
     constructor(ehrAndExpressionArr) {
-        this.andExpression = new ANDExpression(ehrAndExpressionArr.expression);
+        this.expressions = [];
+        for(let expr of ehrAndExpressionArr.expression){
+            const isMetadata = (expr.questionName.includes("Metadata"));
+            const questionName = expr.questionName.replace("Metadata", "");
+            const questionId = globalVars.dictQuestionNameId[questionName];
+            this.expressions.push(new Expression(questionId, expr.operator, expr.value, isMetadata));
+        }
     }
 
     toOtusTemplate(index){

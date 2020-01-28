@@ -97,10 +97,8 @@ function writeOutputJsonFile(filename, content){
     FileHandler.write(path, JSON.stringify(content, null, 4));
 }
 
-
 function makeConversionEhr2OtusTemplate(templateInfo){
 
-    //readEhrXMLAndFilter(templateInfo);
     const ehrTemplate = openEhrFilteredTemplate(templateInfo.acronym);
 
     const ehr = new EhrQuestionnaire();
@@ -143,6 +141,8 @@ function main(){
 
         const templatesInfo = FileHandler.readJsonSync(process.cwd() + "/input/templateInfo.json").templatesInfo;
         for(let templateInfo of templatesInfo){
+            //readEhrXMLAndFilter(templateInfo);
+            // edit templat manually to reallocate hiddenQuestions
             makeConversionEhr2OtusTemplate(templateInfo);
         }
     }

@@ -7,22 +7,13 @@ class Branch {
 
     constructor(questionPageId, ehrBranch) {
         this.originPageId = questionPageId;
-        this.origin = "";
-        this.targetPageId = "";
-        this.target = "";
+        this.originId = "";
+        this.targetPageId = ehrBranch.targetPageId;
+        this.targetId = "";
         this.rules = [];
-        if(ehrBranch) {
-            this.targetPageId = ehrBranch.targetPageId;
-            for(let rule of ehrBranch.rule){
-                this.rules.push(new Rule(rule));
-            }
+        for(let rule of ehrBranch.rule){
+            this.rules.push(new Rule(rule));
         }
-    }
-
-    addEqualExpression(questionId, value){
-        // let expression = new Expression(questionId);
-        // expression.setValueAndOperator(value);
-        // this.rules.push(expression);
     }
 
     extractExpressionsWithQuestionId(questionId){
@@ -30,18 +21,18 @@ class Branch {
     }
 
     setOrigin(originQuestionId){
-        if(this.origin === ""){
-            this.origin = originQuestionId;
+        if(this.originId === ""){
+            this.originId = originQuestionId;
         }
     }
 
     setOriginAndTargetQuestionIds(originQuestionId, targetQuestionId){
         this.setOrigin(originQuestionId);
         if(this.targetPageId === globalVars.END_PAGE_ID){
-            this.target = globalVars.DEFAULT_NODES.END.id;
+            this.targetId = globalVars.DEFAULT_NODES.END.id;
         }
         else{
-            this.target = targetQuestionId;
+            this.targetId = targetQuestionId;
         }
     }
 

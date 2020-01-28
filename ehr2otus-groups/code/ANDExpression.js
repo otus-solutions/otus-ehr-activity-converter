@@ -6,8 +6,7 @@ class ANDExpression {
     constructor(ehrExpressionArr) {
         this.expressions = [];
         for(let expr of ehrExpressionArr){
-            let questionId = globalVars.dictQuestionNameId[expr.questionName];
-            this.expressions.push(new Expression(questionId, expr));
+            this.expressions.push(new Expression(expr));
         }
     }
 

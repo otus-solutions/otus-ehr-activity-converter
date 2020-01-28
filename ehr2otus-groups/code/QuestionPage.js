@@ -83,7 +83,9 @@ class QuestionPage {
 
         this._setCutIndexes();
 
-        //this._readRules(ehrQuestionPageObj);
+        if(ehrQuestionPageObj.branch){
+            this._readRules(ehrQuestionPageObj.branch);
+        }
     }
 
     _readQuestions(questionObjsArr){
@@ -205,46 +207,61 @@ class QuestionPage {
         //.
     }
 
-    resume(){
-        let content = this.id + "\n";
-        for (let i = 0; i < this.questions.length; i++) {
-            const questionId = this.questions[i].id;
-            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
-            let isInSomeBasicGroup = "";
-            for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
-                if(arr.includes(questionId)){
-                    isInSomeBasicGroup = "\t" + id;
-                    break;
-                }
-            }
-            let indexStr = `${i}`;
-            indexStr = indexStr.padStart(2, ' ');
-            content += `\t(${indexStr})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
+    _readRules(ehrBranchArr){        
+        for(let ehrBranch of ehrBranchArr) {
+            //const branch = new Branch(this.id, ehrBranch);//.
+            this.branches.push(new Branch(this.id, ehrBranch));
         }
-        return content;
     }
 
-    resumeWithCuts(){
-        let content = this.id + "\n";
-        for (let i = 0; i < this.questions.length; i++) {
-            const questionId = this.questions[i].id;
-            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
-            let isInSomeBasicGroup = "";
-            for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
-                if(arr.includes(questionId)){
-                    isInSomeBasicGroup = "\t" + id;
-                    break;
-                }
-            }
-            let indexStr = `${i}`;
-            indexStr = indexStr.padStart(2, ' ');
-            content += `\t(${indexStr})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
+    /* -----------------------------------------------------
+     * After read all questionnaire
+     */
 
-            if(this.cutIndexes.includes(i)){
-                content += '\t----------------------------------\n';
+    setRoutes(){
+        this._setRoutesByCutIndexes();
+        this._setRoutesFromBranches();
+    }
+
+    _setRoutesByCutIndexes(){
+        const n = this.questions.length;
+        for (let i = 0; i < n-1; i++) {
+            if(this.hiddenIndexes.includes(i+1)){
+                this._addNewRoute(i, i+2);
+
+                let question = this.questions[i];
+                const operator = Expression.equalOperator();
+                const value = question.hiddenQuestion.isVisibleWhenThisAnswerIs;
+                const expression = new Expression(question.id, operator, value);
+                this._addNewRoute(i, i+1, [expression]);
+            }
+            else{
+                this._addNewRoute(i, i+1);
             }
         }
-        return content;
+        this._addNewRoute(n-1, n);
+        
+        //console.log(this.id + ":\n" + JSON.stringify(this.routes, null, 4) + '\n');//.
+    }
+
+    _setRoutesFromBranches(){
+
+        //if(this.id !== 'PAGE_045'){  return; } //.
+
+        for(let branch of this.branches) {
+
+            branch.originId =  this.questions[0].id;
+            branch.targetId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
+            
+            const conditions = branch.rules;
+
+            console.log(`\norigin: ${branch.originPageId} -> ${branch.originId}`);//.
+            console.log(`target: ${branch.targetPageId} -> ${branch.targetId}\nrules`);//.
+
+            for(let condition of conditions){
+                console.log(JSON.stringify(condition.expressions));//.
+            }
+        }
     }
 
     _addNewRoute(originIndex, targetIndex, conditions){
@@ -254,36 +271,6 @@ class QuestionPage {
             this.routes[originId].push(new Route(originId, targetId, conditions));
         }catch (e) {
             this.routes[originId] = [new Route(originId, targetId, conditions)];
-        }
-    }
-
-    setRoutesByCutIndexes(){
-        // called when read all questionnaire
-        const n = this.questions.length;
-        for (let i = 0; i < n-1; i++) {
-            if(this.hiddenIndexes.includes(i+1)){
-                this._addNewRoute(i, i+2);
-
-                let question = this.questions[i];//.
-                const expression = new Expression(question.id);
-                expression.setValueAndOperator(question.hiddenQuestion.isVisibleWhenThisAnswerIs);
-                this._addNewRoute(i, i+1, [expression]);
-            }
-            else{
-                this._addNewRoute(i, i+1);
-            }
-        }
-        this._addNewRoute(n-1, n);
-        console.log(JSON.stringify(this.routes, null, 4) + '\n');//.
-    }
-
-    _readRules(ehrQuestionPage){
-        let branch = ehrQuestionPage.branch;
-        if(!branch){
-            return;
-        }
-        for(let ehrBranch of branch) {
-            this.branches.push(new Branch(this.id, ehrBranch));
         }
     }
 
@@ -466,6 +453,48 @@ class QuestionPage {
 
     hasQuestion(questionId){
         return (this.questions.filter(question => question.id === questionId).length > 0);
+    }
+
+    resume(){
+        let content = this.id + "\n";
+        for (let i = 0; i < this.questions.length; i++) {
+            const questionId = this.questions[i].id;
+            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
+            let isInSomeBasicGroup = "";
+            for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
+                if(arr.includes(questionId)){
+                    isInSomeBasicGroup = "\t" + id;
+                    break;
+                }
+            }
+            let indexStr = `${i}`;
+            indexStr = indexStr.padStart(2, ' ');
+            content += `\t(${indexStr})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
+        }
+        return content;
+    }
+
+    resumeWithCuts(){
+        let content = this.id + "\n";
+        for (let i = 0; i < this.questions.length; i++) {
+            const questionId = this.questions[i].id;
+            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
+            let isInSomeBasicGroup = "";
+            for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
+                if(arr.includes(questionId)){
+                    isInSomeBasicGroup = "\t" + id;
+                    break;
+                }
+            }
+            let indexStr = `${i}`;
+            indexStr = indexStr.padStart(2, ' ');
+            content += `\t(${indexStr})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
+
+            if(this.cutIndexes.includes(i)){
+                content += '\t----------------------------------\n';
+            }
+        }
+        return content;
     }
 }
 
