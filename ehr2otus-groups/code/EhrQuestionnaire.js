@@ -84,10 +84,18 @@ class EhrQuestionnaire {
         this.endPage.readFromJsonObj(ehrEndPageObj);
     }
 
-    takeXray(){
+    resume(){
         let content = "";
         for (let question of this.questionPages) {
-            content += question.takeXray() + "\n";
+            content += question.resume() + "\n";
+        }
+        return content;
+    }
+
+    resumeWithCuts(){
+        let content = "";
+        for (let question of this.questionPages) {
+            content += question.resumeWithCuts() + "\n";
         }
         return content;
     }

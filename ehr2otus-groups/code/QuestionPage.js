@@ -27,6 +27,7 @@ class QuestionPage {
         this.hiddenQuestions = [];
 
         this.hiddenIndexes = [];
+        this.cutIndexes = [];
     }
 
     // toJSON(){
@@ -157,11 +158,11 @@ class QuestionPage {
 
             console.log(`${id} (${index}) hide ${hiddenQuestion.hidden} (${hiddenIndex})`);//.
 
-            if(hiddenIndex == index-1){
+            if(hiddenIndex === index-1){
                 [this.questions[index], this.questions[hiddenIndex]] = [this.questions[hiddenIndex], this.questions[index]];
                 hiddenIndex = index;
             }
-            else if(hiddenIndex != index+1){
+            else if(hiddenIndex !== index+1){
                 console.log(`${hiddenQuestionId} ${hiddenQuestion.hidden} (${hiddenIndex}) hidden by ${id} (${index})`);//.
             }
 
@@ -178,38 +179,54 @@ class QuestionPage {
     }
 
     _setCutIndexes(){
+        if(this.id === 'PAGE_166'){
+            console.log('here');
+        }
+
         const lastPageQuestionIndex = this.questions.length-1;
         let groupCutIndexes = [];
         for(let [id,arr] of Object.entries(this.basicQuestionGroups)){
             let n = arr.length;
             if(n > 1){
-                const lastGroupQuestionIndex = this._indexOfQuestionById(arr[n-1]);
-                const nextIndex = lastGroupQuestionIndex ;
-                if(!this.hiddenIndexes.includes(nextIndex) && nextIndex != lastPageQuestionIndex){
-                    groupCutIndexes.push(nextIndex);
-                    console.log(`cut at index ${nextIndex} after Basic Group ${id}`);//.
+                const firstIndex = this._indexOfQuestionById(arr[0]);
+                if(this.hiddenIndexes.includes(firstIndex)){
+                    console.log(`remove ${firstIndex} from hiddenIndexes`);
+                    this.hiddenIndexes = this.hiddenIndexes.filter(x => x !== firstIndex);
+                }
+                if(firstIndex-1 >= 0){
+                    groupCutIndexes.push(firstIndex-1);
+                }
+
+                const lastIndex = this._indexOfQuestionById(arr[n-1]);
+                if(!this.hiddenIndexes.includes(lastIndex) && lastIndex !== lastPageQuestionIndex){
+                    groupCutIndexes.push(lastIndex);
+                    console.log(`cut at index ${lastIndex} after Basic Group ${id}`);//.
                 }
             }
         }
 
+        for(let index of this.hiddenIndexes){
+            this.cutIndexes.push(index);
+            if(index > 0 && !this.cutIndexes.includes(index-1)) {
+                this.cutIndexes.push(index - 1);
+            }
+        }
+
+        this.cutIndexes = this.cutIndexes.concat(groupCutIndexes).sort();
+
+        if(this.hiddenIndexes.length > 0){
+            console.log("hiddenIndexes =   " + this.hiddenIndexes.join(", "));
+        }
         if(groupCutIndexes.length > 0){
-            console.log("groupCutIndexes = " + groupCutIndexes.join(", ") + "\n");
+            console.log("groupCutIndexes = " + groupCutIndexes.join(", "));
+        }
+        if(this.cutIndexes.length > 0){
+            console.log("cutIndexes =      " + this.cutIndexes.join(", "));
         }
     }
 
-    _readRules(ehrQuestionPage){
-        let branch = ehrQuestionPage.branch;
-        if(!branch){
-            return;
-        }
-        for(let ehrBranch of branch) {
-            this.branches.push(new Branch(this.id, ehrBranch));
-        }
-    }
-
-    takeXray(){
+    resume(){
         let content = this.id + "\n";
-        //console.log(this.id);
         for (let i = 0; i < this.questions.length; i++) {
             const questionId = this.questions[i].id;
             const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
@@ -220,10 +237,44 @@ class QuestionPage {
                     break;
                 }
             }
-            //console.log(`\t${questionId} ${isInSomeBasicGroup} ${isHiddenBySomebody}`);
-            content += `\t(${i})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
+            let indexStr = `${i}`;
+            indexStr = indexStr.padStart(2, ' ');
+            content += `\t(${indexStr})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
         }
         return content;
+    }
+
+    resumeWithCuts(){
+        let content = this.id + "\n";
+        for (let i = 0; i < this.questions.length; i++) {
+            const questionId = this.questions[i].id;
+            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
+            let isInSomeBasicGroup = "";
+            for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
+                if(arr.includes(questionId)){
+                    isInSomeBasicGroup = "\t" + id;
+                    break;
+                }
+            }
+            let indexStr = `${i}`;
+            indexStr = indexStr.padStart(2, ' ');
+            content += `\t(${indexStr})\t${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
+
+            if(this.cutIndexes.includes(i)){
+                content += '\t----------------------------------\n';
+            }
+        }
+        return content;
+    }
+
+    _readRules(ehrQuestionPage){
+        let branch = ehrQuestionPage.branch;
+        if(!branch){
+            return;
+        }
+        for(let ehrBranch of branch) {
+            this.branches.push(new Branch(this.id, ehrBranch));
+        }
     }
 
     /* -----------------------------------------------------
