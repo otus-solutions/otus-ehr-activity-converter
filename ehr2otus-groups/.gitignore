@@ -1,0 +1,7 @@
+# directories
+.idea/*
+node_modules/*
+output/*
+# files
+input/*.xml
+package-lock.json
