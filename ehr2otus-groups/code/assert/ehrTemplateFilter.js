@@ -61,7 +61,7 @@ function extractQuestionsFromArrays(template, filterLevel){
             nextPageId: questionPage.nextPageId,
             header: questionPage.header,
             questions: outputQuestions,
-            //branch: questionPage.branch
+            branch: questionPage.branch
         });
 
         // if(questionPage.branch && questionPage.branch.length > 1){
