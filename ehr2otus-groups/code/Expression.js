@@ -9,11 +9,11 @@ const operatorDict = {
 class Expression {
 
     constructor(questionName, questionId, operator, value, isMetadata=false){
+        this.questionName = questionName;
         this.questionId = questionId;
         this.operator = operator;
         this.value = value;
         this.isMetadata = isMetadata;
-        this.questionName = questionName;
     }
 
     static equalOperator(){

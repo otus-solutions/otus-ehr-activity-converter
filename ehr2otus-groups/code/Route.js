@@ -1,27 +1,32 @@
 
 class Route {
 
-    constructor(originQuestion, destinyQuestion, conditionsArr) {
+    constructor(originQuestion, destinyQuestion, conditionsArr=[]) {
         this.origin = originQuestion;
         this.destination = destinyQuestion;
         this.conditions = conditionsArr;
     }
 
     toOtusTemplate(){
-        const n = this.conditions.length;
         let conditions = [];
+        const n = this.conditions.length;
+
         for (let i = 0; i < n; i++) {
-            let conditionRules = [];
-            for(let ruleArr of  this.conditions[i]){
-                conditionRules.push(JSON.parse(JSON.stringify(ruleArr, null, 4))); // TODO
+
+            let rules = [];
+
+            for(let expr of this.conditions[i]){
+                rules.push(expr.toOtusTemplate());
             }
+
             conditions.push({
                 "extents": "StudioObject",
                 "objectType": "RouteCondition",
                 "name": `ROUTE_CONDITION_${i}`,
-                "rules": conditionRules
+                "rules": rules
             });
         }
+
         return {
             "extents": "SurveyTemplateObject",
             "objectType": "Route",

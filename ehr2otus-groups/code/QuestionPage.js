@@ -224,8 +224,8 @@ class QuestionPage {
                 let question = this.questions[i];
                 const operator = Expression.equalOperator();
                 const value = question.hiddenQuestion.isVisibleWhenThisAnswerIs;
-                const expression = new Expression(question.name, question.id, operator, value);
-                this._addNewRoute(i, i+1, [expression]);
+                const condition = [ new Expression(question.name, question.id, operator, value) ];
+                this._addNewRoute(i, i+1, [condition]);
             }
             else{
                 this._addNewRoute(i, i+1);
@@ -253,7 +253,7 @@ class QuestionPage {
         }
     }
 
-    _addNewRoute(originIndex, targetIndex, conditions){
+    _addNewRoute(originIndex, targetIndex, conditions=[]){
         const originId = this.questions[originIndex].id;
         const targetId = this._getNextQuestionId(targetIndex-1);// -1 coz method look for arg+1
         try{
@@ -268,7 +268,7 @@ class QuestionPage {
      */
 
     toOtusStudioTemplate(otusStudioTemplate){
-
+        
         for(let question of this.questions){
             otusStudioTemplate[OTUS_QUESTIONS_LIST].push(question.toOtusTemplate());
 

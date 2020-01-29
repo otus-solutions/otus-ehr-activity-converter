@@ -19,7 +19,29 @@ class Group {
     }
 
     toOtusTemplate(){
-        // TODO
+        const members = [{
+            "id": this.getFirstQuestion(),
+            "position": "start"
+        }];
+
+        for (let i = 1; i < this.questions.length-1; i++) {
+            members.push({
+                "id": this.questions[i],
+                "position": "middle"
+            });
+        }
+
+        members.push({
+            "id": this.getLastQuestion(),
+            "position": "end"
+        });
+
+        return {
+			"objectType": "SurveyItemGroup",
+			"start": this.getFirstQuestion(),
+			"end": this.getLastQuestion(),
+			"members": members
+		};
     }
 
 }

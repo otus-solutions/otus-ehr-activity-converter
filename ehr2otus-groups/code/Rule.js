@@ -1,8 +1,5 @@
 const globalVars = require('./globalVars');
 const Expression = require('./Expression');
-const NavigationHandler = require('./NavigationHandler');
-
-/* Its a AND expression in EHR template */
 
 class Rule {
 
@@ -15,10 +12,6 @@ class Rule {
             const expression = new Expression(questionName, questionId, expr.operator, expr.value, isMetadata);
             this.expressions.push(expression);
         }
-    }
-
-    toOtusTemplate(index){
-        return NavigationHandler.getConditionRouteObj(index, this.andExpression.toOtusTemplate());
     }
 
 }

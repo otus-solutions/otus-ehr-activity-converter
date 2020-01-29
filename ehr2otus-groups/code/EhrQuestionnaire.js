@@ -121,18 +121,36 @@ class EhrQuestionnaire {
 
    resume(){
         let content = "";
-        for (let question of this.questionPages) {
-            content += question.resume() + "\n";
+        for (let questionPage of this.questionPages) {
+            content += questionPage.resume() + "\n";
         }
         return content;
     }
 
     resumeWithCuts(){
         let content = "";
-        for (let question of this.questionPages) {
-            content += question.resumeWithCuts() + "\n";
+        for (let questionPage of this.questionPages) {
+            content += questionPage.resumeWithCuts() + "\n";
         }
         return content;
+    }
+
+    resumeRoutesJson(){
+        let json = {};
+        for (let questionPage of this.questionPages) {
+            json[questionPage.id] = questionPage.routes;
+        }
+        return json;
+    }
+
+    resumeGroupsJson(){
+        let json = {};
+        for (let questionPage of this.questionPages) {
+            if(questionPage.groups.length > 0){
+                json[questionPage.id] = questionPage.groups;
+            }
+        }
+        return json;
     }
 
 }
