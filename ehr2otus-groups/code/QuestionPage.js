@@ -241,27 +241,30 @@ class QuestionPage {
         }
         this._addNewRoute(n-1, n);
         
-        //console.log(this.id + ":\n" + JSON.stringify(this.routes, null, 4) + '\n');//.
+        //console.log(this.id + ":\n" + JSON.stringify(this.routes, null, 2) + '\n');//.
     }
 
     _setRoutesFromBranches(){
-
-        //if(this.id !== 'PAGE_045'){  return; } //.
+        const pageId = "PAGE_000";//.
+        if(this.id === pageId) console.log(this.id + "\n" + JSON.stringify(this.routes, null, 2) + '\n');//.
 
         for(let branch of this.branches) {
+            const originId =  this.questions[0].id;
+            const targetId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
 
-            branch.originId =  this.questions[0].id;
-            branch.targetId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
-            
-            const conditions = branch.rules;
+            if(this.id === pageId) console.log(`\n${branch.originPageId} (${originId}) -> ${branch.targetPageId} (${targetId})\nrules`);//.
 
-            console.log(`\norigin: ${branch.originPageId} -> ${branch.originId}`);//.
-            console.log(`target: ${branch.targetPageId} -> ${branch.targetId}\nrules`);//.
+            let conditions = [];
 
-            for(let condition of conditions){
-                console.log(JSON.stringify(condition.expressions));//.
+            for(let condition of branch.rules){
+                conditions.push(condition.expressions);
+                if(this.id === pageId) console.log(JSON.stringify(condition.expressions, null, 4));//.
             }
+
+            this.routes[originId].push(new Route(originId, targetId, conditions));
         }
+
+        if(this.id === pageId) console.log("\nagain\n" + JSON.stringify(this.routes, null, 2) + '\n\n');//.
     }
 
     _addNewRoute(originIndex, targetIndex, conditions){
@@ -338,78 +341,6 @@ class QuestionPage {
         navigationList.push(_navigationItemListForQuestion(lastQuestion, inNavigation, routes));
     }
 
-    _setNavigationAndGroupListUsingSplitedQuestions(otusStudioTemplate){
-        let navigationList = otusStudioTemplate[OTUS_NAVIGATION_LIST];
-        let groupList = otusStudioTemplate[OTUS_GROUP_LIST];
-        const questionGroupsForDefaultRoute = this.splitedQuestions.filter(obj => !(obj instanceof HiddenQuestionGroup));
-        const questionGroupsForHide = this.splitedQuestions.filter(obj => (obj instanceof HiddenQuestionGroup));
-
-        let result = [];
-        for (let i = 0; i < questionGroupsForDefaultRoute.length; i++) {
-            let group = questionGroupsForDefaultRoute[i];
-            result = result.concat(group);
-            if (group.length > 1) {
-                groupList.push(
-                    _getOtusGroupListObjForGroup(group.map(q => q.id))
-                );
-            }
-        }
-
-        this._addNavigationToOtusTemplate(result, navigationList);
-
-        let hiddenQuestionsDict = {};
-        for (let i = 0; i < questionGroupsForHide.length; i++) {
-            let questionHiddenGroup = questionGroupsForHide[i];
-            let branch = new Branch(this.id);
-            branch.targetPageId = this.id;
-            let lastQuestionGroup = questionGroupsForDefaultRoute[i];
-            let lastQuestion = lastQuestionGroup[lastQuestionGroup.length - 1];
-            branch.setOriginAndTargetQuestionIds(lastQuestion.id, questionHiddenGroup.hiddenQuestions[0].id);
-            let answer = questionHiddenGroup.hiddenBy.answer;
-            for (let value of answer.split(',')) {
-                branch.addEqualExpression(questionHiddenGroup.hiddenBy.id, value);
-            }
-            hiddenQuestionsDict[questionHiddenGroup.hiddenBy.id] = branch;
-
-            let hiddenGroupSize = questionHiddenGroup.hiddenQuestions.length;
-            if (hiddenGroupSize === 1) {
-                const uniqueHiddenQuestion = questionHiddenGroup.hiddenQuestions[0];
-                const nextRegularGroupFirstQuestionId = (uniqueHiddenQuestion.id === this.getLastQuestion().id ?
-                    questionHiddenGroup.next :
-                    questionGroupsForDefaultRoute[i + 1][0].id);
-                _addNavigationDefaulRouteForQuestion(navigationList, uniqueHiddenQuestion, nextRegularGroupFirstQuestionId, null);
-            }
-            else {
-                groupList.push(
-                    _getOtusGroupListObjForGroup(questionHiddenGroup.hiddenQuestions.map(q => q.id))
-                );
-
-                const firstHiddenQuestion = questionHiddenGroup.hiddenQuestions[0];
-                const nextHiddenQuestion = questionHiddenGroup.hiddenQuestions[1];
-                _addNavigationDefaulRouteForQuestion(navigationList, firstHiddenQuestion, nextHiddenQuestion.id, null);
-
-                _addNavigationAtSequence(navigationList, questionHiddenGroup.hiddenQuestions, 1, hiddenGroupSize - 2);
-
-                const lastHiddenQuestion = questionHiddenGroup.hiddenQuestions[hiddenGroupSize - 1];
-                const prevLastHiddenQuestion = questionHiddenGroup.hiddenQuestions[hiddenGroupSize - 2];
-                const nextRegularGroupFirstQuestionId = (lastHiddenQuestion.id === this.getLastQuestion().id ?
-                    questionHiddenGroup.next :
-                    questionGroupsForDefaultRoute[i + 1][0].id);
-                _addNavigationDefaulRouteForQuestion(navigationList, lastHiddenQuestion, nextRegularGroupFirstQuestionId, prevLastHiddenQuestion);
-            }
-        }
-
-        for (let [id, rule] of Object.entries(hiddenQuestionsDict)) {
-            let i = 0, navigationElem = undefined;
-            while (!navigationElem && i < navigationList.length) {
-                if (navigationList[i].origin === id) {
-                    navigationElem = navigationList[i];
-                }
-                i++;
-            }
-            navigationElem.routes.push(rule.toOtusTemplate());
-        }
-    }
 
     _inNavigationArrForFirstQuestion(){
         try {
@@ -423,19 +354,6 @@ class QuestionPage {
                 return [NavigationHandler.getInNavigationObj(BEGIN_NODE.id, BEGIN_NODE.index)];
             }
             return [];
-        }
-    }
-
-    _pushNonDefaultRoutesOtusObj(questions, routes){
-        const lastQuestion = questions[questions.length-1];
-        for (let branch of this.branches) {
-            let targetQuestionId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
-            branch.setOriginAndTargetQuestionIds(lastQuestion.id, targetQuestionId);
-            routes.push(branch.toOtusTemplate());
-
-            if(this.id === "PAGE_045"){//.
-                console.log(JSON.stringify(branch.toOtusTemplate()));
-            }
         }
     }
 
