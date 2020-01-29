@@ -12,6 +12,8 @@ const NavigationHandler = require('./NavigationHandler');
 const Branch = require('./Branch');
 const Route = require('./Route');
 const Expression = require('./Expression');
+const Group = require('./Group');
+
 
 const OTUS_QUESTIONS_LIST = globalVars.OTUS_TEMPLATE_ATTRIBUTES.QUESTIONS;
 const OTUS_NAVIGATION_LIST = globalVars.OTUS_TEMPLATE_ATTRIBUTES.NAVIGATION_LIST;
@@ -31,6 +33,7 @@ class QuestionPage {
         this.hiddenIndexes = [];
         this.cutIndexes = [];
         this.routes = {};
+        this.groups = [];
     }
 
     // toJSON(){
@@ -221,6 +224,7 @@ class QuestionPage {
     setRoutes(){
         this._setRoutesByCutIndexes();
         this._setRoutesFromBranches();
+        this._setGroups();
     }
 
     _setRoutesByCutIndexes(){
@@ -275,6 +279,42 @@ class QuestionPage {
         }catch (e) {
             this.routes[originId] = [new Route(originId, targetId, conditions)];
         }
+    }
+
+    _setGroups(){
+        if(this.id === "PAGE_003"){
+            console.log('debug');
+        }
+
+        const n = this.questions.length;
+        let start=0, end=0;
+
+        for(let index of this.cutIndexes.concat([n-1])){
+            const group = this.questions.slice(start, index+1).map(q => q.id);
+            const m = group.length;
+            if(m >= 2){
+                this.groups.push(group);
+            }
+            start = index+1;
+        }
+        
+
+        // while(start < n){
+        //     end = start+1;
+        //     let group = [this.questions[start].id];
+        //     while(!this.cutIndexes.includes(end) && end < n){
+        //         group.push(this.questions[end++].id);
+        //     }
+        //     if(end < n){
+        //         group.push(this.questions[end].id);
+        //     }
+        //     if(group.length > 1){
+        //         this.groups.push(new Group(group, this.questions[start].basicGroup));
+        //     }
+        //     start = end+1;
+        // }
+
+        if(this.groups.length>0) console.log("\n" + this.id + "\n" + JSON.stringify(this.groups, null, 4));//.
     }
 
     /* -----------------------------------------------------
