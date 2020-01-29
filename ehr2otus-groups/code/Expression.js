@@ -1,8 +1,6 @@
 const globalVars = require('./globalVars');
-const NavigationHandler = require('./NavigationHandler');
 
 const EHR_EQUAL = "EQ";
-
 const operatorDict = {
     "EQ": "equal",
     "GT": "greater"
@@ -10,11 +8,12 @@ const operatorDict = {
 
 class Expression {
 
-    constructor(questionId, operator, value, isMetadata=false){
+    constructor(questionName, questionId, operator, value, isMetadata=false){
         this.questionId = questionId;
         this.operator = operator;
         this.value = value;
         this.isMetadata = isMetadata;
+        this.questionName = questionName;
     }
 
     static equalOperator(){
@@ -22,12 +21,7 @@ class Expression {
     }
 
     toJSON(){
-        return `${this.questionId} ${this.operator} ${this.value}`;
-    }
-
-    setValueAndOperator(value, operator=EHR_EQUAL){
-        this.operator = operator;
-        this.value = value;
+        return `${this.questionName} (${this.questionId}) ${this.operator} ${this.value}`;
     }
 
     toOtusTemplate(){
@@ -38,7 +32,16 @@ class Expression {
                 this.value = globalVars.choiceGroups.findChoiceLabelInAllChoiceGroup(this.value);
             }
         }
-        return NavigationHandler.getExpressionObject(this.questionId, operatorDict[this.operator], this.value, this.isMetadata);
+
+        return {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Rule",
+            "when": this.questionId,
+            "operator": operatorDict[this.operator],
+            "answer": this.value,
+            "isMetadata": this.isMetadata,
+            "isCustom": true
+        };
     }
     
 }

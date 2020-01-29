@@ -12,7 +12,8 @@ class Rule {
             const isMetadata = (expr.questionName.includes("Metadata"));
             const questionName = expr.questionName.replace("Metadata", "");
             const questionId = globalVars.dictQuestionNameId[questionName];
-            this.expressions.push(new Expression(questionId, expr.operator, expr.value, isMetadata));
+            const expression = new Expression(questionName, questionId, expr.operator, expr.value, isMetadata);
+            this.expressions.push(expression);
         }
     }
 

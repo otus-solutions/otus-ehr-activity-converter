@@ -80,17 +80,6 @@ class NavigationHandler {
         }
     }
 
-    static getExpressionObject(questionId, operator, answer, isMetadata, isCustom=true){
-        return {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Rule",
-            "when": questionId,
-            "operator": operator,
-            "answer": answer,
-            "isMetadata": isMetadata,
-            "isCustom": isCustom
-        };
-    }
 }
 
 module.exports = NavigationHandler;
