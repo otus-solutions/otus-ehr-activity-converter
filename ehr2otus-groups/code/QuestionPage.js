@@ -222,9 +222,35 @@ class QuestionPage {
      */
 
     setRoutes(){
+        this._setGroups();
         this._setRoutesByCutIndexes();
         this._setRoutesFromBranches();
-        this._setGroups();
+    }
+
+    _setGroups(){
+        // if(this.id === "PAGE_003"){
+        //     console.log('debug');
+        // }
+
+        const n = this.questions.length;
+        let start=0;
+        for(let index of this.cutIndexes.concat([n-1])){
+            const group = this.questions.slice(start, index+1).map(q => q.id);
+            if(group.length >= 2){
+                this.groups.push(new Group(group, group[0].basicGroup));
+            }
+            start = index+1;
+        }
+
+        //if(this.groups.length>0) console.log("\n" + this.id + "\n" + JSON.stringify(this.groups, null, 4));//.
+    }
+
+    _someGroupContainsQuestion(questionId){
+        for(let group of this.groups){
+            if(group.containsQuestion(questionId)){
+                return group;
+            }
+        }
     }
 
     _setRoutesByCutIndexes(){
@@ -250,25 +276,37 @@ class QuestionPage {
 
     _setRoutesFromBranches(){
         const pageId = "PAGE_000";//.
-        if(this.id === pageId) console.log(this.id + "\n" + JSON.stringify(this.routes, null, 2) + '\n');//.
+        const debug = (this.id === pageId);//.
+        if(debug) {
+            console.log(this.id + "\ngroups" + this.groups.length + "\n" + JSON.stringify(this.groups, null, 2) + '\n');
+            console.log(JSON.stringify(this.routes, null, 2) + '\n');//.
+        }//.
 
         for(let branch of this.branches) {
-            const originId =  this.questions[0].id;
+            let originId =  this.questions[0].id;
+            let group = this._someGroupContainsQuestion(originId);
+            if(group){
+                if(debug) console.log(`initial originId = ${originId}`);//.
+                originId = group.getLastQuestion();
+            }
+
+            if(debug) console.log(`has group with originId = ${originId}? ${group!==undefined}`);//.
+
             const targetId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
 
-            if(this.id === pageId) console.log(`\n${branch.originPageId} (${originId}) -> ${branch.targetPageId} (${targetId})\nrules`);//.
+            if(debug) console.log(`\n${branch.originPageId} (${originId}) -> ${branch.targetPageId} (${targetId})\nrules`);//.
 
             let conditions = [];
 
             for(let condition of branch.rules){
                 conditions.push(condition.expressions);
-                if(this.id === pageId) console.log(JSON.stringify(condition.expressions, null, 4));//.
+                if(debug) console.log(JSON.stringify(condition.expressions, null, 4));//.
             }
 
             this.routes[originId].push(new Route(originId, targetId, conditions));
         }
 
-        if(this.id === pageId) console.log("\nagain\n" + JSON.stringify(this.routes, null, 2) + '\n\n');//.
+        if(debug) console.log("\nagain\n" + JSON.stringify(this.routes, null, 2) + '\n\n');//.
     }
 
     _addNewRoute(originIndex, targetIndex, conditions){
@@ -279,42 +317,6 @@ class QuestionPage {
         }catch (e) {
             this.routes[originId] = [new Route(originId, targetId, conditions)];
         }
-    }
-
-    _setGroups(){
-        if(this.id === "PAGE_003"){
-            console.log('debug');
-        }
-
-        const n = this.questions.length;
-        let start=0, end=0;
-
-        for(let index of this.cutIndexes.concat([n-1])){
-            const group = this.questions.slice(start, index+1).map(q => q.id);
-            const m = group.length;
-            if(m >= 2){
-                this.groups.push(group);
-            }
-            start = index+1;
-        }
-        
-
-        // while(start < n){
-        //     end = start+1;
-        //     let group = [this.questions[start].id];
-        //     while(!this.cutIndexes.includes(end) && end < n){
-        //         group.push(this.questions[end++].id);
-        //     }
-        //     if(end < n){
-        //         group.push(this.questions[end].id);
-        //     }
-        //     if(group.length > 1){
-        //         this.groups.push(new Group(group, this.questions[start].basicGroup));
-        //     }
-        //     start = end+1;
-        // }
-
-        if(this.groups.length>0) console.log("\n" + this.id + "\n" + JSON.stringify(this.groups, null, 4));//.
     }
 
     /* -----------------------------------------------------
