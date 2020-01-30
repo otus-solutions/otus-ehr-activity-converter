@@ -1,16 +1,11 @@
-const AssertQuestion = require('./AssertQuestion');
-const AssertTemplate = require('./AssertTemplate');
-
-function extractRules(questionPage){
-    // TODO
-    return {};
-}
+const TAG_SEPARATOR = "_";
 
 let basicQuestionGroupId = [];
 let basicQuestionGroupCounter = 0;
 
 function extractQuestionsFromBasicGroup(questionArr, outputQuestions){
     for(let [key, subQuestionArr]  of questionArr){
+        key = key.split(TAG_SEPARATOR)[0];
         if(key === 'basicQuestionGroup'){
             for(let question of subQuestionArr){
                 if(basicQuestionGroupCounter === 0) {
@@ -51,7 +46,7 @@ function indexOf(questionName, questions, attributeName){
     }
 }
 
-function reallocHiddenQuestions(questions){
+function checkHiddenQuestions(questions){
     for (let i = 0; i < questions.length; i++) {
         let hiddenQuestionName = questions[i].hiddenQuestion;
         if(hiddenQuestionName){
@@ -62,7 +57,6 @@ function reallocHiddenQuestions(questions){
 
             if(j !== i+1){
                 console.log(`question ${i} (${questions[i].id}) hide ${j} (${questions[j].id})`);
-                [questions[i], questions[j]] = [questions[j], questions[i]];
             }
         }
     }
@@ -75,8 +69,7 @@ function extractQuestionsFromArrays(template, filterLevel){
         let outputQuestions = [];
         const questionArr = Object.entries(questionPage).filter(([key,value]) => key.includes('Question'));
         extractQuestionsFromBasicGroup(questionArr, outputQuestions);
-
-        reallocHiddenQuestions(outputQuestions);
+        checkHiddenQuestions(outputQuestions);
 
         if(filterLevel > 1) {
             outputQuestions = convertQuestionsOfQuestionPageIntoObject(outputQuestions);
@@ -89,11 +82,8 @@ function extractQuestionsFromArrays(template, filterLevel){
             questions: outputQuestions,
             branch: questionPage.branch
         });
-
-        // if(questionPage.branch && questionPage.branch.length > 1){
-        //     console.log(questionPage.id, questionPage.branch.length);
-        // }
     }
+
     return {
         metaDataGroup: template.metaDataGroup,
         choiceGroup: template.choiceGroup,
@@ -103,5 +93,6 @@ function extractQuestionsFromArrays(template, filterLevel){
 
 
 module.exports = {
+    TAG_SEPARATOR: TAG_SEPARATOR,
     extractQuestionsFromArrays: extractQuestionsFromArrays
 };
