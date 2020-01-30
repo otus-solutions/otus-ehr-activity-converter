@@ -11,9 +11,9 @@ class FileHandler {
 
     static mkdir (dirPath) {
         try {
-            fs.mkdirSync(dirPath, { recursive: true })
+            fs.mkdirSync(dirPath, { recursive: true });
         } catch (err) {
-            if (err.code !== 'EEXIST') throw err
+            if (err.code !== 'EEXIST') throw err;
         }
     }
 

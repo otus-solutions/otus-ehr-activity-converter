@@ -43,6 +43,30 @@ function convertQuestionsOfQuestionPageIntoObject(questionsArr){
     return questionsObj;
 }
 
+function indexOf(questionName, questions, attributeName){
+    for (let i = 0; i < questions.length; i++) {
+        if(questions[i][attributeName] === questionName){
+            return i;
+        }
+    }
+}
+
+function reallocHiddenQuestions(questions){
+    for (let i = 0; i < questions.length; i++) {
+        let hiddenQuestionName = questions[i].hiddenQuestion;
+        if(hiddenQuestionName){
+            let j = indexOf(hiddenQuestionName, questions, "name");
+            if(!j){
+                j = indexOf(hiddenQuestionName, questions, "basicGroup");
+            }
+
+            if(j !== i+1){
+                console.log(`question ${i} (${questions[i].id}) hide ${j} (${questions[j].id})`);
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+        }
+    }
+}
 
 function extractQuestionsFromArrays(template, filterLevel){
     let outputQuestionPages = [];
@@ -51,6 +75,8 @@ function extractQuestionsFromArrays(template, filterLevel){
         let outputQuestions = [];
         const questionArr = Object.entries(questionPage).filter(([key,value]) => key.includes('Question'));
         extractQuestionsFromBasicGroup(questionArr, outputQuestions);
+
+        reallocHiddenQuestions(outputQuestions);
 
         if(filterLevel > 1) {
             outputQuestions = convertQuestionsOfQuestionPageIntoObject(outputQuestions);

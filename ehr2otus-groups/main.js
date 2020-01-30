@@ -2,11 +2,14 @@
 const xml2js = require('xml2js');
 const FileHandler = require('./code/FileHandler');
 const EhrQuestionnaire = require("./code/EhrQuestionnaire");
-const otusTemplateReader = require('./code/assert/otusTemplateReader');
 const ehrTemplateFilter = require('./code/assert/ehrTemplateFilter');
-const assertRoutes = require('./code/assert/assertRoutes');
 
 const outputDirPath = process.cwd() + "/output/";
+
+function generateTemplateOID(){
+    //TODO
+    return "eleaOtusSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOltiYmFjYzM1MC1lNDdjLTExZTktOGVmNy02MTUwOTJlYjNkOTFdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==";
+}
 
 function createEmptyOtusSutioTemplateObj(name, acronym, oid) {
     return {
@@ -73,23 +76,16 @@ function xml2json(ehrXmlFilePath) {
     }
 }
 
-function getFilteredTemplateFilename(acronym) {
-    return acronym+"-filtered.json";
-}
 
-function getFilteredTemplateManuallyEditedFilename(acronym) {
-    return acronym+"-filtered-manually-edited.json";
-}
-
-function readEhrXMLAndFilter(templateInfo){
-    const xmlFilePath = process.cwd() + "/input/" + templateInfo.filename;
+function readEhrXMLAndFilter(acronym, filename){
+    const xmlFilePath = process.cwd() + "/input/" + filename;
     let ehrTemplate = xml2json(xmlFilePath).survey;
     ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(ehrTemplate, 1);
-    writeOutputJsonFile(getFilteredTemplateFilename(templateInfo.acronym), ehrTemplate);
+    writeOutputJsonFile(acronym+"-filtered.json", ehrTemplate);
 }
 
 function openEhrFilteredTemplate(acronym){
-    return FileHandler.readJsonSync(outputDirPath + getFilteredTemplateManuallyEditedFilename(acronym));
+    return FileHandler.readJsonSync(outputDirPath + acronym +"-filtered-manually-edited.json");
 }
 
 function writeOutputJsonFile(filename, content){
@@ -97,47 +93,51 @@ function writeOutputJsonFile(filename, content){
     FileHandler.write(path, JSON.stringify(content, null, 4));
 }
 
-function exportResumes(ehrQuestionnaire, acronym){
-    const prefixPath = outputDirPath + acronym + "-resume-";
-    FileHandler.write(prefixPath + "questions.txt", ehr.resume());
-    FileHandler.write(prefixPath + "cuts.txt", ehr.resumeWithCuts());
-    FileHandler.writeJson(prefixPath + "routes.json", ehr.resumeRoutesJson());
-    FileHandler.writeJson(prefixPath + "groups.json", ehr.resumeGroupsJson());
+function exportResumes(ehrQuestionnaire, templateOutputDirPath){
+    const prefixPath = templateOutputDirPath + "-resume";
+    FileHandler.write(prefixPath + "0-questions.txt", ehrQuestionnaire.resume());
+    // FileHandler.write(prefixPath + "1-cuts.txt", ehrQuestionnaire.resumeWithCuts());
+    // FileHandler.writeJson(prefixPath + "2-routes.json", ehrQuestionnaire.resumeRoutesJson());
+    // FileHandler.writeJson(prefixPath + "3-groups.json", ehrQuestionnaire.resumeGroupsJson());
 }
 
-function makeConversionEhr2OtusTemplate(templateInfo){
+function makeConversionEhr2OtusTemplate(acronym, templateInfo){
 
-    const ehrTemplate = openEhrFilteredTemplate(templateInfo.acronym);
+    const templateOutputDirPath = outputDirPath + acronym + "/";
+    FileHandler.mkdir(templateOutputDirPath);
+
+    const ehrTemplate = openEhrFilteredTemplate(acronym);
 
     const ehr = new EhrQuestionnaire();
     ehr.readFromJsonObj(ehrTemplate);
-    
-    //exportResumes(ehr, templateInfo.acronym);
+
+    exportResumes(ehr, templateOutputDirPath + acronym);
     // writeOutputJsonFile("dictQuestionNameId.json", globalVars.dictQuestionNameId);
 
-    const oid = "eleaOtusSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOltiYmFjYzM1MC1lNDdjLTExZTktOGVmNy02MTUwOTJlYjNkOTFdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==";
-    let otusTemplate = createEmptyOtusSutioTemplateObj(templateInfo.name, templateInfo.acronym, templateInfo.oid);
+    let otusTemplate = createEmptyOtusSutioTemplateObj(templateInfo.name, acronym, generateTemplateOID());
     ehr.toOtusStudioTemplate(otusTemplate);
-    writeOutputJsonFile(templateInfo.acronym+"-otus-result.json", otusTemplate);
+    writeOutputJsonFile(acronym+"-otus-result.json", otusTemplate);
 
     // const endPageSentences = ehr.endPage.getSentencesObject();
     // writeOutputJsonFile(templateInfo.acronym+"-end-page-sentences.json", endPageSentences);
 }
 
-
 function main(){
-    try {
-        FileHandler.mkdir(outputDirPath);
+    const func = process.argv[process.argv.length-1];
 
-        const templatesInfo = FileHandler.readJsonSync(process.cwd() + "/input/templateInfo.json").templatesInfo;
-        for(let templateInfo of templatesInfo){
-            //readEhrXMLAndFilter(templateInfo);
-            // edit templat manually to reallocate hiddenQuestions
-            makeConversionEhr2OtusTemplate(templateInfo);
+    const templatesInfo = FileHandler.readJsonSync(process.cwd() + "/templateInfo.json");
+    for(let [acronym, info] of Object.entries(templatesInfo)){
+
+        switch (func) {
+            case 'read':
+                readEhrXMLAndFilter(acronym, info.filename);
+                break;
+            case 'parse':
+                makeConversionEhr2OtusTemplate(acronym, info);
+                break;
         }
-    }
-    catch (e) {
-        console.log(e);
+
+        // edit templat manually to reallocate hiddenQuestions
     }
 }
 

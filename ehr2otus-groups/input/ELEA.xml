@@ -3129,9 +3129,11 @@
 		<basicQuestionGroup name="elea14aGroup" id="ELEA14aGroup"
 			label="[b]Evento hospitalar:[/b]" metaDataGroupId="DONT_WANT_KNOW_APPLY">
 
-			<booleanQuestion name="stroke" id="ELEA14a"	label="Acidente Vascular Cerebral" />
+			<booleanQuestion name="stroke" id="ELEA14a"
+				label="Acidente Vascular Cerebral" />
 
-			<booleanQuestion name="transientIschaemicAttack" id="ELEA14b"	label="Ataque Isquêmico Transitório" />
+			<booleanQuestion name="transientIschaemicAttack" id="ELEA14b"
+				label="Ataque Isquêmico Transitório" />
 
 			<booleanQuestion name="cancer14c" id="ELEA14c" label="Câncer" />
 
@@ -3139,19 +3141,26 @@
 
 			<booleanQuestion name="diabetes" id="ELEA14e" label="Diabetes" />
 
-			<booleanQuestion name="peripheralVascularDisease" id="ELEA14f"	label="Doença Vascular Periférica" />
+			<booleanQuestion name="peripheralVascularDisease" id="ELEA14f"
+				label="Doença Vascular Periférica" />
 
-			<booleanQuestion name="acuteMyocardialInfarction" id="ELEA14g"	label="Infarto Agudo do Miocárdio" />
+			<booleanQuestion name="acuteMyocardialInfarction" id="ELEA14g"
+				label="Infarto Agudo do Miocárdio" />
 
-			<booleanQuestion name="heartFailure" id="ELEA14h"	label="Insuficiência Cardíaca" />
+			<booleanQuestion name="heartFailure" id="ELEA14h"
+				label="Insuficiência Cardíaca" />
 
-			<booleanQuestion name="renalFailure14i" id="ELEA14i"	label="Insuficiência Renal" />
+			<booleanQuestion name="renalFailure14i" id="ELEA14i"
+				label="Insuficiência Renal" />
 
-			<booleanQuestion name="obstructionCarotid" id="ELEA14j"	label="Obstrução da Carótida" />
+			<booleanQuestion name="obstructionCarotid" id="ELEA14j"
+				label="Obstrução da Carótida" />
 
-			<booleanQuestion name="deepVeinThrombosis14k" id="ELEA14k" label="Trombose Venosa Profunda" />
+			<booleanQuestion name="deepVeinThrombosis14k" id="ELEA14k"
+				label="Trombose Venosa Profunda" />
 
-			<booleanQuestion name="other" id="ELEA14l" label="Outro"	hiddenQuestion="howA14lq" visibleWhen="true" />
+			<booleanQuestion name="other" id="ELEA14l" label="Outro"
+				hiddenQuestion="howA14lq" visibleWhen="true" />
 
 			<textQuestion name="howA14lq" id="ELEA14lq" label="Qual?" />
 		</basicQuestionGroup>
@@ -3161,9 +3170,11 @@
 
 			<booleanQuestion name="cancer14m" id="ELEA14m" label="Câncer" />
 
-			<booleanQuestion name="renalFailure14n" id="ELEA14n" label="Insuficiência Renal" />
+			<booleanQuestion name="renalFailure14n" id="ELEA14n"
+				label="Insuficiência Renal" />
 
-			<booleanQuestion name="deepVeinThrombosis14o" id="ELEA14o" label="Trombose Venosa Profunda" />
+			<booleanQuestion name="deepVeinThrombosis14o" id="ELEA14o"
+				label="Trombose Venosa Profunda" />
 		</basicQuestionGroup>
 
 		<singleSelectionQuestion name="death15" id="ELEA15"
@@ -3284,13 +3295,17 @@
 	<questionPage id="PAGE_172" nextPageId="END_PAGE">
 		<header>[b]Acidente Vascular Cerebral[/b]</header>
 
-		<textQuestion id="ELEA14a1" name="hospitalNameA14a1"	label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<textQuestion id="ELEA14a1" name="hospitalNameA14a1"
+			label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 
-		<numericQuestion id="ELEA14a2" name="cnesA14a2" label="CNES"	metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" lowerLimit="0" />
+		<numericQuestion id="ELEA14a2" name="cnesA14a2" label="CNES"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" lowerLimit="0" />
 
-		<dateQuestion id="ELEA14a3" name="dateOfAdmissionA14a3" maxdate="realizationDate"	label="Data da internação" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<dateQuestion id="ELEA14a3" name="dateOfAdmissionA14a3" maxdate="realizationDate"
+			label="Data da internação" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 
-		<numericQuestion id="ELEA14a4" name="periodOfAdmissionA14a4" label="Duração da internação (dias):" decimalNumber="false"
+		<numericQuestion id="ELEA14a4" name="periodOfAdmissionA14a4"
+			label="Duração da internação (dias):" decimalNumber="false"
 			lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
 
 		<branch targetPageId="PAGE_173">
@@ -3396,11 +3411,14 @@
 	<questionPage id="PAGE_173" nextPageId="END_PAGE">
 		<header>[b]Ataque Isquêmico Transitório[/b]</header>
 
-		<textQuestion id="ELEA14b1" name="hospitalNameA14b1" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<textQuestion id="ELEA14b1" name="hospitalNameA14b1"
+			label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 
-		<numericQuestion id="ELEA14b2" name="cnesA14b2" label="CNES" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" lowerLimit="0" />
+		<numericQuestion id="ELEA14b2" name="cnesA14b2" label="CNES"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" lowerLimit="0" />
 
-		<dateQuestion id="ELEA14b3" name="dateOfAdmissionA14b3" maxdate="realizationDate"	label="Data da internação" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<dateQuestion id="ELEA14b3" name="dateOfAdmissionA14b3" maxdate="realizationDate"
+			label="Data da internação" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 
 		<numericQuestion id="ELEA14b4" name="periodOfAdmissionA14b4"
 			label="Duração da internação (dias):" decimalNumber="false"
@@ -3502,9 +3520,11 @@
 	<questionPage id="PAGE_174" nextPageId="END_PAGE">
 		<header>[b]Câncer - Hospitalar[/b]</header>
 
-		<textQuestion id="ELEA14c1" name="hospitalNameA14c1" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<textQuestion id="ELEA14c1" name="hospitalNameA14c1"
+			label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 
-		<numericQuestion id="ELEA14c2" name="cnesA14c2" label="CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+		<numericQuestion id="ELEA14c2" name="cnesA14c2" label="CNES"
+			lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
 
 		<dateQuestion id="ELEA14c3" name="dateOfAdmissionA14c3" maxdate="realizationDate"
 			label="Data da internação" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
@@ -4298,10 +4318,11 @@
 
 		<singleSelectionQuestion name="deathLocation"
 			id="ELEA15b" choiceGroupId="DeathLocation" label="Local do óbito:"
-			hiddenQuestion="ifDeathOutsideTheHospital" visibleWhen="HOSPITAL,EMERGENCY_CARE,OTHER_HEALTH_INSTITUTION"
+			hiddenQuestion="ELEA15bHiddenGroup" visibleWhen="HOSPITAL,EMERGENCY_CARE,OTHER_HEALTH_INSTITUTION"
 			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 
-		<basicQuestionGroup name="ifDeathOutsideTheHospital" id="ELEA15bHiddenGroup">
+		<basicQuestionGroup name="ifDeathOutsideTheHospital"
+			id="ELEA15bHiddenGroup">
 
 			<textQuestion name="nameOfTheHealthFacility" id="ELEA15c"
 				label="Nome do estabelecimento de saúde:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />

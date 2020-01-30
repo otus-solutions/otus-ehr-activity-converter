@@ -4,7 +4,9 @@
   "description": "EHR to Otus Template Conversion",
   "main": "main.js",
   "scripts": {
-    "parser": "node main.js"
+    "start": "mkdir -p input output",
+    "read": "node main.js read",
+    "parse": "node main.js parse"
   },
   "author": "Flávia Pereira",
   "license": "ISC",
