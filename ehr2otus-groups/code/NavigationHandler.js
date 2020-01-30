@@ -2,28 +2,37 @@ const DEFAULT_NODES = require('./globalVars').DEFAULT_NODES;
 
 class NavigationHandler {
 
-    static getInNavigationObj(prevQuestionId, prevQuestionIndex){
-        return {
-            "origin": prevQuestionId,
-            "index": prevQuestionIndex
-        }
-    }
-
-    static navigationBeginNodeItem(firstQuestionId) {
-        const BEGIN_NODE = DEFAULT_NODES.BEGIN.id;
+    static getNavigationNode(originId, originIndex, prevQuestionId, prevQuestionIndex, routes=[]) {
         return {
             "extents": "SurveyTemplateObject",
             "objectType": "Navigation",
-            "origin": BEGIN_NODE,
-            "index": 0,
+            "origin": originId,
+            "index": originIndex,
+            "inNavigations": [
+                {
+                    "origin": prevQuestionId,
+                    "index": prevQuestionIndex
+                }
+            ],
+            "routes": routes
+        }
+    }
+
+    static getNavigationBeginNode(firstQuestionId) {
+        const BEGIN_NODE = DEFAULT_NODES.BEGIN;
+        return {
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": BEGIN_NODE.id,
+            "index": BEGIN_NODE.index,
             "inNavigations": [],
             "routes": [
                 {
                     "extents": "SurveyTemplateObject",
                     "objectType": "Route",
-                    "origin": BEGIN_NODE,
+                    "origin": BEGIN_NODE.ID,
                     "destination": firstQuestionId,
-                    "name": `${BEGIN_NODE}_${firstQuestionId}`,
+                    "name": `${BEGIN_NODE.id}_${firstQuestionId}`,
                     "isDefault": true,
                     "conditions": []
                 }
@@ -31,17 +40,9 @@ class NavigationHandler {
         }
     }
 
-    static navigationEndNodeItem(lastQuestionId, lastQuestionIndex) {
-        return {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Navigation",
-            "origin": DEFAULT_NODES.END.id,
-            "index": DEFAULT_NODES.END.index,
-            "inNavigations": [
-                NavigationHandler.getInNavigationObj(lastQuestionId, lastQuestionIndex)
-            ],
-            "routes": []
-        };
+    static getNavigationEndNode(lastQuestionId, lastQuestionIndex) {
+        const END_NODE = DEFAULT_NODES.END;
+        return NavigationHandler.getNavigationNode(lastQuestionId, lastQuestionIndex, END_NODE.id, END_NODE.index);
     }
 
     static getDefaultRouteObj(originQuestionId, destinationQuestionId){
@@ -69,16 +70,7 @@ class NavigationHandler {
         };
     }
 
-    static getNavigationListQuestionElementObj(questionId, questionIndex, inNavigationsArr, routesArr){
-        return {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Navigation",
-            "origin": questionId,
-            "index": questionIndex,
-            "inNavigations": inNavigationsArr,
-            "routes": routesArr
-        }
-    }
+    
 
 }
 

@@ -12,6 +12,7 @@ class EhrQuestionnaire {
         this.endPage = new EndPage();
         this.defaultRouteQuestionIds = [];
         globalVars.ehrQuestionnaire = this;
+        this.defaultRoutePageIds = [];
     }
 
     get getFirstQuestionPage(){
@@ -83,19 +84,29 @@ class EhrQuestionnaire {
         const ehrEndPageObj = ehrTemplate.questionPage.filter((questionPage) => questionPage.id === this.endPage.id)[0];
         this.endPage.readFromJsonObj(ehrEndPageObj);
 
-        for(let ehrQuestionPage of this.questionPages){
-            ehrQuestionPage.setRoutes();
+        let prevOfFirstQuestion = globalVars.DEFAULT_NODES.BEGIN;
+        this.defaultRoutePageIds = [this.questionPages[0].id];
+
+        for(let questionPage of this.questionPages){
+            prevOfFirstQuestion = questionPage.setRoutes(prevOfFirstQuestion);
+
+            if(this.defaultRoutePageIds.includes(questionPage.id)){
+                this.defaultRoutePageIds.push(questionPage.nextPageId);
+            }
         }
+
+        this.defaultRoutePageIds.pop(); // take off END PAGE
     }
 
     toOtusStudioTemplate(emptyOtusStudioTemplate){
         const firstQuestionId = this.getFirstQuestionPage.getFirstQuestion().id;
         emptyOtusStudioTemplate["navigationList"].push(
-            NavigationHandler.navigationBeginNodeItem(firstQuestionId));
+            NavigationHandler.getNavigationBeginNode(firstQuestionId));
 
-        const lastQuestion = this.getLastQuestionPage.getLastQuestion();
+        const lastQuestionPageId = this.defaultRoutePageIds.pop();
+        const lastQuestion = this.questionPages.filter(qp => qp.id === lastQuestionPageId)[0].getLastQuestionNotHidden();
         emptyOtusStudioTemplate["navigationList"].push(
-            NavigationHandler.navigationEndNodeItem(lastQuestion.id, lastQuestion.index));
+            NavigationHandler.getNavigationEndNode(lastQuestion.id, lastQuestion.index));
 
         for(let questionPage of this.questionPages){
             questionPage.toOtusStudioTemplate(emptyOtusStudioTemplate);

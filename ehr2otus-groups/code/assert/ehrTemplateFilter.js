@@ -56,7 +56,7 @@ function checkHiddenQuestions(questions){
             }
 
             if(j !== i+1){
-                console.log(`question ${i} (${questions[i].id}) hide ${j} (${questions[j].id})`);
+                console.log(`ATENTION: question ${i} (${questions[i].id}) hide ${j} (${questions[j].id})`);
             }
         }
     }
@@ -64,8 +64,8 @@ function checkHiddenQuestions(questions){
 
 function extractQuestionsFromArrays(template, filterLevel){
     let outputQuestionPages = [];
-    const questionPages = template.questionPage;
-    for(let questionPage of questionPages){
+
+    for(let questionPage of template.questionPage){
         let outputQuestions = [];
         const questionArr = Object.entries(questionPage).filter(([key,value]) => key.includes('Question'));
         extractQuestionsFromBasicGroup(questionArr, outputQuestions);
