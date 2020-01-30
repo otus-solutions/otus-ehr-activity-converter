@@ -84,20 +84,19 @@ function xml2json(ehrXmlFilePath) {
 }
 
 
-function readEhrXMLAndFilter(acronym, filename){
+function readEhrXMLAndFilter(outputPath, filename){
     const xmlFilePath = process.cwd() + "/input/" + filename;
     let ehrTemplate = xml2json(xmlFilePath).survey;
-    writeOutputJsonFile(acronym+".json", ehrTemplate);
+    writeOutputJsonFile(outputPath+".json", ehrTemplate);
     ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(ehrTemplate, 1);
-    writeOutputJsonFile(acronym+"-filtered.json", ehrTemplate);
+    writeOutputJsonFile(outputPath+"-filtered.json", ehrTemplate);
 }
 
 function openEhrFilteredTemplate(acronym){
-    return FileHandler.readJsonSync(outputDirPath + acronym +"-filtered-manually-edited.json");
+    return FileHandler.readJsonSync(outputDirPath + acronym +"-filtered.json");
 }
 
-function writeOutputJsonFile(filename, content){
-    const path = outputDirPath + filename;
+function writeOutputJsonFile(path, content){
     FileHandler.write(path, JSON.stringify(content, null, 4));
 }
 
