@@ -35,6 +35,12 @@ module.exports = {
         NAVIGATION_LIST: "navigationList",
         GROUPS_LIST: "surveyItemGroupList"
     },
+    METADATA_LABEL_TRANSLATION: {
+        "DOES_NOT_WANT_TO_ANSWER": "Não quer responder",
+        "DOES_NOT_KNOW": "Não sabe",
+        "DOES_NOT_APPLY": "Não se aplica",
+        "ACCEPT_ANSWER": "Aceita resposta"
+    },
     // variables
     metaDataGroups: {},
     choiceGroups: choiceGroups,

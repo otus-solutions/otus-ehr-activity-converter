@@ -8,11 +8,17 @@ class SingleSelectionQuestion extends EhrQuestion {
         super(ehrQuestionObj, pageId, "SingleSelectionQuestion","Integer");
         this.choiceGroupId = ehrQuestionObj.choiceGroupId;
     }
-
+    
     replaceHiddenQuestionAnswerValue(){
         this.hiddenQuestionIsVisibleWhenMyAnswerIs = choiceGroups.findChoiceLabelInSpecificChoiceGroup(
             this.choiceGroupId, 
             this.hiddenQuestionIsVisibleWhenMyAnswerIs);
+    }
+
+    getAnswerToShowHiddenQuestion(){
+        const value = super.getAnswerToShowHiddenQuestion();
+        const valueChoice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === value)[0];
+        return valueChoice.label;
     }
     
     toOtusTemplate(){

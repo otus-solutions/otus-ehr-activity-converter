@@ -6,8 +6,15 @@ class BooleanQuestion extends EhrQuestion{
         super(ehrQuestionObj, pageId, "CheckboxQuestion", "Array");
     }
 
+    getAnswerToShowHiddenQuestion(){
+        if(super.getAnswerToShowHiddenQuestion() !== "true"){
+            console.log(`ATENTION! getAnswerToShowHiddenQuestion method for question ${this.id} found value  = 'false'`);//.
+        }
+        return this.label;
+    }
+
     toOtusTemplate(){
-        let questionObj = this.getOtusStudioQuestionHeader();
+        let questionObj = this.getOtusStudioQuestionHeader(false);
         let checkboxOption = {
             "extents": "SurveyItem",
             "objectType": "CheckboxAnswerOption",

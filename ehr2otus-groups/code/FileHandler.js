@@ -109,7 +109,7 @@ class FileHandler {
         }
     
         function setIndexAtTag(tagName){
-            if(tagName.includes("Question"))
+            if(tagName === "finalPage" || tagName.includes("Question"))
                 return `${tagName}${tagSeparator}${tagIndex++}`;
     
             return tagName;

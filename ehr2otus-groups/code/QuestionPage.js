@@ -1,6 +1,7 @@
 const globalVars = require('./globalVars');
 const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
 
+const Header = require('./questions/Header');
 const AutoCompleteQuestion = require('./questions/AutoCompleteQuestion');
 const BooleanQuestion = require('./questions/BooleanQuestion');
 const DateQuestion = require('./questions/DateQuestion');
@@ -87,6 +88,7 @@ class QuestionPage {
 
     _readQuestions(questionObjsArr){
         const questionFuncDict = {
+            "textItemQuestion": Header,
             "autocompleteQuestion": AutoCompleteQuestion,
             "booleanQuestion": BooleanQuestion,
             "dateQuestion": DateQuestion,
@@ -229,8 +231,12 @@ class QuestionPage {
     }
 
     _setRoutesByCutIndexes(){
-        let lastQuestionInDefaultRoute = null;
         const n = this.questions.length;
+        if(n == 0){
+            return null;
+        }
+
+        let lastQuestionInDefaultRoute = null;
         
         for (let i = 0; i < n-1; i++) {
             if(this.hiddenIndexes.includes(i+1)){
@@ -238,7 +244,7 @@ class QuestionPage {
 
                 let question = this.questions[i];
                 const operator = Expression.equalOperator();
-                const value = question.hiddenQuestion.isVisibleWhenThisAnswerIs;
+                const value = question.getAnswerToShowHiddenQuestion();
                 const condition = [ new Expression(question.name, question.id, operator, value) ];
                 this._addNewRoute(i, i+1, [condition]);
                 lastQuestionInDefaultRoute = this.questions[i];
@@ -248,6 +254,7 @@ class QuestionPage {
                 
             }
         }
+        
         this._addNewRoute(n-1, n);
 
         if(!this.hiddenIndexes.includes(n-1)){

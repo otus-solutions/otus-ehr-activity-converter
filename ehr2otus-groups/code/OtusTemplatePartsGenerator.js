@@ -82,14 +82,19 @@ class OtusTemplatePartsGenerator {
         };
     }
 
-    static getQuestionMainInfo(questionType, id, dataType, label, metaDataOptions){
-        const obj = {
+    static getQuestionMainInfo(questionType, id, dataType, label, metaDataOptions, fillingIsMandatory=true){
+        return {
             "extents": "SurveyItem",
             "objectType": questionType,
             "templateID": id,
             "customID": id,
             "dataType": dataType,
             "label": label,
+            "metadata":  {
+                "extents": "StudioObject",
+                    "objectType": "MetadataGroup",
+                    "options": metaDataOptions
+            },
             "fillingRules": {
                 "extends": "StudioObject",
                 "objectType": "FillingRules",
@@ -100,23 +105,15 @@ class OtusTemplatePartsGenerator {
                         "validatorType": "mandatory",
                         "data": {
                             "canBeIgnored": false,
-                            "reference": true
+                            "reference": fillingIsMandatory
                         }
                     }
                 }
             }
-        };
-        if(metaDataOptions){
-            obj["metadata"] = {
-                "extents": "StudioObject",
-                    "objectType": "MetadataGroup",
-                    "options": metaDataOptions
-            };
         }
-        return obj;
     }
 
-    static getQuestionMetadata(value, label){
+    static getQuestionMetadataOption(value, label){
         return {
             "extends": "StudioObject",
             "objectType": "MetadataAnswer",
@@ -171,7 +168,7 @@ class OtusTemplatePartsGenerator {
                 {
                     "extents": "SurveyTemplateObject",
                     "objectType": "Route",
-                    "origin": BEGIN_NODE.ID,
+                    "origin": BEGIN_NODE.id,
                     "destination": firstQuestionId,
                     "name": `${BEGIN_NODE.id}_${firstQuestionId}`,
                     "isDefault": true,

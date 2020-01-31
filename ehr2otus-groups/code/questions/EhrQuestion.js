@@ -86,13 +86,21 @@ class EhrQuestion {
 
     }
 
-    getOtusStudioQuestionHeader(){
-        let metaDataOptions = undefined;
+    getAnswerToShowHiddenQuestion(){
+        return this.hiddenQuestion.isVisibleWhenThisAnswerIs;
+    }
+
+    getOtusHeader(){
+        return OtusTemplatePartsGenerator.getQuestionHeader(this.questionType, this.id, this.dataType);
+    }
+
+    getOtusStudioQuestionHeader(fillingIsMandatory=true){
+        let metaDataOptions = [];
         if(this.metaDataGroupId){
             metaDataOptions = this._getQuestionMetadataObj()
         }
         return OtusTemplatePartsGenerator.getQuestionMainInfo(
-            this.questionType, this.id, this.dataType, this.label2Otus(), metaDataOptions);
+            this.questionType, this.id, this.dataType, this.label2Otus(), metaDataOptions, fillingIsMandatory);
     }
 
     _getQuestionMetadataObj(){
@@ -101,22 +109,18 @@ class EhrQuestion {
         let value = 1;
         for(let label of labels) {
             options.push(
-                OtusTemplatePartsGenerator.getQuestionMetadata(value, 
-                    label
-                    //this.label2Otus() //TODO nao seria o label do for?
+                OtusTemplatePartsGenerator.getQuestionMetadataOption(value, 
+                    globalVars.METADATA_LABEL_TRANSLATION[label]
                 )
             );
             value++;
-        }
-
-        if(options.length === 0){
-            return undefined;
         }
 
         return options;
     }
 
     label2Otus(){
+        return OtusTemplatePartsGenerator.getLabel(`${this.id} ${this.label}`);//.
         return OtusTemplatePartsGenerator.getLabel(this.label);
     }
 
