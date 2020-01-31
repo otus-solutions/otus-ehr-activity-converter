@@ -1,6 +1,12 @@
 {
     "ELEA": {
         "filename":  "ELEA.xml",
-        "name": "Elegibilidade de Evento (A)"
+        "oid": "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOls5MWQyNjNkMC00NDIzLTExZWEtYjFmMi0zNzFjM2UyNGMzYmFdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+        "creationDate": "2020-01-31T12:16:54.925Z"
+    },
+    "EASA": {
+        "filename":  "EASA.xml",
+        "oid": "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOls4NGY1OGU0MC00NDI3LTExZWEtYjFmMi0zNzFjM2UyNGMzYmFdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+        "creationDate": "2020-01-31T12:45:11.332Z"
     }
 }

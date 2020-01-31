@@ -17,11 +17,11 @@ class OtusTemplatePartsGenerator {
         }
     }
 
-    static getEmptyTemplate(name, acronym) {
+    static getEmptyTemplate(name, acronym, oid, creationDate) {
         return {
             "extents": "StudioObject",
             "objectType": "Survey",
-            "oid": generateTemplateOID(),
+            "oid": oid,
             "identity": {
                 "extents": "StudioObject",
                 "objectType": "SurveyIdentity",
@@ -34,7 +34,7 @@ class OtusTemplatePartsGenerator {
             "metainfo": {
                 "extents": "StudioObject",
                 "objectType": "SurveyMetaInfo",
-                "creationDatetime": "2019-10-01T18:53:18.725Z",
+                "creationDatetime": creationDate,
                 "otusStudioVersion": ""
             },
             "dataSources": [],

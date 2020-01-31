@@ -82,7 +82,9 @@ class EhrQuestionnaire {
         }
 
         const ehrEndPageObj = ehrTemplate.questionPage.filter((questionPage) => questionPage.id === this.endPage.id)[0];
-        this.endPage.readFromJsonObj(ehrEndPageObj);
+        if(ehrEndPageObj){
+            this.endPage.readFromJsonObj(ehrEndPageObj);
+        }
 
         let prevOfFirstQuestion = globalVars.DEFAULT_NODES.BEGIN;
         this.defaultRoutePageIds = [this.questionPages[0].id];

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "mkdir -p input output",
     "read": "node main.js read",
-    "parse": "node main.js parse"
+    "parse": "node main.js parse",
+    "go": "node main.js go"
   },
   "author": "Flávia Pereira",
   "license": "ISC",
