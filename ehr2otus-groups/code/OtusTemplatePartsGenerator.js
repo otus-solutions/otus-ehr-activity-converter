@@ -72,19 +72,24 @@ class OtusTemplatePartsGenerator {
         };
     }
 
-    static getQuestionHeader(questionType, id, dataType, label, metaDataOptions){
+    static getQuestionHeader(questionType, id, dataType){
         return {
+            "extents": "SurveyItem",
+            "objectType": questionType,
+            "templateID": id,
+            "customID": id,
+            "dataType": dataType
+        };
+    }
+
+    static getQuestionMainInfo(questionType, id, dataType, label, metaDataOptions){
+        const obj = {
             "extents": "SurveyItem",
             "objectType": questionType,
             "templateID": id,
             "customID": id,
             "dataType": dataType,
             "label": label,
-            "metadata": {
-                "extents": "StudioObject",
-                "objectType": "MetadataGroup",
-                "options": metaDataOptions
-            },
             "fillingRules": {
                 "extends": "StudioObject",
                 "objectType": "FillingRules",
@@ -101,6 +106,14 @@ class OtusTemplatePartsGenerator {
                 }
             }
         };
+        if(metaDataOptions){
+            obj["metadata"] = {
+                "extents": "StudioObject",
+                    "objectType": "MetadataGroup",
+                    "options": metaDataOptions
+            };
+        }
+        return obj;
     }
 
     static getQuestionMetadata(value, label){
@@ -110,7 +123,7 @@ class OtusTemplatePartsGenerator {
             "dataType": "Integer",
             "value": value,
             "extractionValue": value,
-            "label": label
+            "label": OtusTemplatePartsGenerator.getLabel(label)
         };
     }
 
@@ -208,8 +221,3 @@ class OtusTemplatePartsGenerator {
 }
 
 module.exports = OtusTemplatePartsGenerator;
-
-function generateTemplateOID(){
-    //TODO
-    return "eleaOtusSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOltiYmFjYzM1MC1lNDdjLTExZTktOGVmNy02MTUwOTJlYjNkOTFdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==";
-}

@@ -277,12 +277,18 @@ class QuestionPage {
     }
 
     _addNewRoute(originIndex, targetIndex, conditions=[]){
-        const originId = this.questions[originIndex].id;
-        const targetId = this._getNextQuestionId(targetIndex-1);// -1 coz method look for arg+1
+
         try{
-            this.routes[originId].push(new Route(originId, targetId, conditions));
-        }catch (e) {
-            this.routes[originId] = [new Route(originId, targetId, conditions)];
+            const originId = this.questions[originIndex].id;
+            const targetId = this._getNextQuestionId(targetIndex-1);// -1 coz method look for arg+1
+            try{
+                this.routes[originId].push(new Route(originId, targetId, conditions));
+            }catch (e) {
+                this.routes[originId] = [new Route(originId, targetId, conditions)];
+            }
+        }
+        catch (e) {
+            throw e;
         }
     }
 

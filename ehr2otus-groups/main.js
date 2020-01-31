@@ -13,6 +13,10 @@ function main(){
     const templatesInfo = FileHandler.readJsonSync(process.cwd() + "/templateInfo.json");
     for(let [acronym, info] of Object.entries(templatesInfo)){
 
+        if(acronym === "CARA"){//.
+            continue;
+        }
+
         console.log("\n\n" + acronym);
 
         try{

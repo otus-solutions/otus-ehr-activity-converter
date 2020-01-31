@@ -87,11 +87,11 @@ class EhrQuestion {
     }
 
     getOtusStudioQuestionHeader(){
-        let metaDataOptions = [];
+        let metaDataOptions = undefined;
         if(this.metaDataGroupId){
             metaDataOptions = this._getQuestionMetadataObj()
         }
-        return OtusTemplatePartsGenerator.getQuestionHeader(
+        return OtusTemplatePartsGenerator.getQuestionMainInfo(
             this.questionType, this.id, this.dataType, this.label2Otus(), metaDataOptions);
     }
 
@@ -108,6 +108,11 @@ class EhrQuestion {
             );
             value++;
         }
+
+        if(options.length === 0){
+            return undefined;
+        }
+
         return options;
     }
 
