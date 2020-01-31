@@ -15,7 +15,7 @@ class BooleanQuestion extends EhrQuestion{
             "customID": this.id,
             "dataType": "Boolean",
             "value": false,
-            "label": this._getLabelObj()
+            "label": this.label2Otus()
         };
         questionObj['options'] = [checkboxOption];
         return questionObj;

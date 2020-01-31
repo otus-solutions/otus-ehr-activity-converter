@@ -1,5 +1,6 @@
 const EhrQuestion = require('./EhrQuestion');
 const choiceGroups = require('../globalVars').choiceGroups;
+const OtusTemplatePartsGenerator = require("../OtusTemplatePartsGenerator");
 
 class SingleSelectionQuestion extends EhrQuestion {
 
@@ -27,7 +28,7 @@ class SingleSelectionQuestion extends EhrQuestion {
                 "value": numericValue,
                 "extractionValue": numericValue,
                 "dataType": "Integer",
-                "label":  EhrQuestion.getLabelObj(label)
+                "label":  OtusTemplatePartsGenerator.getLabel(label)
             });
         }
         questionObj["options"] = options;

@@ -1,4 +1,6 @@
 
+const OtusTemplatePartsGenerator = require("./OtusTemplatePartsGenerator");
+
 class Route {
 
     constructor(originQuestion, destinyQuestion, conditionsArr=[]) {
@@ -19,23 +21,12 @@ class Route {
                 rules.push(expr.toOtusTemplate());
             }
 
-            conditions.push({
-                "extents": "StudioObject",
-                "objectType": "RouteCondition",
-                "name": `ROUTE_CONDITION_${i}`,
-                "rules": rules
-            });
+            conditions.push(
+                OtusTemplatePartsGenerator.getConditionRoute(i, rules)
+            );
         }
 
-        return {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Route",
-            "origin": this.origin,
-            "destination": this.destination,
-            "name": `${this.origin}_${this.destination}`,
-            "isDefault": (n === 0),
-            "conditions": conditions
-        };
+        return OtusTemplatePartsGenerator.getRoute(this.origin, this.destination, (n==0), conditions);
     }
 }
 

@@ -1,3 +1,4 @@
+const OtusTemplatePartsGenerator = require("./OtusTemplatePartsGenerator");
 
 class Group {
 
@@ -19,29 +20,25 @@ class Group {
     }
 
     toOtusTemplate(){
-        const members = [{
-            "id": this.getFirstQuestion(),
-            "position": "start"
-        }];
+        const groupPositions = OtusTemplatePartsGenerator.groupPositions;
+        const firstQuestion = this.getFirstQuestion();
+        const lastQuestion = this.getLastQuestion();
+
+        const members = [
+            OtusTemplatePartsGenerator.getGroupItem(firstQuestion, groupPositions.first)
+        ];
 
         for (let i = 1; i < this.questions.length-1; i++) {
-            members.push({
-                "id": this.questions[i],
-                "position": "middle"
-            });
+            members.push(
+                OtusTemplatePartsGenerator.getGroupItem(this.questions[i], groupPositions.middle)
+            );
         }
 
-        members.push({
-            "id": this.getLastQuestion(),
-            "position": "end"
-        });
+        members.push(
+            OtusTemplatePartsGenerator.getGroupItem(lastQuestion, groupPositions.last)
+        );
 
-        return {
-			"objectType": "SurveyItemGroup",
-			"start": this.getFirstQuestion(),
-			"end": this.getLastQuestion(),
-			"members": members
-		};
+        return OtusTemplatePartsGenerator.getGroup(firstQuestion, lastQuestion, members);
     }
 
 }

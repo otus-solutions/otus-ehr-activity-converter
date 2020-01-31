@@ -1,4 +1,5 @@
 const globalVars = require('../globalVars');
+const OtusTemplatePartsGenerator = require("../OtusTemplatePartsGenerator");
 
 let currIndex = globalVars.FIRST_QUESTION_INDEX;
 
@@ -90,34 +91,8 @@ class EhrQuestion {
         if(this.metaDataGroupId){
             metaDataOptions = this._getQuestionMetadataObj()
         }
-        return {
-            "extents": "SurveyItem",
-            "objectType": this.questionType,
-            "templateID": this.id,
-            "customID": this.id,
-            "dataType": this.dataType,
-            "label": this._getLabelObj(),
-            "metadata": {
-                "extents": "StudioObject",
-                "objectType": "MetadataGroup",
-                "options": metaDataOptions
-            },
-            "fillingRules": {
-                "extends": "StudioObject",
-                "objectType": "FillingRules",
-                "options": {
-                    "mandatory": {
-                        "extends": "StudioObject",
-                        "objectType": "Rule",
-                        "validatorType": "mandatory",
-                        "data": {
-                            "canBeIgnored": false,
-                            "reference": true
-                        }
-                    }
-                }
-            }
-        };
+        return OtusTemplatePartsGenerator.getQuestionHeader(
+            this.questionType, this.id, this.dataType, this.label2Otus(), metaDataOptions);
     }
 
     _getQuestionMetadataObj(){
@@ -125,48 +100,19 @@ class EhrQuestion {
         let options = [];
         let value = 1;
         for(let label of labels) {
-            options.push({
-                "extends": "StudioObject",
-                "objectType": "MetadataAnswer",
-                "dataType": "Integer",
-                "value": value,
-                "extractionValue": value,
-                "label": this._getLabelObj()
-            });
+            options.push(
+                OtusTemplatePartsGenerator.getQuestionMetadata(value, 
+                    label
+                    //this.label2Otus() //TODO nao seria o label do for?
+                )
+            );
             value++;
         }
         return options;
     }
 
-    _getLabelObj(){
-        return EhrQuestion.getLabelObj(this.label);
-    }
-
-    static getLabelObj(label){
-        label = label.replace("[\/b]", "").replace("[b]", "");
-        return {
-            "ptBR": {
-                "extends": "StudioObject",
-                "objectType": "Label",
-                "oid": "",
-                "plainText": label,
-                "formattedText": label
-            },
-            "enUS": {
-                "extends": "StudioObject",
-                "objectType": "Label",
-                "oid": "",
-                "plainText": "",
-                "formattedText": ""
-            },
-            "esES": {
-                "extends": "StudioObject",
-                "objectType": "Label",
-                "oid": "",
-                "plainText": "",
-                "formattedText": ""
-            }
-        };
+    label2Otus(){
+        return OtusTemplatePartsGenerator.getLabel(this.label);
     }
 
 }

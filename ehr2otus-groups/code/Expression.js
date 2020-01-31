@@ -1,10 +1,5 @@
 const globalVars = require('./globalVars');
-
-const EHR_EQUAL = "EQ";
-const operatorDict = {
-    "EQ": "equal",
-    "GT": "greater"
-};
+const OtusTemplatePartsGenerator = require("./OtusTemplatePartsGenerator");
 
 class Expression {
 
@@ -17,14 +12,15 @@ class Expression {
     }
 
     static equalOperator(){
-        return EHR_EQUAL;
-    }
-
-    toJSON(){
-        return `${this.questionName} (${this.questionId}) ${this.operator} ${this.value}`;
+        return "EQ";
     }
 
     toOtusTemplate(){
+        const operatorDict = {
+            "EQ": OtusTemplatePartsGenerator.operators.EQ,
+            "GT": OtusTemplatePartsGenerator.operators.GET
+        };
+
         if(!this.isMetadata) {
             const isNumValue = !isNaN(parseInt(this.value));
             const isBoolValue = (this.value === 'true' || this.value === 'false');
@@ -33,17 +29,12 @@ class Expression {
             }
         }
 
-        return {
-            "extents": "SurveyTemplateObject",
-            "objectType": "Rule",
-            "when": this.questionId,
-            "operator": operatorDict[this.operator],
-            "answer": this.value,
-            "isMetadata": this.isMetadata,
-            "isCustom": true
-        };
+        return OtusTemplatePartsGenerator.getExpression(this.questionId, operatorDict[this.operator], this.value, this.isMetadata);
     }
     
+    toJSON(){
+        return `${this.questionName} (${this.questionId}) ${this.operator} ${this.value}`;
+    }
 }
 
 module.exports = Expression;

@@ -1,7 +1,7 @@
 const globalVars = require('./globalVars');
 const QuestionPage = require('./QuestionPage');
 const EndPage = require('./EndPage');
-const NavigationHandler = require('./NavigationHandler');
+const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
 
 class EhrQuestionnaire {
 
@@ -101,12 +101,12 @@ class EhrQuestionnaire {
     toOtusStudioTemplate(emptyOtusStudioTemplate){
         const firstQuestionId = this.getFirstQuestionPage.getFirstQuestion().id;
         emptyOtusStudioTemplate["navigationList"].push(
-            NavigationHandler.getNavigationBeginNode(firstQuestionId));
+            OtusTemplatePartsGenerator.getNavigationBeginNode(firstQuestionId));
 
         const lastQuestionPageId = this.defaultRoutePageIds.pop();
         const lastQuestion = this.questionPages.filter(qp => qp.id === lastQuestionPageId)[0].getLastQuestionNotHidden();
         emptyOtusStudioTemplate["navigationList"].push(
-            NavigationHandler.getNavigationEndNode(lastQuestion.id, lastQuestion.index));
+            OtusTemplatePartsGenerator.getNavigationEndNode(lastQuestion.id, lastQuestion.index));
 
         for(let questionPage of this.questionPages){
             questionPage.toOtusStudioTemplate(emptyOtusStudioTemplate);
@@ -138,10 +138,10 @@ class EhrQuestionnaire {
         return content;
     }
 
-    resumeWithCuts(){
+    resumeCuts(){
         let content = "";
         for (let questionPage of this.questionPages) {
-            content += questionPage.resumeWithCuts() + "\n";
+            content += questionPage.resumeCuts() + "\n";
         }
         return content;
     }

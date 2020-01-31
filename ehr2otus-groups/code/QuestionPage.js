@@ -1,4 +1,5 @@
 const globalVars = require('./globalVars');
+const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
 
 const AutoCompleteQuestion = require('./questions/AutoCompleteQuestion');
 const BooleanQuestion = require('./questions/BooleanQuestion');
@@ -7,7 +8,6 @@ const NumericQuestion = require('./questions/NumericQuestion');
 const SingleSelectionQuestion = require('./questions/SingleSelectionQuestion');
 const TextQuestion = require('./questions/TextQuestion');
 
-const NavigationHandler = require('./NavigationHandler');
 const Branch = require('./Branch');
 const Route = require('./Route');
 const Expression = require('./Expression');
@@ -313,7 +313,7 @@ class QuestionPage {
         }
 
         otusStudioTemplate[OTUS_NAVIGATION_LIST].push(
-            NavigationHandler.getNavigationNode(question.id, question.index, prevQuestion.id, prevQuestion.index, otusRoutes)
+            OtusTemplatePartsGenerator.getNavigationNode(question.id, question.index, prevQuestion.id, prevQuestion.index, otusRoutes)
         );
     }
 
