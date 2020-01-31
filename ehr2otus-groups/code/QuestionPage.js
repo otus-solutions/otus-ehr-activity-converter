@@ -7,6 +7,7 @@ const DateQuestion = require('./questions/DateQuestion');
 const NumericQuestion = require('./questions/NumericQuestion');
 const SingleSelectionQuestion = require('./questions/SingleSelectionQuestion');
 const TextQuestion = require('./questions/TextQuestion');
+const TimeQuestion = require('./questions/TimeQuestion');
 
 const Branch = require('./Branch');
 const Route = require('./Route');
@@ -67,7 +68,6 @@ class QuestionPage {
         return this.questions[i];
     }
 
-
     /*-----------------------------------------------------
     * Read methods
     */
@@ -92,7 +92,8 @@ class QuestionPage {
             "dateQuestion": DateQuestion,
             "numericQuestion": NumericQuestion,
             "singleSelectionQuestion": SingleSelectionQuestion,
-            "textQuestion": TextQuestion
+            "textQuestion": TextQuestion,
+            "timeQuestion": TimeQuestion
         };
         try {
             for (let questionObj of questionObjsArr) {

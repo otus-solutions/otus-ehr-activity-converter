@@ -8,9 +8,7 @@ function extractQuestionsFromBasicGroup(questionArr, outputQuestions){
         key = key.split(TAG_SEPARATOR)[0];
         if(key === 'basicQuestionGroup'){
             for(let question of subQuestionArr){
-                if(basicQuestionGroupCounter === 0) {
-                    basicQuestionGroupId.push(question.id);
-                }
+                basicQuestionGroupId.push(question.id);
                 basicQuestionGroupCounter++;
                 const subSubQuestionArr = Object.entries(question).filter(([key,value]) => key.includes('Question'));
                 extractQuestionsFromBasicGroup(subSubQuestionArr, outputQuestions);

@@ -1,6 +1,6 @@
 const FileHandler = require('./code/FileHandler');
 const EhrQuestionnaire = require("./code/EhrQuestionnaire");
-const ehrTemplateFilter = require('./code/assert/ehrTemplateFilter');
+const ehrTemplateFilter = require('./code/ehrTemplateFilter');
 const OtusTemplatePartsGenerator = require("./code/OtusTemplatePartsGenerator");
 
 function outputDirPath(){
@@ -71,7 +71,6 @@ function readAndParse(acronym, templateInfo, outputPath){
     FileHandler.writeJson(outputPath + acronym+".json", ehrTemplate.survey);
 
     const templateName = `${ehrTemplate.survey.title} (${ehrTemplate.survey.version})`;
-    console.log(templateName);
 
     ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(ehrTemplate.survey, 1);
     FileHandler.writeJson(outputPath + acronym+"-filtered.json", ehrTemplate);
