@@ -15,18 +15,27 @@ class SingleSelectionQuestion extends EhrQuestion {
             this.hiddenQuestionIsVisibleWhenMyAnswerIs);
     }
 
-    getAnswerToShowHiddenQuestion(){
-        const value = super.getAnswerToShowHiddenQuestion();
-        const valueChoice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === value)[0];
-        return valueChoice.label;
+    getAnswerValue(answer, isMetadata){
+        if(isMetadata){
+            return super.getAnswerValue(answer, isMetadata);
+        }
+        const choice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === answer)[0];
+        return parseInt(choice.value, 10);
     }
-    
+
+    getAnswerToShowHiddenQuestion(){
+        const answer = super.getAnswerToShowHiddenQuestion();
+        return this.getAnswerValue(answer);
+        //const choice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === value)[0];
+        //return choice.value;
+    }
+
     toOtusTemplate(){
         let questionObj = this.getOtusStudioQuestionHeader();
         const choiceGroupObjArr = choiceGroups.choiceObj[this.choiceGroupId];
         let options = [];
         for(let choiceObj of choiceGroupObjArr){
-            let numericValue = choiceObj["value"];
+            let numericValue = parseInt(choiceObj["value"], 10);
             let label = choiceObj["label"];
             options.push({
                 "extents": "StudioObject",

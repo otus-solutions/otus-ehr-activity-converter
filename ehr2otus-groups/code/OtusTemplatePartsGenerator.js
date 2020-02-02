@@ -119,7 +119,7 @@ class OtusTemplatePartsGenerator {
             "objectType": "MetadataAnswer",
             "dataType": "Integer",
             "value": value,
-            "extractionValue": value,
+            "extractionValue": value.toString(),
             "label": OtusTemplatePartsGenerator.getLabel(label)
         };
     }
@@ -180,7 +180,7 @@ class OtusTemplatePartsGenerator {
 
     static getNavigationEndNode(lastQuestionId, lastQuestionIndex) {
         const END_NODE = DEFAULT_NODES.END;
-        return OtusTemplatePartsGenerator.getNavigationNode(lastQuestionId, lastQuestionIndex, END_NODE.id, END_NODE.index);
+        return OtusTemplatePartsGenerator.getNavigationNode(END_NODE.id, END_NODE.index, lastQuestionId, lastQuestionIndex);
     }
 
     static getRoute(originTemplateId, destinationTemplateId, isDefault=true, conditions=[]){
@@ -212,7 +212,7 @@ class OtusTemplatePartsGenerator {
             "operator": operator,
             "answer": answer,
             "isMetadata": isMetadata,
-            "isCustom": true
+            "isCustom": false
         };
     }
 }

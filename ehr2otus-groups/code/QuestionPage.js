@@ -69,6 +69,15 @@ class QuestionPage {
         return this.questions[i];
     }
 
+    getQuestionById(questionId){
+        try{
+            return this.questions.filter(q => q.id === questionId)[0];
+        }
+        catch(e){
+            return undefined;
+        }
+    }
+
     /*-----------------------------------------------------
     * Read methods
     */
@@ -251,7 +260,6 @@ class QuestionPage {
             }
             else{
                 this._addNewRoute(i, i+1);
-                
             }
         }
         
@@ -276,6 +284,10 @@ class QuestionPage {
 
             let conditions = [];
             for(let condition of branch.rules){
+                for(let expression of condition.expressions){
+                    let question = globalVars.ehrQuestionnaire.findQuestionById(expression.questionId);
+                    expression.value = question.getAnswerValue(expression.value, expression.isMetadata);
+                }
                 conditions.push(condition.expressions);
             }
 

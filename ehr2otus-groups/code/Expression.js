@@ -18,23 +18,14 @@ class Expression {
     toOtusTemplate(){
         const operatorDict = {
             "EQ": OtusTemplatePartsGenerator.operators.EQ,
-            "GT": OtusTemplatePartsGenerator.operators.GET
+            "GT": OtusTemplatePartsGenerator.operators.GT
         };
-
-        if(!this.isMetadata) {
-            const isNumValue = !isNaN(parseInt(this.value));
-            const isBoolValue = (this.value === 'true' || this.value === 'false');
-            if(!isNumValue && !isBoolValue){
-                this.value = globalVars.choiceGroups.findChoiceLabelInAllChoiceGroup(this.value);
-            }
-        }
-
         return OtusTemplatePartsGenerator.getExpression(this.questionId, operatorDict[this.operator], this.value, this.isMetadata);
     }
     
-    toJSON(){
-        return `${this.questionName} (${this.questionId}) ${this.operator} ${this.value}`;
-    }
+    // toJSON(){
+    //     return `${this.questionName} (${this.questionId}) ${this.operator} ${this.value}`;
+    // }
 }
 
 module.exports = Expression;

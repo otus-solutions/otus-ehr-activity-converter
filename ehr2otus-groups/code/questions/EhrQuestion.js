@@ -86,6 +86,18 @@ class EhrQuestion {
 
     }
 
+    getAnswerValue(answer, isMetadata){
+        if(isMetadata){
+            const index = globalVars.metaDataGroups[this.metaDataGroupId].indexOf(answer);
+            if(index < 0){
+                throw `Answer '${answer}' is not in metadata group of question ${this.id}`; 
+            }
+            return (index + 1);
+        }
+
+        return answer;
+    }
+
     getAnswerToShowHiddenQuestion(){
         return this.hiddenQuestion.isVisibleWhenThisAnswerIs;
     }

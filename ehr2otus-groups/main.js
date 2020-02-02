@@ -17,7 +17,7 @@ function main(){
             continue;
         }
 
-        console.log("\n\n" + acronym);
+        console.log("\n" + acronym);
 
         try{
             const path = outputDirPath() + acronym + "/";

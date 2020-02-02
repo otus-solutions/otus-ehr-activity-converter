@@ -127,6 +127,15 @@ class EhrQuestionnaire {
         return this.questionPages[i-1].id;
     }
 
+    findQuestionById(questionId){
+        let i = 0, question = null;
+        while(!question && i < this.questionPages.length){
+            question = this.questionPages[i].getQuestionById(questionId);
+            i++;
+        }
+        return question;
+    }
+
 
     /*
      * Debug
