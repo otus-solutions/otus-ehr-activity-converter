@@ -1,13 +1,13 @@
 const globalVars = require('./globalVars');
 const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
 
-const Header = require('./questions/Header');
 const AutoCompleteQuestion = require('./questions/AutoCompleteQuestion');
 const BooleanQuestion = require('./questions/BooleanQuestion');
 const DateQuestion = require('./questions/DateQuestion');
 const NumericQuestion = require('./questions/NumericQuestion');
 const SingleSelectionQuestion = require('./questions/SingleSelectionQuestion');
 const TextQuestion = require('./questions/TextQuestion');
+const TextItemQuestion = require('./questions/TextItemQuestion');
 const TimeQuestion = require('./questions/TimeQuestion');
 
 const Branch = require('./Branch');
@@ -97,7 +97,7 @@ class QuestionPage {
 
     _readQuestions(questionObjsArr){
         const questionFuncDict = {
-            "textItemQuestion": Header,
+            "textItemQuestion": TextItemQuestion,
             "autocompleteQuestion": AutoCompleteQuestion,
             "booleanQuestion": BooleanQuestion,
             "dateQuestion": DateQuestion,
@@ -352,17 +352,24 @@ class QuestionPage {
     }
 
     resume(){
-        let content = this.id + "\n";
+        let content = this.id;
         if(this.prevOfFirstQuestion){
-            content += " prev of 1st: " + this.prevOfFirstQuestion.id + "\n";
+            content += " - prev of 1st: " + this.prevOfFirstQuestion.id + "\n";
         }
         else{
             console.log(this.id);//.
+            content += "\n";
         }
 
         for (let i = 0; i < this.questions.length; i++) {
             const questionId = this.questions[i].id;
-            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
+
+            let isHiddenBySomebody = "";
+            if(this.hiddenIndexes.includes(i)){
+                const hidderQuestion = this.questions[i-1];
+                isHiddenBySomebody = `\t*h when ${hidderQuestion.id} == ${hidderQuestion.hiddenQuestion.isVisibleWhenThisAnswerIs}`;
+            }
+
             let isInSomeBasicGroup = "";
             for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
                 if(arr.includes(questionId)){
@@ -381,7 +388,13 @@ class QuestionPage {
         let content = this.id + "\n";
         for (let i = 0; i < this.questions.length; i++) {
             const questionId = this.questions[i].id;
-            const isHiddenBySomebody = (this.hiddenIndexes.includes(i) ? "\t*h" : "");
+
+            let isHiddenBySomebody = "";
+            if(this.hiddenIndexes.includes(i)){
+                const hidderQuestion = this.questions[i-1];
+                isHiddenBySomebody = `\t*h when ${hidderQuestion.id} == ${hidderQuestion.hiddenQuestion.isVisibleWhenThisAnswerIs}`;
+            }
+
             let isInSomeBasicGroup = "";
             for(let [id, arr] of Object.entries(this.basicQuestionGroups)){
                 if(arr.includes(questionId)){
