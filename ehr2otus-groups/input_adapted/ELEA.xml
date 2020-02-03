@@ -108,29 +108,30 @@
 	<!-- ======================================================================== 
 		Pages ======================================================================== -->
 
+	<questionPage id="BEGIN_PAGE" nextPageId="PAGE_001">
+		<textItemQuestion id="presents" label="[i]Este formulário determina a qualificação do evento (cardiovascular, cerebrovascular, diabetes, neoplasia ou insuficiência renal crônica ou de mortalidade) para revisão. Informações dos registros hospitalares (se evento hospitalizado) ou da Declaração de Óbito (se evento fatal) são necessárias.[/i]"/>
+	</questionPage>
 
 	<questionPage id="PAGE_001" nextPageId="PAGE_002">
-		<header>[i]Este formulário determina a qualificação do evento (cardiovascular, cerebrovascular, diabetes, neoplasia ou insuficiência renal crônica ou de mortalidade) para revisão. Informações dos registros hospitalares (se evento hospitalizado) ou da Declaração de Óbito (se evento fatal) são necessárias.[/i]</header>
 
 		<textQuestion id="ELEAIDI" name="investigationId" label="ID DA INVESTIGAÇÃO:"
 			metaDataGroupId="DONT_WANT_KNOW_APPLY" maxLength="10" minLength="10" />
 		<!-- TODO: funcionalidade de minLength="10" maxLength="12" no survey maker -->
 		<singleSelectionQuestion id="ELEA1" name="eventLocation"
 			choiceGroupId="EventLocation" label="[b]1. Localização do Evento/Morte:[/b]"
-			hiddenQuestion="specifyEventLocation" visibleWhen="OTHER"
 			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 
-		<textQuestion id="ELEA1qou" name="specifyEventLocation"
-			label="Especifique:" />
+		<branch targetPageId="PAGE_001qou">
+			<rule>
+				<expression questionName="eventLocation" operator="EQ"
+					value="OTHER" />
+			</rule>
+		</branch>
 
 		<branch targetPageId="PAGE_003">
 			<rule>
 				<expression questionName="eventLocation" operator="EQ"
 					value="HOME_OR_PUBLIC_PLACE" />
-			</rule>
-			<rule>
-				<expression questionName="eventLocation" operator="EQ"
-					value="OTHER" />
 			</rule>
 			<rule>
 				<expression questionName="eventLocationMetadata"
@@ -145,8 +146,13 @@
 					operator="EQ" value="DOES_NOT_APPLY" />
 			</rule>
 		</branch>
+
 	</questionPage>
 
+	<questionPage id="PAGE_001qou" nextPageId="PAGE_003">
+		<textQuestion id="ELEA1qou" name="specifyEventLocation"
+			label="Especifique:" />
+	</questionPage>
 
 	<questionPage id="PAGE_002" nextPageId="PAGE_170">
 		<header>[b]1.1[/b] Registre o CNES e o nome do estabelecimento onde ocorreu o evento/óbito, e o endereço do local quando o CNES não estiver disponível ou não se aplicar.</header>
@@ -4335,7 +4341,11 @@
 			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
 	</questionPage>
 
-	<questionPage id="END_PAGE" finalPage="true">
+	<questionPage id="END_PAGE">
+		<textItemQuestion id="end" label="[i]Obrigado.[/i]" />
+	</questionPage>
+
+	<questionPage id="CONDITIONS_END_PAGE" finalPage="true">
 		<!-- não colocamos metadado pq as questoes abaixo serao preenchidas pelo 
 			sistema -->
 		<header>[i]Obrigado.[/i][br]
