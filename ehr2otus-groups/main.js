@@ -7,9 +7,10 @@ function outputDirPath(){
     return process.cwd() + "/output/";
 }
 
+main();
+
 function main(){
     const arg = process.argv[process.argv.length-1];
-
     const templatesInfo = FileHandler.readJsonSync(process.cwd() + "/templateInfo.json");
 
     if(Object.keys(templatesInfo).includes(arg)){
@@ -21,8 +22,6 @@ function main(){
         }
     }
 }
-
-main();
 
 function parseTemplate(acronym, info){
     try{
@@ -53,8 +52,6 @@ function readAndParse(acronym, templateInfo, outputPath){
     let otusTemplate = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
     ehr.toOtusStudioTemplate(otusTemplate);
     FileHandler.writeJson(outputPath + acronym + "-otus-result.json", otusTemplate);
-
-    // FileHandler.writeJson(templateInfo.acronym+"-end-page-sentences.json", ehr.endPage.getSentencesObject());
 }
 
 function exportResumes(ehr, acronym, path){
