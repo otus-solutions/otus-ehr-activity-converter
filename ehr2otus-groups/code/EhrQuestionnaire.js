@@ -140,6 +140,14 @@ class EhrQuestionnaire {
         return content;
     }
 
+    resumeBranches(){
+        let content = "";
+        for (let questionPage of this.questionPages) {
+            content += questionPage.resumeBranches() + "\n";
+        }
+        return content;
+    }
+
     resumeCuts(){
         let content = "";
         for (let questionPage of this.questionPages) {

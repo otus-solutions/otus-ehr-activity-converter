@@ -276,15 +276,14 @@ class QuestionPage {
 
     _setRoutesFromBranches(){
         for(let branch of this.branches) {
-            let originId =  this.questions[0].id;
-            let group = this._someGroupContainsQuestion(originId);
-            if(group){
-                originId = group.getLastQuestion();
-            }
+            // let originId =  this.questions[0].id;
+            // let group = this._someGroupContainsQuestion(originId);
+            // if(group){
+            //     originId = group.getLastQuestion();
+            // }
 
+            const originId = this.getLastQuestionNotHidden().id;
             const targetId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
-
-            originId = this.getLastQuestionNotHidden().id;
             const lastQuestionId = this.getLastQuestion().id;
             const lastIsHiddenQuestion = this.hiddenIndexes.includes(this.questions.length-1);
 
@@ -424,6 +423,23 @@ class QuestionPage {
             let indexStr = `${i}`;
             indexStr = indexStr.padStart(2, ' ');
             content += `\t[${indexStr}]\t ${this.questions[i].index} ${questionId}${isInSomeBasicGroup}${isHiddenBySomebody}\n`;
+        }
+        return content;
+    }
+
+    resumeBranches(){
+        let content = "";
+        for(let branch of this.branches){
+            let conditions = [];
+            let size = 1;
+            for(let condition of branch.rules){
+                conditions.push(condition.expressions);
+                size *= condition.expressions.length;
+            }
+            size *= conditions.length;
+            content += `${branch.originPageId} -> ${branch.targetPageId}` + 
+                (size == 1 ? "\t"+JSON.stringify(conditions) :  "\n"+JSON.stringify(conditions, null, 4)) + 
+                "\n";
         }
         return content;
     }

@@ -59,6 +59,7 @@ function exportResumes(ehr, acronym, path){
     FileHandler.mkdir(path);
     path += acronym;
     FileHandler.write(path + "-resume0-questions.txt", ehr.resume());
+    FileHandler.write(path + "-resume0-branches.txt", ehr.resumeBranches());
     FileHandler.write(path + "-resume1-cuts.txt", ehr.resumeCuts());
     FileHandler.writeJson(path + "-resume2-routes.json", ehr.resumeRoutesJson());
     FileHandler.writeJson(path + "-resume3-groups.json", ehr.resumeGroupsJson());
