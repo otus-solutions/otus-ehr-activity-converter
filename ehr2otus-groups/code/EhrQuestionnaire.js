@@ -9,7 +9,6 @@ class EhrQuestionnaire {
         this.metaDataGroups = {};
         this.choiceGroups = {};
         this.questionPages = [];
-        this.endPage = new EndPage();
         this.defaultRouteQuestionIds = [];
         globalVars.ehrQuestionnaire = this;
         this.defaultRoutePageIds = [];
@@ -41,9 +40,6 @@ class EhrQuestionnaire {
     }
 
     getFirstQuestionIdFromQuestionPage(searchQuestionPageId){
-        // if(searchQuestionPageId === this.endPage.id){
-        //     throw this.endPage.id;
-        // }
         return this.getQuestionPage(searchQuestionPageId).getFirstQuestion().id;
     }
 
@@ -64,7 +60,7 @@ class EhrQuestionnaire {
         }
         globalVars.choiceGroups.set(this.choiceGroups);
 
-        const ehrQuestionPages = ehrTemplate.questionPage//.filter((questionPage) => questionPage.id !== this.endPage.id);
+        const ehrQuestionPages = ehrTemplate.questionPage.filter((questionPage) => questionPage.id !== globalVars.CONDITIONS_END_PAGE_ID);
 
         let setFirstQuestionPage = false;
 
@@ -79,11 +75,6 @@ class EhrQuestionnaire {
                 setFirstQuestionPage = true;
                 this.defaultRouteQuestionIds.push(questionPage.id, questionPage.nextPageId);
             }
-        }
-
-        const ehrEndPageObj = ehrTemplate.questionPage.filter((questionPage) => questionPage.id === this.endPage.id)[0];
-        if(ehrEndPageObj){
-            this.endPage.readFromJsonObj(ehrEndPageObj);
         }
 
         let prevOfFirstQuestion = globalVars.DEFAULT_NODES.BEGIN;

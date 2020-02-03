@@ -30,6 +30,7 @@ module.exports = {
     },
     FIRST_QUESTION_INDEX: 2,
     END_PAGE_ID: "END_PAGE",
+    CONDITIONS_END_PAGE_ID: "CONDITIONS_END_PAGE",
     OTUS_TEMPLATE_ATTRIBUTES: {
         QUESTIONS: "itemContainer",
         NAVIGATION_LIST: "navigationList",

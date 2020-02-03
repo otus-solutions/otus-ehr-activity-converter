@@ -6,7 +6,7 @@ class EndPage extends QuestionPage{
 
     constructor(){
         super();
-        this.id = globalVars.END_PAGE_ID;
+        this.id = globalVars.CONDITIONS_END_PAGE_ID;
     }
 
     readFromJsonObj(ehrEndPageObj){
