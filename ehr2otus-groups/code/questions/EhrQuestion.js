@@ -8,7 +8,7 @@ class EhrQuestion {
     constructor(ehrQuestionObj, pageId, questionType, dataType){
         this.id = ehrQuestionObj.id;
         this.name = ehrQuestionObj.name;
-        this.label = ehrQuestionObj.label;
+        this.label = ehrQuestionObj.label.replace(/\[/gi, "<").replace(/\]/gi, ">");
         this.metaDataGroupId = ehrQuestionObj.metaDataGroupId;
         this.pageId = pageId;
         this.questionType = questionType;
@@ -139,3 +139,7 @@ class EhrQuestion {
 }
 
 module.exports = EhrQuestion;
+
+function readLabel(label){
+    return label.replaceAll("[", "<").replaceAll("]", ">");
+}
