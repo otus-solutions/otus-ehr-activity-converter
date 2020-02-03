@@ -1,0 +1,2805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<survey xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="survey.xsd" title="Entrevista Anual de Seguimento"
+	shortName="EAS" version="A" group="OUTCOMES">
+
+	<metaDataGroup id="DONT_WANT_KNOW_APPLY">
+		<metaDataValue>DOES_NOT_WANT_TO_ANSWER</metaDataValue>
+		<metaDataValue>DOES_NOT_KNOW</metaDataValue>
+		<metaDataValue>DOES_NOT_APPLY</metaDataValue>
+	</metaDataGroup>
+
+	<choiceGroup id="InterviewType">
+		<choice name="REFERRED_EVENT" label="evento referido/D.O." value="1" />
+		<choice name="ANNUAL_CONTACT" label="contato anual" value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="InterviewStatus">
+		<choice name="INTERVIEW_COMPLETED_OR_PARTIALLY" label="Entrevista completa ou parcialmente completa"
+			value="1" />
+		<choice name="INTERVIEW_NOT_DONE" label="Entrevista não realizada"
+			value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="InterviewWithWhom">
+		<choice name="PARTICIPANT" label="Participante" value="1" />
+		<choice name="INFORMER" label="Informante/D.O." value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="ReasonNotDone">
+		<choice name="IMPOSSIBILITY" label="Impossibilidade " value="1" />
+		<choice name="REFUSAL" label="Recusa" value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="HealthState">
+		<choice name="VERY_GOOD" label="Muito bom" value="1" />
+		<choice name="GOOD" label="Bom" value="2" />
+		<choice name="REGULAR" label="Regular" value="3" />
+		<choice name="BAD" label="Ruim" value="4" />
+		<choice name="VERY_BAD" label="Muito ruim" value="5" />
+	</choiceGroup>
+
+	<choiceGroup id="YesNoDoesntApply">
+		<choice name="YES" label="Sim" value="1" />
+		<choice name="NO" label="Não" value="0" />
+		<choice name="DOES_NOT_APPLY" label="Não se aplica (hipertensão PREVIAMENTE REFERIDA)"
+			value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="AtHospitalOutOfHospital">
+		<choice name="IN_HOSPITAL" label="Em hospital" value="1" />
+		<choice name="IN_EMERGENCY_ROOM" label="Em Pronto Socorro/Sala de emergência"
+			value="2" />
+		<choice name="OUT_OF_HOSPITAL" label="Fora de hospital" value="3" />
+	</choiceGroup>
+
+	<choiceGroup id="PositiveNegative">
+		<choice name="POSITIVE" label="Positivo" value="1"/>
+		<choice name="NEGATIVE" label="Negativo" value="0"/>
+	</choiceGroup>
+
+	<choiceGroup id="YesNo">
+		<choice name="YES" label="Sim" value="1" />
+		<choice name="NO" label="Não" value="0" />
+	</choiceGroup>
+
+	<choiceGroup id="WhichReferredEvent">
+		<choice name="HEART_ATTACK" label="Infarto agudo do miocárdio ou ataque cardíaco"
+			value="1" />
+		<choice name="ANGINA_CHEST_PAIN"
+			label="Angina ou dor no peito ou má circulação no coração" value="2" />
+		<choice name="HEART_INSUFFICIENCY"
+			label="Insuficiência cardíaca (coração grande ou dilatado)" value="3" />
+		<choice name="LEG_PAIN"
+			label="Dor nas pernas devido a obstrução arterial, claudicação intermitente ou doença vascular periférica"
+			value="4" />
+		<choice name="DEEP_THROMBOSIS_CLOTS"
+			label="Trombose venosa profunda ou coágulos sanguíneos nas pernas ou braços"
+			value="5" />
+		<choice name="TIA"
+			label="Ataque isquêmico transitório (AIT) ou “princípio de derrame”"
+			value="6" />
+		<choice name="STROKE" label="Acidente vascular cerebral (derrame ou AVC)"
+			value="7" />
+		<choice name="CAROTID_OBSTRUCTION"
+			label="Obstrução de artéria carótida (artéria do pescoço)" value="8" />
+		<choice name="RENAL_INSUFFICIENCY" label="Insuficiência Renal"
+			value="9" />
+		<choice name="CANCER" label="Câncer" value="10" />
+		<choice name="DIABETES" label="Diabetes" value="11" />
+		<choice name="OTHER_PROBLEM" label="Outro problema que tenha resultado em internação"
+			value="12" />
+	</choiceGroup>
+
+
+	<!-- INICIO DE FORMULARIO -->
+	<questionPage nextPageId="PAGE_001" id="BEGIN_PAGE">
+		<textItemQuestion id="instructions" label="As questões a seguir NÃO devem ser lidas ao participante: devem ser respondidas pelo ENTREVISTADOR(A)."> </textItemQuestion>
+	</questionPage>
+
+	<!-- SECAO 1 -->
+
+	<questionPage nextPageId="PAGE_002" id="PAGE_001">
+		<singleSelectionQuestion name="interviewType"
+			choiceGroupId="InterviewType" id="EASA1" label="Tipo de entrevista:" />
+
+		<branch targetPageId="PAGE_003">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_003" id="PAGE_002">
+		<singleSelectionQuestion name="interviewStatus"
+			choiceGroupId="InterviewStatus" id="EASA2" label="Contato anual de seguimento:" />
+
+		<branch targetPageId="PAGE_007">
+			<rule>
+				<expression questionName="interviewStatus" operator="EQ"
+					value="INTERVIEW_NOT_DONE" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_004" id="PAGE_003">
+		<singleSelectionQuestion name="interviewWithWhom"
+			choiceGroupId="InterviewWithWhom" id="EASA2a" label="Entrevista realizada com quem:" />
+
+		<branch targetPageId="PAGE_005">
+			<rule>
+				<expression questionName="interviewWithWhom" operator="EQ"
+					value="PARTICIPANT" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+
+		<branch targetPageId="PAGE_010">
+			<rule>
+				<expression questionName="interviewWithWhom" operator="EQ"
+					value="PARTICIPANT" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_014" id="PAGE_004">
+		<singleSelectionQuestion name="participantDied"
+			choiceGroupId="YesNo" id="EASA2b1" label="Participante faleceu?" />
+
+		<branch targetPageId="PAGE_005">
+			<rule>
+				<expression questionName="participantDied" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_006">
+			<rule>
+				<expression questionName="participantDied" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_018" id="PAGE_005">
+		<singleSelectionQuestion name="whichReferredEvent"
+			choiceGroupId="WhichReferredEvent" id="EASA1a" label="Qual evento referido?"/>
+
+		<branch targetPageId="PAGE_025">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="ANGINA_CHEST_PAIN" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_032">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="HEART_INSUFFICIENCY" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_039">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="LEG_PAIN" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_046">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="DEEP_THROMBOSIS_CLOTS" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_054">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="TIA" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_061">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="STROKE" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_068">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="CAROTID_OBSTRUCTION" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_075">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="RENAL_INSUFFICIENCY" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_085">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="CANCER" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_095">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="DIABETES" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_104">
+			<rule>
+				<expression questionName="whichReferredEvent" operator="EQ"
+					value="OTHER_PROBLEM" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_010" id="PAGE_006">
+		<basicQuestionGroup name="reasonInformer" id="EASA2bGroup"
+			label="Razão pela qual foi realizada com informante:">
+			<singleSelectionQuestion name="hearingProblem"
+				choiceGroupId="YesNo" id="EASA2b2" label="Problema auditivo" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="cognitiveProblem"
+				choiceGroupId="YesNo" id="EASA2b3" label="Problema cognitivo" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="hospitalized"
+				choiceGroupId="YesNo" id="EASA2b4" hiddenQuestion="hospitalizedText" label="Internado"
+				visibleWhen="YES" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+			<textQuestion name="hospitalizedText" id="EASA2b4q"
+				label="Doença:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="otherReasonInformer"
+				choiceGroupId="YesNo" id="EASA2b5" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				hiddenQuestion="otherReasonInformerText" visibleWhen="YES" label="Outra razão"/>
+			<textQuestion name="otherReasonInformerText" id="EASA2b5q"
+				label="Qual:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_008" id="PAGE_007">
+		<singleSelectionQuestion name="reasonNotDone"
+			choiceGroupId="ReasonNotDone" id="EASA2c" label="Razão da não realização" />
+
+		<branch targetPageId="PAGE_009">
+			<rule>
+				<expression questionName="reasonNotDone" operator="EQ"
+					value="IMPOSSIBILITY" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="UNKNOWN_END_PAGE" id="PAGE_008">
+		<basicQuestionGroup name="reasonForRefusalGroup" id="EASA2dGroup"
+			label="Razão da recusa">
+			<singleSelectionQuestion name="difficultyWithStudy"
+				choiceGroupId="YesNo" id="EASA2d1" label="Dificuldades com o estudo"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="currentLifeSituation"
+				choiceGroupId="YesNo" id="EASA2d2" label="Situação atual de vida"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="lackOfTime"
+				choiceGroupId="YesNo" id="EASA2d3" label="Falta de tempo"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="otherReasonRefusal"
+				choiceGroupId="YesNo" id="EASA2d4" label="Outra razão"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="otherReasonRefusalText"
+				visibleWhen="YES" />
+			<textQuestion name="otherReasonRefusalText" id="EASA2d4q"
+				label="Qual:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+	</questionPage>
+
+	<questionPage nextPageId="UNKNOWN_END_PAGE" id="PAGE_009">
+		<basicQuestionGroup name="reasonForImpossibilityGroup" id="EASA2eGroup"
+			label="Razão da impossibilidade">
+			<singleSelectionQuestion name="notPossibleToLocate"
+				choiceGroupId="YesNo" id="EASA2e1" label="Não foi possível localizar"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="passingImpossibility"
+				choiceGroupId="YesNo" id="EASA2e2" label="Falecimento"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="hearingProblemImpossibility"
+				choiceGroupId="YesNo" id="EASA2e3" label="Problema auditivo"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="cognitiveProblemImpossibility"
+				choiceGroupId="YesNo" id="EASA2e4" label="Problema cognitivo"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="hospitalizedImpossibility"
+				choiceGroupId="YesNo" id="EASA2e5" label="Internado"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="hospitalizedImpossibilityText" visibleWhen="YES"/>
+			<textQuestion name="hospitalizedImpossibilityText" id="EASA2e5q"
+				label="Doença:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="otherReasonImpossibility"
+				choiceGroupId="YesNo" id="EASA2e6" label="Outra razão"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="otherReasonImpossibilityText" visibleWhen="YES"/>
+			<textQuestion name="otherReasonImpossibilityText" id="EASA2e6q"
+				label="Qual:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_011" id="PAGE_010">
+		<singleSelectionQuestion name="healthState"
+			choiceGroupId="HealthState" id="EASA3"
+			label="De um modo geral, em comparação a pessoas da sua idade, como o/a Sr/Sra (nome do participante) considera seu estado de saúde? (LEIA AS OPÇÕES)"
+			infoLabel="[i]As questões a seguir DEVEM ser LIDAS ao participante/informante.[/i]"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_012" id="PAGE_011">
+		<singleSelectionQuestion name="healthService"
+			choiceGroupId="YesNo" id="EASA4"
+			label="Depois da última entrevista telefônica ao ELSA, o/a Sr/Sra (nome do participante) procurou um médico ou algum serviço de saúde?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="healthService" operator="EQ"
+					value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_013" id="PAGE_012">
+		<singleSelectionQuestion name="hypertension"
+			choiceGroupId="YesNoDoesntApply" id="EASA5"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) apresenta [b]hipertensão arterial (pressão alta)[/b]?" />
+
+		<branch targetPageId="PAGE_017">
+			<rule>
+				<expression questionName="hypertension" operator="EQ"
+					value="NO" />
+			</rule>
+			<rule>
+				<expression questionName="hypertension" operator="EQ"
+					value="DOES_NOT_APPLY" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_017" id="PAGE_013">
+		<singleSelectionQuestion name="diagnosisAfterLastVisit"
+			choiceGroupId="YesNo" id="EASA5a"
+			label="Este diagnóstico foi depois da última entrevista telefônica ao ELSA? "
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_015" id="PAGE_014">
+		<dateQuestion maxdate="realizationDate" name="dateDied" id="EASA6"
+			label="Em que dia o/a Sr/Sra (nome do participante) faleceu?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<textQuestion name="cityDied" id="EASA7" label="Cidade:"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<textQuestion name="stateDied" id="EASA8" label="Estado:"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		<singleSelectionQuestion name="diedInHospital"
+			choiceGroupId="AtHospitalOutOfHospital" id="EASA9"
+			label="Ele(a) faleceu dentro ou fora de um hospital?" />
+
+		<branch targetPageId="PAGE_016">
+			<rule>
+				<expression questionName="diedInHospital" operator="EQ"
+					value="OUT_OF_HOSPITAL" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_016" id="PAGE_015">
+		<basicQuestionGroup name="hospitalDiedData" id="EASA9Group">
+			<textQuestion name="hospitalDiedName" id="EASA9a"
+				label="Nome do estabelecimento:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="hospitalDiedCode" id="EASA9acod"
+				decimalNumber="false" label="Código do Hospital-CNES:" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_017" id="PAGE_016">
+		<textQuestion name="deathNotes" id="EASAnotasobito"
+			label="Notas" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<branch targetPageId="PAGE_005">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_018" id="PAGE_017">
+		<singleSelectionQuestion name="heartAttack"
+			choiceGroupId="YesNo" id="EASA10"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve [b]infarto agudo do miocárdio ou ataque cardíaco?[/b]" />
+
+		<branch targetPageId="PAGE_024">
+			<rule>
+				<expression questionName="heartAttack" operator="EQ"
+					value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_019" id="PAGE_018">
+		<dateQuestion maxdate="realizationDate" name="heartAttackDiagnosisDate" id="EASA10a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="heartAttackHospitalized"
+			choiceGroupId="YesNo" id="EASA10b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="heartAttackHospitalized"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_024">
+			<rule>
+				<expression questionName="heartAttackHospitalized"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_020" id="PAGE_019">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstHeartAttackHospitalizationGroup"
+			id="EASA10c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstHeartAttackHospitalizationDate"
+				id="EASA10c1a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstHeartAttackHospitalName" id="EASA10c1b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstHeartAttackHospitalCode"
+				id="EASA10c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstHeartAttackHospitalizationDays"
+				id="EASA10c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondHeartAttackHospitalization"
+			choiceGroupId="YesNo" id="EASA10c2"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_024">
+			<rule>
+				<expression questionName="secondHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_021" id="PAGE_020">
+		<header>Dados da [b]segunda internação[/b] por infarto.</header>
+
+		<basicQuestionGroup name="secondHeartAttackHospitalizationGroup"
+			id="EASA10c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondHeartAttackHospitalizationDate"
+				id="EASA10c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondHeartAttackHospitalName" id="EASA10c2b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondHeartAttackHospitalCode"
+				id="EASA10c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondHeartAttackHospitalizationDays"
+				id="EASA10c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdHeartAttackHospitalization"
+			choiceGroupId="YesNo" id="EASA10c3"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_024">
+			<rule>
+				<expression questionName="thirdHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_022" id="PAGE_021">
+		<header>Dados da [b]terceira internação[/b] por infarto.</header>
+
+		<basicQuestionGroup name="thirdHeartAttackHospitalizationGroup"
+			id="EASA10c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdHeartAttackHospitalizationDate"
+				id="EASA10c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdHeartAttackHospitalName" id="EASA10c3b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdHeartAttackHospitalCode"
+				id="EASA10c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdHeartAttackHospitalizationDays"
+				id="EASA10c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthHeartAttackHospitalization"
+			choiceGroupId="YesNo" id="EASA10c4"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_024">
+			<rule>
+				<expression questionName="fourthHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_023" id="PAGE_022">
+		<header>Dados da [b]quarta internação[/b] por infarto.</header>
+
+		<basicQuestionGroup name="fourthHeartAttackHospitalizationGroup"
+			id="EASA10c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthHeartAttackHospitalizationDate"
+				id="EASA10c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthHeartAttackHospitalName" id="EASA10c4b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthHeartAttackHospitalCode"
+				id="EASA10c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthHeartAttackHospitalizationDays"
+				id="EASA10c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthHeartAttackHospitalization"
+			choiceGroupId="YesNo" id="EASA10c5"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_024">
+			<rule>
+				<expression questionName="fifthHeartAttackHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_024" id="PAGE_023">
+		<header>Dados da [b]quinta internação[/b] por infarto.</header>
+
+		<basicQuestionGroup name="fifthHeartAttackHospitalizationGroup"
+			id="EASA10c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthHeartAttackHospitalizationDate"
+				id="EASA10c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthHeartAttackHospitalName" id="EASA10c5b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthHeartAttackHospitalCode"
+				id="EASA10c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthHeartAttackHospitalizationDays"
+				id="EASA10c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_025" id="PAGE_024">
+		<singleSelectionQuestion name="anginaChestPain"
+			choiceGroupId="YesNo" id="EASA11"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]angina ou dor no peito ou má circulação no coração?[/b]" />
+
+		<branch targetPageId="PAGE_031">
+			<rule>
+				<expression questionName="anginaChestPain" operator="EQ"
+					value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_026" id="PAGE_025">
+		<dateQuestion maxdate="realizationDate" name="anginaDiagnosisDate" id="EASA11a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="anginaHospitalized"
+			choiceGroupId="YesNo" id="EASA11b"
+			label="O/a Sr/Sra (nome do participante) esteve internado devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="anginaHospitalized" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_031">
+			<rule>
+				<expression questionName="anginaHospitalized" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_027" id="PAGE_026">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstAnginaHospitalizationGroup"
+			id="EASA11c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstAnginaHospitalizationDate" id="EASA11c1a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstAnginaHospitalName" id="EASA11c1b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstAnginaHospitalCode" id="EASA11c1bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstAnginaHospitalizationDays"
+				id="EASA11c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondAnginaHospitalization"
+			choiceGroupId="YesNo" id="EASA11c2"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_031">
+			<rule>
+				<expression questionName="secondAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_028" id="PAGE_027">
+		<header>Dados da [b]segunda internação[/b] por angina ou dor no peito ou má circulação no coração.</header>
+
+		<basicQuestionGroup name="secondAnginaHospitalizationGroup"
+			id="EASA11c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondAnginaHospitalizationDate" id="EASA11c2a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondAnginaHospitalName" id="EASA11c2b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondAnginaHospitalCode" id="EASA11c2bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondAnginaHospitalizationDays"
+				id="EASA11c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdAnginaHospitalization"
+			choiceGroupId="YesNo" id="EASA11c3"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_031">
+			<rule>
+				<expression questionName="thirdAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_029" id="PAGE_028">
+		<header>Dados da [b]terceira internação[/b] por angina ou dor no peito ou má circulação no coração.</header>
+
+		<basicQuestionGroup name="thirdAnginaHospitalizationGroup"
+			id="EASA11c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdAnginaHospitalizationDate" id="EASA11c3a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdAnginaHospitalName" id="EASA11c3b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdAnginaHospitalCode" id="EASA11c3bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdAnginaHospitalizationDays"
+				id="EASA11c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthAnginaHospitalization"
+			choiceGroupId="YesNo" id="EASA11c4"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_031">
+			<rule>
+				<expression questionName="fourthAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_030" id="PAGE_029">
+		<header>Dados da [b]quarta internação[/b] por angina ou dor no peito ou má circulação no coração.</header>
+
+		<basicQuestionGroup name="fourthAnginaHospitalizationGroup"
+			id="EASA11c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthAnginaHospitalizationDate" id="EASA11c4a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthAnginaHospitalName" id="EASA11c4b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthAnginaHospitalCode" id="EASA11c4bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthAnginaHospitalizationDays"
+				id="EASA11c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthAnginaHospitalization"
+			choiceGroupId="YesNo" id="EASA11c5"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_031">
+			<rule>
+				<expression questionName="fifthAnginaHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_031" id="PAGE_030">
+		<header>Dados da [b]quinta internação[/b] por angina ou dor no peito ou má circulação no coração.</header>
+
+		<basicQuestionGroup name="fifthAnginaHospitalizationGroup"
+			id="EASA11c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthAnginaHospitalizationDate" id="EASA11c5a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthAnginaHospitalName" id="EASA11c5b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthAnginaHospitalCode" id="EASA11c5bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthAnginaHospitalizationDays"
+				id="EASA11c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_032" id="PAGE_031">
+		<singleSelectionQuestion name="heartInsufficiency"
+			choiceGroupId="YesNo" id="EASA12"
+			label="Depois da última entrevista telefônica ao ELSA, um médico lhe informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]insuficiência cardíaca (coração grande ou dilatado)[/b]?" />
+
+		<branch targetPageId="PAGE_038">
+			<rule>
+				<expression questionName="heartInsufficiency" operator="EQ"
+					value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_033" id="PAGE_032">
+		<dateQuestion maxdate="realizationDate" name="heartInsufficiencyDiagnosisDate" id="EASA12a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="heartInsufficiencyHospitalized"
+			choiceGroupId="YesNo" id="EASA12b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="heartInsufficiencyHospitalized"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_038">
+			<rule>
+				<expression questionName="heartInsufficiencyHospitalized"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_034" id="PAGE_033">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstHeartInsufficiencyHospitalizationGroup"
+			id="EASA12c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstHeartInsufficiencyHospitalizationDate"
+				id="EASA12c1a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstHeartInsufficiencyHospitalName"
+				id="EASA12c1b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstHeartInsufficiencyHospitalCode"
+				id="EASA12c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstHeartInsufficiencyHospitalizationDays"
+				id="EASA12c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondHeartInsufficiencyHospitalization"
+			choiceGroupId="YesNo" id="EASA12c2"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_038">
+			<rule>
+				<expression questionName="secondHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_035" id="PAGE_034">
+		<header>Dados da [b]segunda internação[/b] por insuficiência cardíaca (coração grande ou dilatado).</header>
+
+		<basicQuestionGroup name="secondHeartInsufficiencyHospitalizationGroup"
+			id="EASA12c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondHeartInsufficiencyHospitalizationDate"
+				id="EASA12c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondHeartInsufficiencyHospitalName"
+				id="EASA12c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondHeartInsufficiencyHospitalCode"
+				id="EASA12c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondHeartInsufficiencyHospitalizationDays"
+				id="EASA12c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdHeartInsufficiencyHospitalization"
+			choiceGroupId="YesNo" id="EASA12c3"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_038">
+			<rule>
+				<expression questionName="thirdHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_036" id="PAGE_035">
+		<header>Dados da [b]terceira internação[/b] por insuficiência cardíaca (coração grande ou dilatado).</header>
+
+		<basicQuestionGroup name="thirdHeartInsufficiencyHospitalizationGroup"
+			id="EASA12c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdHeartInsufficiencyHospitalizationDate"
+				id="EASA12c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdHeartInsufficiencyHospitalName"
+				id="EASA12c3b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdHeartInsufficiencyHospitalCode"
+				id="EASA12c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdHeartInsufficiencyHospitalizationDays"
+				id="EASA12c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthHeartInsufficiencyHospitalization"
+			choiceGroupId="YesNo" id="EASA12c4"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_038">
+			<rule>
+				<expression questionName="fourthHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_037" id="PAGE_036">
+		<header>Dados da [b]quarta internação[/b] por insuficiência cardíaca (coração grande ou dilatado).</header>
+
+		<basicQuestionGroup name="fourthHeartInsufficiencyHospitalizationGroup"
+			id="EASA12c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthHeartInsufficiencyHospitalizationDate"
+				id="EASA12c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthHeartInsufficiencyHospitalName"
+				id="EASA12c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthHeartInsufficiencyHospitalCode"
+				id="EASA12c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthHeartInsufficiencyHospitalizationDays"
+				id="EASA12c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthHeartInsufficiencyHospitalization"
+			choiceGroupId="YesNo" id="EASA12c5"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_038">
+			<rule>
+				<expression questionName="fifthHeartInsufficiencyHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_038" id="PAGE_037">
+		<header>Dados da [b]quinta internação[/b] por insuficiência cardíaca (coração grande ou dilatado).</header>
+
+		<basicQuestionGroup name="fifthHeartInsufficiencyHospitalizationGroup"
+			id="EASA12c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthHeartInsufficiencyHospitalizationDate"
+				id="EASA12c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthHeartInsufficiencyHospitalName"
+				id="EASA12c5b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthHeartInsufficiencyHospitalCode"
+				id="EASA12c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthHeartInsufficiencyHospitalizationDays"
+				id="EASA12c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_039" id="PAGE_038">
+		<singleSelectionQuestion name="legPain"
+			choiceGroupId="YesNo" id="EASA13"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]dor nas pernas devido a obstrução arterial, claudicação intermitente ou doença vascular periférica, que não seja problema de varizes[/b]?" />
+
+		<branch targetPageId="PAGE_045">
+			<rule>
+				<expression questionName="legPain" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_040" id="PAGE_039">
+		<dateQuestion maxdate="realizationDate" name="legPainDiagnosisDate" id="EASA13a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="legPainHospitalized"
+			choiceGroupId="YesNo" id="EASA13b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="legPainHospitalized" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_045">
+			<rule>
+				<expression questionName="legPainHospitalized" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_041" id="PAGE_040">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstLegPainHospitalizationGroup"
+			id="EASA13c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstLegPainHospitalizationDate" id="EASA13c1a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstLegPainHospitalName" id="EASA13c1b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstLegPainHospitalCode" id="EASA13c1bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstLegPainHospitalizationDays"
+				id="EASA13c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondLegPainHospitalization"
+			choiceGroupId="YesNo" id="EASA13c2"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_045">
+			<rule>
+				<expression questionName="secondLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_042" id="PAGE_041">
+		<header>Dados da [b]segunda internação[/b] por dor nas pernas devido a obstrução arterial, claudicação intermitente ou doença vascular periférica, que não seja problema de varizes.</header>
+
+		<basicQuestionGroup name="secondLegPainHospitalizationGroup"
+			id="EASA13c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondLegPainHospitalizationDate"
+				id="EASA13c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondLegPainHospitalName" id="EASA13c2b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondLegPainHospitalCode" id="EASA13c2bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondLegPainHospitalizationDays"
+				id="EASA13c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdLegPainHospitalization"
+			choiceGroupId="YesNo" id="EASA13c3"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_045">
+			<rule>
+				<expression questionName="thirdLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_043" id="PAGE_042">
+		<header>Dados da [b]terceira internação[/b] por dor nas pernas devido a obstrução arterial, claudicação intermitente ou doença vascular periférica, que não seja problema de varizes.</header>
+
+		<basicQuestionGroup name="thirdLegPainHospitalizationGroup"
+			id="EASA13c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdLegPainHospitalizationDate" id="EASA13c3a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdLegPainHospitalName" id="EASA13c3b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdLegPainHospitalCode" id="EASA13c3bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdLegPainHospitalizationDays"
+				id="EASA13c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthLegPainHospitalization"
+			choiceGroupId="YesNo" id="EASA13c4"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_045">
+			<rule>
+				<expression questionName="fourthLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_044" id="PAGE_043">
+		<header>Dados da [b]quarta internação[/b] por dor nas pernas devido a obstrução arterial, claudicação intermitente ou doença vascular periférica, que não seja problema de varizes.</header>
+
+		<basicQuestionGroup name="fourthLegPainHospitalizationGroup"
+			id="EASA13c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthLegPainHospitalizationDate"
+				id="EASA13c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthLegPainHospitalName" id="EASA13c4b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthLegPainHospitalCode" id="EASA13c4bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthLegPainHospitalizationDays"
+				id="EASA13c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthLegPainHospitalization"
+			choiceGroupId="YesNo" id="EASA13c5"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_045">
+			<rule>
+				<expression questionName="fifthLegPainHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_045" id="PAGE_044">
+		<header>Dados da [b]quinta internação[/b] por dor nas pernas devido a obstrução arterial, claudicação intermitente ou doença vascular periférica, que não seja problema de varizes.</header>
+
+		<basicQuestionGroup name="fifthLegPainHospitalizationGroup"
+			id="EASA13c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthLegPainHospitalizationDate" id="EASA13c5a"
+				label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthLegPainHospitalName" id="EASA13c5b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthLegPainHospitalCode" id="EASA13c5bcod"
+				decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthLegPainHospitalizationDays"
+				id="EASA13c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_046" id="PAGE_045">
+		<singleSelectionQuestion name="deepThrombosis"
+			choiceGroupId="YesNo" id="EASA14"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]trombose venosa profunda (coágulos sanguíneos nas pernas/ braços) ou embolia pulmonar?" />
+
+		<branch targetPageId="PAGE_053">
+			<rule>
+				<expression questionName="deepThrombosis" operator="EQ"
+					value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_047" id="PAGE_046">
+		<dateQuestion maxdate="realizationDate" name="deepThrombosisDiagnosisDate" id="EASA14a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="deepThrombosisHospitalized"
+			choiceGroupId="YesNo" id="EASA14b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_052">
+			<rule>
+				<expression questionName="deepThrombosisHospitalized"
+					operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_048" id="PAGE_047">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstDeepThrombosisHospitalizationGroup"
+			id="EASA14c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstDeepThrombosisHospitalizationDate"
+				id="EASA14c1a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstDeepThrombosisHospitalName" id="EASA14c1b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstDeepThrombosisHospitalCode"
+				id="EASA14c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstDeepThrombosisHospitalizationDays"
+				id="EASA14c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondDeepThrombosisHospitalization"
+			choiceGroupId="YesNo" id="EASA14c2"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_053">
+			<rule>
+				<expression questionName="secondDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_049" id="PAGE_048">
+		<header>Dados da [b]segunda internação[/b] por trombose venosa profunda ou coágulos sanguíneos nas pernas.</header>
+
+		<basicQuestionGroup name="secondDeepThrombosisHospitalizationGroup"
+			id="EASA14c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondDeepThrombosisHospitalizationDate"
+				id="EASA14c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondDeepThrombosisHospitalName"
+				id="EASA14c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondDeepThrombosisHospitalCode"
+				id="EASA14c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondDeepThrombosisHospitalizationDays"
+				id="EASA14c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdDeepThrombosisHospitalization"
+			choiceGroupId="YesNo" id="EASA14c3"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_053">
+			<rule>
+				<expression questionName="thirdDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_050" id="PAGE_049">
+		<header>Dados da [b]terceira internação[/b] por trombose venosa profunda ou coágulos sanguíneos nas pernas.</header>
+
+		<basicQuestionGroup name="thirdDeepThrombosisHospitalizationGroup"
+			id="EASA14c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdDeepThrombosisHospitalizationDate"
+				id="EASA14c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdDeepThrombosisHospitalName" id="EASA14c3b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdDeepThrombosisHospitalCode"
+				id="EASA14c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdDeepThrombosisHospitalizationDays"
+				id="EASA14c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthDeepThrombosisHospitalization"
+			choiceGroupId="YesNo" id="EASA14c4"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_053">
+			<rule>
+				<expression questionName="fourthDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_051" id="PAGE_050">
+		<header>Dados da [b]quarta internação[/b] por trombose venosa profunda ou coágulos sanguíneos nas pernas.</header>
+
+		<basicQuestionGroup name="fourthDeepThrombosisHospitalizationGroup"
+			id="EASA14c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthDeepThrombosisHospitalizationDate"
+				id="EASA14c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthDeepThrombosisHospitalName"
+				id="EASA14c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthDeepThrombosisHospitalCode"
+				id="EASA14c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthDeepThrombosisHospitalizationDays"
+				id="EASA14c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthDeepThrombosisHospitalization"
+			choiceGroupId="YesNo" id="EASA14c5"
+			label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_053">
+			<rule>
+				<expression questionName="fifthDeepThrombosisHospitalization"
+					operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_052" id="PAGE_051">
+		<header>Dados da [b]quinta internação[/b] por trombose venosa profunda ou coágulos sanguíneos nas pernas.</header>
+
+		<basicQuestionGroup name="fifthDeepThrombosisHospitalizationGroup"
+			id="EASA14c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthDeepThrombosisHospitalizationDate"
+				id="EASA14c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthDeepThrombosisHospitalName" id="EASA14c5b"
+				label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthDeepThrombosisHospitalCode"
+				id="EASA14c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthDeepThrombosisHospitalizationDays"
+				id="EASA14c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="deepThrombosisHospitalized"
+					operator="EQ" value="YES" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_053">
+			<rule>
+				<expression questionName="deepThrombosisHospitalized"
+					operator="EQ" value="YES" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_053" id="PAGE_052">
+		<singleSelectionQuestion name="dopplerExam"
+			choiceGroupId="YesNo" id="EASA14d"
+			label="Depois da última entrevista ao ELSA, o/a Sr/Sra (nome do participante) realizou exame de Duplex Scan ou Doppler das pernas ou braços ou cintilografia pulmonar ou angiotomografia pulmonar?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_054" id="PAGE_053">
+		<singleSelectionQuestion name="transitoryIschemicAttack"
+			choiceGroupId="YesNo" id="EASA15"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) apresenta (teve) um [b]ataque isquêmico transitório (AIT) ou “princípio de derrame”[/b]?" />
+
+		<branch targetPageId="PAGE_060">
+			<rule>
+				<expression questionName="transitoryIschemicAttack" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_055" id="PAGE_054">
+		<dateQuestion maxdate="realizationDate" name="transitoryIschemicAttackDiagnosisDate" id="EASA15a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="transitoryIschemicAttackHospitalized"
+			choiceGroupId="YesNo" id="EASA15b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="transitoryIschemicAttackHospitalized" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_060">
+			<rule>
+				<expression questionName="transitoryIschemicAttackHospitalized" operator="EQ"
+					value="NO" />
+				<expression questionName="interviewType" operator="EQ"
+					value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_056" id="PAGE_055">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstTIAHospitalizationGroup" id="EASA15c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstTIAHospitalizationDate" id="EASA15c1a"	label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstTIAHospitalName" id="EASA15c1b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstTIAHospitalCode" id="EASA15c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstTIAHospitalizationDays" id="EASA15c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondTIAHospitalization" choiceGroupId="YesNo" id="EASA15c2" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_060">
+			<rule>
+				<expression questionName="secondTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_057" id="PAGE_056">
+		<header>Dados da [b]segunda internação[/b] por ataque isquêmico transitório (AIT) ou “princípio de derrame”.</header>
+
+		<basicQuestionGroup name="secondTIAHospitalizationGroup" id="EASA15c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondTIAHospitalizationDate" id="EASA15c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondTIAHospitalName" id="EASA15c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondTIAHospitalCode" id="EASA15c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondTIAHospitalizationDays" id="EASA15c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdTIAHospitalization" choiceGroupId="YesNo" id="EASA15c3" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_060">
+			<rule>
+				<expression questionName="thirdTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_058" id="PAGE_057">
+		<header>Dados da [b]terceira internação[/b] por ataque isquêmico transitório (AIT) ou “princípio de derrame”.</header>
+
+		<basicQuestionGroup name="thirdTIAHospitalizationGroup" id="EASA15c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdTIAHospitalizationDate" id="EASA15c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdTIAHospitalName" id="EASA15c3b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdTIAHospitalCode" id="EASA15c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdTIAHospitalizationDays" id="EASA15c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthTIAHospitalization" choiceGroupId="YesNo" id="EASA15c4" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_060">
+			<rule>
+				<expression questionName="fourthTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_059" id="PAGE_058">
+		<header>Dados da [b]quarta internação[/b] por ataque isquêmico transitório (AIT) ou “princípio de derrame”.</header>
+
+		<basicQuestionGroup name="fourthTIAHospitalizationGroup" id="EASA15c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthTIAHospitalizationDate" id="EASA15c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthTIAHospitalName" id="EASA15c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthTIAHospitalCode" id="EASA15c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthTIAHospitalizationDays" id="EASA15c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthTIAHospitalization" choiceGroupId="YesNo" id="EASA15c5" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_060">
+			<rule>
+				<expression questionName="fifthTIAHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_060" id="PAGE_059">
+		<header>Dados da [b]quinta internação[/b] por ataque isquêmico transitório (AIT) ou “princípio de derrame”.</header>
+
+		<basicQuestionGroup name="fifthTIAHospitalizationGroup" id="EASA15c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthTIAHospitalizationDate" id="EASA15c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthTIAHospitalName" id="EASA15c5b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthTIAHospitalCode" id="EASA15c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthTIAHospitalizationDays" id="EASA15c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ"
+					value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_061" id="PAGE_060">
+		<singleSelectionQuestion name="stroke"
+			choiceGroupId="YesNo" id="EASA16"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) apresenta (teve) um [b]acidente vascular cerebral (derrame) ou AVC[/b]?" />
+
+		<branch targetPageId="PAGE_067">
+			<rule>
+				<expression questionName="stroke" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_062" id="PAGE_061">
+		<dateQuestion maxdate="realizationDate" name="strokeDiagnosisDate" id="EASA16a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="strokeHospitalized" choiceGroupId="YesNo" id="EASA16b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="strokeHospitalized" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_067">
+			<rule>
+				<expression questionName="strokeHospitalized" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_063" id="PAGE_062">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstStrokeHospitalizationGroup" id="EASA16c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstStrokeHospitalizationDate" id="EASA16c1a"	label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstStrokeHospitalName" id="EASA16c1b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstStrokeHospitalCode" id="EASA16c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstStrokeHospitalizationDays" id="EASA16c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondStrokeHospitalization" choiceGroupId="YesNo" id="EASA16c2" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_067">
+			<rule>
+				<expression questionName="secondStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_064" id="PAGE_063">
+		<header>Dados da [b]segunda internação[/b] por acidente vascular cerebral (derrame) ou AVC.</header>
+
+		<basicQuestionGroup name="secondStrokeHospitalizationGroup" id="EASA16c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondStrokeHospitalizationDate" id="EASA16c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondStrokeHospitalName" id="EASA16c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondStrokeHospitalCode" id="EASA16c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondStrokeHospitalizationDays" id="EASA16c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdStrokeHospitalization" choiceGroupId="YesNo" id="EASA16c3" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_067">
+			<rule>
+				<expression questionName="thirdStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_065" id="PAGE_064">
+		<header>Dados da [b]terceira internação[/b] por acidente vascular cerebral (derrame) ou AVC.</header>
+
+		<basicQuestionGroup name="thirdStrokeHospitalizationGroup" id="EASA16c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdStrokeHospitalizationDate" id="EASA16c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdStrokeHospitalName" id="EASA16c3b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdStrokeHospitalCode" id="EASA16c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdStrokeHospitalizationDays" id="EASA16c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthStrokeHospitalization" choiceGroupId="YesNo" id="EASA16c4" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_067">
+			<rule>
+				<expression questionName="fourthStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_066" id="PAGE_065">
+		<header>Dados da [b]quarta internação[/b] por acidente vascular cerebral (derrame) ou AVC.</header>
+
+		<basicQuestionGroup name="fourthStrokeHospitalizationGroup" id="EASA16c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthStrokeHospitalizationDate" id="EASA16c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthStrokeHospitalName" id="EASA16c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthStrokeHospitalCode" id="EASA16c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthStrokeHospitalizationDays" id="EASA16c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthStrokeHospitalization" choiceGroupId="YesNo" id="EASA16c5" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_067">
+			<rule>
+				<expression questionName="fifthStrokeHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_067" id="PAGE_066">
+		<header>Dados da [b]quinta internação[/b] por acidente vascular cerebral (derrame) ou AVC.</header>
+
+		<basicQuestionGroup name="fifthStrokeHospitalizationGroup" id="EASA16c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthStrokeHospitalizationDate" id="EASA16c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthStrokeHospitalName" id="EASA16c5b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthStrokeHospitalCode" id="EASA16c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthStrokeHospitalizationDays" id="EASA16c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_068" id="PAGE_067">
+		<singleSelectionQuestion name="carotidObstruction"
+			choiceGroupId="YesNo" id="EASA17"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]obstrução/entupimento de artéria carótida (artéria do pescoço)[/b]?" />
+
+		<branch targetPageId="PAGE_074">
+			<rule>
+				<expression questionName="carotidObstruction" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_069" id="PAGE_068">
+		<dateQuestion maxdate="realizationDate" name="carotidObstructionDiagnosisDate" id="EASA17a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="carotidObstructionHospitalized" choiceGroupId="YesNo" id="EASA17b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="carotidObstructionHospitalized" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_074">
+			<rule>
+				<expression questionName="carotidObstructionHospitalized" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_070" id="PAGE_069">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstCarotidObstructionHospitalizationGroup" id="EASA17c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstCarotidObstructionHospitalizationDate" id="EASA17c1a"	label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstCarotidObstructionHospitalName" id="EASA17c1b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstCarotidObstructionHospitalCode" id="EASA17c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstCarotidObstructionHospitalizationDays" id="EASA17c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondCarotidObstructionHospitalization" choiceGroupId="YesNo" id="EASA17c2" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_074">
+			<rule>
+				<expression questionName="secondCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_071" id="PAGE_070">
+		<header>Dados da [b]segunda internação[/b] por obstrução/entupimento de artéria carótida (artéria do pescoço).</header>
+
+		<basicQuestionGroup name="secondCarotidObstructionHospitalizationGroup" id="EASA17c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondCarotidObstructionHospitalizationDate" id="EASA17c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondCarotidObstructionHospitalName" id="EASA17c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondCarotidObstructionHospitalCode" id="EASA17c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondCarotidObstructionHospitalizationDays" id="EASA17c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdCarotidObstructionHospitalization" choiceGroupId="YesNo" id="EASA17c3" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_074">
+			<rule>
+				<expression questionName="thirdCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_072" id="PAGE_071">
+		<header>Dados da [b]terceira internação[/b] por obstrução/entupimento de artéria carótida (artéria do pescoço).</header>
+
+		<basicQuestionGroup name="thirdCarotidObstructionHospitalizationGroup" id="EASA17c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdCarotidObstructionHospitalizationDate" id="EASA17c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdCarotidObstructionHospitalName" id="EASA17c3b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdCarotidObstructionHospitalCode" id="EASA17c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdCarotidObstructionHospitalizationDays" id="EASA17c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthCarotidObstructionHospitalization" choiceGroupId="YesNo" id="EASA17c4" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_074">
+			<rule>
+				<expression questionName="fourthCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_073" id="PAGE_072">
+		<header>Dados da [b]quarta internação[/b] por obstrução/entupimento de artéria carótida (artéria do pescoço).</header>
+
+		<basicQuestionGroup name="fourthCarotidObstructionHospitalizationGroup" id="EASA17c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthCarotidObstructionHospitalizationDate" id="EASA17c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthCarotidObstructionHospitalName" id="EASA17c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthCarotidObstructionHospitalCode" id="EASA17c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthCarotidObstructionHospitalizationDays" id="EASA17c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthCarotidObstructionHospitalization" choiceGroupId="YesNo" id="EASA17c5" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_074">
+			<rule>
+				<expression questionName="fifthCarotidObstructionHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_074" id="PAGE_073">
+		<header>Dados da [b]quinta internação[/b] por obstrução/entupimento de artéria carótida (artéria do pescoço).</header>
+
+		<basicQuestionGroup name="fifthCarotidObstructionHospitalizationGroup" id="EASA17c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthCarotidObstructionHospitalizationDate" id="EASA17c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthCarotidObstructionHospitalName" id="EASA17c5b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthCarotidObstructionHospitalCode" id="EASA17c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthCarotidObstructionHospitalizationDays" id="EASA17c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_075" id="PAGE_074">
+		<singleSelectionQuestion name="renalInsufficiency"
+			choiceGroupId="YesNo" id="EASA18"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]insuficiência renal[/b]?" />
+
+		<branch targetPageId="PAGE_081">
+			<rule>
+				<expression questionName="renalInsufficiency" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_076" id="PAGE_075">
+		<dateQuestion maxdate="realizationDate" name="renalInsufficiencyDiagnosisDate" id="EASA18a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="renalInsufficiencyHospitalized" choiceGroupId="YesNo" id="EASA18b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_081">
+			<rule>
+				<expression questionName="renalInsufficiencyHospitalized" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_077" id="PAGE_076">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstRenalInsufficiencyHospitalizationGroup" id="EASA18c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstRenalInsufficiencyHospitalizationDate" id="EASA18c1a"	label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstRenalInsufficiencyHospitalName" id="EASA18c1b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstRenalInsufficiencyHospitalCode" id="EASA18c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstRenalInsufficiencyHospitalizationDays" id="EASA18c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondRenalInsufficiencyHospitalization" choiceGroupId="YesNo" id="EASA18c2" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_081">
+			<rule>
+				<expression questionName="secondRenalInsufficiencyHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_078" id="PAGE_077">
+		<header>Dados da [b]segunda internação[/b] por insuficiência renal.</header>
+
+		<basicQuestionGroup name="secondRenalInsufficiencyHospitalizationGroup" id="EASA18c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondRenalInsufficiencyHospitalizationDate" id="EASA18c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondRenalInsufficiencyHospitalName" id="EASA18c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondRenalInsufficiencyHospitalCode" id="EASA18c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondRenalInsufficiencyHospitalizationDays" id="EASA18c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdRenalInsufficiencyHospitalization" choiceGroupId="YesNo" id="EASA18c3" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_081">
+			<rule>
+				<expression questionName="thirdRenalInsufficiencyHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_079" id="PAGE_078">
+		<header>Dados da [b]terceira internação[/b] por insuficiência renal.</header>
+
+		<basicQuestionGroup name="thirdRenalInsufficiencyHospitalizationGroup" id="EASA18c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdRenalInsufficiencyHospitalizationDate" id="EASA18c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdRenalInsufficiencyHospitalName" id="EASA18c3b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdRenalInsufficiencyHospitalCode" id="EASA18c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdRenalInsufficiencyHospitalizationDays" id="EASA18c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthRenalInsufficiencyHospitalization" choiceGroupId="YesNo" id="EASA18c4" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_081">
+			<rule>
+				<expression questionName="fourthRenalInsufficiencyHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_080" id="PAGE_079">
+		<header>Dados da [b]quarta internação[/b] por insuficiência renal.</header>
+
+		<basicQuestionGroup name="fourthRenalInsufficiencyHospitalizationGroup" id="EASA18c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthRenalInsufficiencyHospitalizationDate" id="EASA18c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthRenalInsufficiencyHospitalName" id="EASA18c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthRenalInsufficiencyHospitalCode" id="EASA18c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthRenalInsufficiencyHospitalizationDays" id="EASA18c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthRenalInsufficiencyHospitalization" choiceGroupId="YesNo" id="EASA18c5" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_081">
+			<rule>
+				<expression questionName="fifthRenalInsufficiencyHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_081" id="PAGE_080">
+		<header>Dados da [b]quinta internação[/b] por insuficiência renal.</header>
+
+		<basicQuestionGroup name="fifthRenalInsufficiencyHospitalizationGroup" id="EASA18c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthRenalInsufficiencyHospitalizationDate" id="EASA18c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthRenalInsufficiencyHospitalName" id="EASA18c5b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthRenalInsufficiencyHospitalCode" id="EASA18c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthRenalInsufficiencyHospitalizationDays" id="EASA18c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_082" id="PAGE_081">
+		<singleSelectionQuestion name="hemodialysis" choiceGroupId="YesNo" id="EASA18d" 
+			label="Desde a última entrevista ao ELSA, o/a Sr/Sra (nome do participante) realizou [b]diálise peritoneal ou hemodiálise[/b] dentro ou fora do hospital?"/>
+			
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="hemodialysis" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_084">
+			<rule>
+				<expression questionName="hemodialysis" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_083" id="PAGE_082">
+		<dateQuestion maxdate="realizationDate" name="hemodialysisDate" id="EASA18e" label="Qual a data da realização do procedimento?" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		
+		<singleSelectionQuestion name="hemodialysisNeededHospitalization" choiceGroupId="YesNo" id="EASA18f" label="Para realização deste procedimento houve necessidade de internação?"/>
+		
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="hemodialysisNeededHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_084">
+			<rule>
+				<expression questionName="hemodialysisNeededHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_084" id="PAGE_083">
+		<basicQuestionGroup name="hemodialysisHospitalizationData" id="EASA18f1Group">
+			<textQuestion name="hemodialysisHospitalName" id="EASA18f1" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+			<numericQuestion name="hemodialysisHospitalCode" id="EASA18f1cod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		</basicQuestionGroup>
+		
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_085" id="PAGE_084">
+		<singleSelectionQuestion name="cancer"
+			choiceGroupId="YesNo" id="EASA19"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]câncer?[/b]" 
+			hiddenQuestion="cancerText" visibleWhen="YES"/>
+		
+		<textQuestion name="cancerText" id="EASA19q" label="Cancêr de que?"/>
+		
+		<branch targetPageId="PAGE_091">
+			<rule>
+				<expression questionName="cancer" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_086" id="PAGE_085">
+		<dateQuestion maxdate="realizationDate" name="cancerDiagnosisDate" id="EASA19a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="cancerHospitalized" choiceGroupId="YesNo" id="EASA19b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_091">
+			<rule>
+				<expression questionName="cancerHospitalized" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_087" id="PAGE_086">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstCancerHospitalizationGroup" id="EASA19c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstCancerHospitalizationDate" id="EASA19c1a"	label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstCancerHospitalName" id="EASA19c1b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstCancerHospitalCode" id="EASA19c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstCancerHospitalizationDays" id="EASA19c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondCancerHospitalization" choiceGroupId="YesNo" id="EASA19c2" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_091">
+			<rule>
+				<expression questionName="secondCancerHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_088" id="PAGE_087">
+		<header>Dados da [b]segunda internação[/b] por câncer.</header>
+
+		<basicQuestionGroup name="secondCancerHospitalizationGroup" id="EASA19c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondCancerHospitalizationDate" id="EASA19c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondCancerHospitalName" id="EASA19c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondCancerHospitalCode" id="EASA19c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondCancerHospitalizationDays" id="EASA19c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdCancerHospitalization" choiceGroupId="YesNo" id="EASA19c3" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_091">
+			<rule>
+				<expression questionName="thirdCancerHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_089" id="PAGE_088">
+		<header>Dados da [b]terceira internação[/b] por câncer.</header>
+
+		<basicQuestionGroup name="thirdCancerHospitalizationGroup" id="EASA19c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdCancerHospitalizationDate" id="EASA19c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdCancerHospitalName" id="EASA19c3b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdCancerHospitalCode" id="EASA19c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdCancerHospitalizationDays" id="EASA19c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthCancerHospitalization" choiceGroupId="YesNo" id="EASA19c4" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_091">
+			<rule>
+				<expression questionName="fourthCancerHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_090" id="PAGE_089">
+		<header>Dados da [b]quarta internação[/b] por câncer.</header>
+
+		<basicQuestionGroup name="fourthCancerHospitalizationGroup" id="EASA19c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthCancerHospitalizationDate" id="EASA19c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthCancerHospitalName" id="EASA19c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthCancerHospitalCode" id="EASA19c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthCancerHospitalizationDays" id="EASA19c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthCancerHospitalization" choiceGroupId="YesNo" id="EASA19c5" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_091">
+			<rule>
+				<expression questionName="fifthCancerHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_091" id="PAGE_090">
+		<header>Dados da [b]quinta internação[/b] por câncer.</header>
+
+		<basicQuestionGroup name="fifthCancerHospitalizationGroup" id="EASA19c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthCancerHospitalizationDate" id="EASA19c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthCancerHospitalName" id="EASA19c5b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthCancerHospitalCode" id="EASA19c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthCancerHospitalizationDays" id="EASA19c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_092" id="PAGE_091">
+		<singleSelectionQuestion name="cancerBiopsy" choiceGroupId="YesNo" id="EASA19d" 
+			label="Desde a última entrevista ao ELSA, o/a Sr/Sra (nome do participante) realizou [b]biópsia para investigação de câncer[/b]?"
+			hiddenQuestion="cancerBiopsyText" visibleWhen="YES"/>
+			
+		<textQuestion name="cancerBiopsyText" id="EASA19d1" label="Biópsia de que?" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+			
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="cancerBiopsy" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_094">
+			<rule>
+				<expression questionName="cancerBiopsy" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_093" id="PAGE_092">
+		<singleSelectionQuestion name="cancerBiopsyPositiveNegative" choiceGroupId="PositiveNegative" id="EASA19d2" label="Resultado positivo ou negativo para câncer? " metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		
+		<dateQuestion maxdate="realizationDate" name="cancerBiopsyDate" id="EASA19e" label="Qual a data da realização do procedimento?" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		
+		<singleSelectionQuestion name="cancerBiopsyNeededHospitalization" choiceGroupId="YesNo" id="EASA19f" label="Para realização deste procedimento houve necessidade de internação por pelo menos 24h?"/>
+		
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="cancerBiopsyNeededHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_094">
+			<rule>
+				<expression questionName="cancerBiopsyNeededHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_094" id="PAGE_093">
+		<basicQuestionGroup name="cancerBiopsyHospitalizationData" id="EASA19f1Group">
+			<textQuestion name="cancerBiopsyHospitalName" id="EASA19f1" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+			<numericQuestion name="cancerBiopsyHospitalCode" id="EASA19f1cod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		</basicQuestionGroup>
+		
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_095" id="PAGE_094">
+		<singleSelectionQuestion name="diabetes"
+			choiceGroupId="YesNo" id="EASA20"
+			label="Depois da última entrevista telefônica ao ELSA, um médico informou que o/a Sr/Sra (nome do participante) teve (ou tem) [b]diabetes (mellitus)[/b]?"/>
+
+		<branch targetPageId="PAGE_103">
+			<rule>
+				<expression questionName="diabetes" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_096" id="PAGE_095">
+		<dateQuestion maxdate="realizationDate" name="diabetesDiagnosisDate" id="EASA20a"
+			label="Qual foi a data do diagnóstico?" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="diabetesHospitalized" choiceGroupId="YesNo" id="EASA20b"
+			label="O/a Sr/Sra (nome do participante) esteve internado por pelo menos 24 horas devido a esta condição desde a última entrevista telefônica ao ELSA?" />
+
+		<branch targetPageId="PAGE_101">
+			<rule>
+				<expression questionName="diabetesHospitalized" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_097" id="PAGE_096">
+		<header>O/a Sr/Sra poderia me informar as datas de cada internação e onde foi internado por este motivo?</header>
+
+		<basicQuestionGroup name="firstDiabetesHospitalizationGroup" id="EASA20c1Group">
+			<dateQuestion maxdate="realizationDate" name="firstDiabetesHospitalizationDate" id="EASA20c1a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="firstDiabetesHospitalName" id="EASA20c1b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstDiabetesHospitalCode" id="EASA20c1bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="firstDiabetesHospitalizationDays" id="EASA20c1c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="secondDiabetesHospitalization" choiceGroupId="YesNo" id="EASA20c2" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="secondDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_103">
+			<rule>
+				<expression questionName="secondDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_098" id="PAGE_097">
+		<header>Dados da [b]segunda internação[/b] por diabetes</header>
+
+		<basicQuestionGroup name="secondDiabetesHospitalizationGroup" id="EASA20c2Group">
+			<dateQuestion maxdate="realizationDate" name="secondDiabetesHospitalizationDate" id="EASA20c2a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="secondDiabetesHospitalName" id="EASA20c2b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondDiabetesHospitalCode" id="EASA20c2bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="secondDiabetesHospitalizationDays" id="EASA20c2c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="thirdDiabetesHospitalization" choiceGroupId="YesNo" id="EASA20c3" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="thirdDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_103">
+			<rule>
+				<expression questionName="thirdDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_099" id="PAGE_098">
+		<header>Dados da [b]terceira internação[/b] por diabetes</header>
+
+		<basicQuestionGroup name="thirdDiabetesHospitalizationGroup" id="EASA20c3Group">
+			<dateQuestion maxdate="realizationDate" name="thirdDiabetesHospitalizationDate" id="EASA20c3a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="thirdDiabetesHospitalName" id="EASA20c3b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdDiabetesHospitalCode" id="EASA20c3bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="thirdDiabetesHospitalizationDays" id="EASA20c3c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fourthDiabetesHospitalization" choiceGroupId="YesNo" id="EASA20c4" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fourthDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_103">
+			<rule>
+				<expression questionName="fourthDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_100" id="PAGE_099">
+		<header>Dados da [b]quarta internação[/b] por diabetes</header>
+
+		<basicQuestionGroup name="fourthDiabetesHospitalizationGroup" id="EASA20c4Group">
+			<dateQuestion maxdate="realizationDate" name="fourthDiabetesHospitalizationDate" id="EASA20c4a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fourthDiabetesHospitalName" id="EASA20c4b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthDiabetesHospitalCode" id="EASA20c4bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fourthDiabetesHospitalizationDays" id="EASA20c4c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion name="fifthDiabetesHospitalization" choiceGroupId="YesNo" id="EASA20c5" label="Houve alguma outra internação pelo mesmo motivo?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="fifthDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_103">
+			<rule>
+				<expression questionName="fifthDiabetesHospitalization" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_103" id="PAGE_100">
+		<header>Dados da [b]quinta internação[/b] por diabetes</header>
+
+		<basicQuestionGroup name="fifthDiabetesHospitalizationGroup" id="EASA20c5Group">
+			<dateQuestion maxdate="realizationDate" name="fifthDiabetesHospitalizationDate" id="EASA20c5a" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="fifthDiabetesHospitalName" id="EASA20c5b" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthDiabetesHospitalCode" id="EASA20c5bcod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<numericQuestion name="fifthDiabetesHospitalizationDays" id="EASA20c5c" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_102" id="PAGE_101">
+		<singleSelectionQuestion name="diabetesAssistance" choiceGroupId="YesNo" id="EASA20d" 
+			label="Depois da última entrevista ao ELSA, o/a Sr/Sra (nome do participante) fez acompanhamento médico para tratamento do diabetes?"/>
+			
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="diabetesAssistance" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+		<branch targetPageId="PAGE_103">
+			<rule>
+				<expression questionName="diabetesAssistance" operator="EQ" value="NO" />
+				<expression questionName="interviewType" operator="EQ" value="ANNUAL_CONTACT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_103" id="PAGE_102">
+		<header>O que foi recomendado como tratamento para o diabetes?</header>
+		
+		<singleSelectionQuestion name="diet" choiceGroupId="YesNo" id="EASA20e1" label="Dieta" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		
+		<singleSelectionQuestion name="insulin" choiceGroupId="YesNo" id="EASA20e2" label="Insulina" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		
+		<singleSelectionQuestion name="pills" choiceGroupId="YesNo" id="EASA20e3" label="Comprimidos" metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="pillsText" visibleWhen="YES"/>
+		<textQuestion name="pillsText" id="EASA20e3q" label="Qual(is):" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_104" id="PAGE_103">
+		<singleSelectionQuestion name="otherProblem" choiceGroupId="YesNo" id="EASA21"
+			label="Depois da última entrevista telefônica ao ELSA, o Sr/Sra (nome do participante) apresentou [b]outro problema[/b] de saúde que tenha resultado em internação por, pelo menos, 24 horas?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="otherProblem" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_105" id="PAGE_104">
+		<textQuestion name="otherProblemFirstHospitalizationsReason" id="EASA21a1" label="Motivo da internação:" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+	
+		<dateQuestion maxdate="realizationDate" name="otherProblemFirstHospitalizationDate" id="EASA21a2" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<textQuestion name="otherProblemFirstHospitalName" id="EASA21a3" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemFirstHospitalCode" id="EASA21a3cod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemFirstHospitalizationDays" id="EASA21a4" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<singleSelectionQuestion name="otherProblemNeededSecondHospitalization" choiceGroupId="YesNo" id="EASA21b" label="Precisou internar mais uma vez?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="otherProblemNeededSecondHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_106" id="PAGE_105">
+		<header>Dados da [b]segunda internação[/b] por outro problema de saúde.</header>
+		
+		<textQuestion name="otherProblemSecondHospitalizationsReason" id="EASA21b1" label="Motivo da internação:" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+	
+		<dateQuestion maxdate="realizationDate" name="otherProblemSecondHospitalizationDate" id="EASA21b2" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<textQuestion name="otherProblemSecondHospitalName" id="EASA21b3" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemSecondHospitalCode" id="EASA21b3cod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemSecondHospitalizationDays" id="EASA21b4" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<singleSelectionQuestion name="otherProblemNeededThirdHospitalization" choiceGroupId="YesNo" id="EASA21c" label="Precisou internar mais uma vez?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="otherProblemNeededThirdHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_107" id="PAGE_106">
+		<header>Dados da [b]terceira internação[/b] por outro problema de saúde.</header>
+		
+		<textQuestion name="otherProblemThirdHospitalizationsReason" id="EASA21c1" label="Motivo da internação:" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+	
+		<dateQuestion maxdate="realizationDate" name="otherProblemThirdHospitalizationDate" id="EASA21c2" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<textQuestion name="otherProblemThirdHospitalName" id="EASA21c3" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemThirdHospitalCode" id="EASA21c3cod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemThirdHospitalizationDays" id="EASA21c4" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<singleSelectionQuestion name="otherProblemNeededFourthHospitalization" choiceGroupId="YesNo" id="EASA21d" label="Precisou internar mais uma vez?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="otherProblemNeededFourthHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage nextPageId="PAGE_108" id="PAGE_107">
+		<header>Dados da [b]quarta internação[/b] por outro problema de saúde.</header>
+		
+		<textQuestion name="otherProblemFourthHospitalizationsReason" id="EASA21d1" label="Motivo da internação:" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+	
+		<dateQuestion maxdate="realizationDate" name="otherProblemFourthHospitalizationDate" id="EASA21d2" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<textQuestion name="otherProblemFourthHospitalName" id="EASA21d3" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemFourthHospitalCode" id="EASA21d3cod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemFourthHospitalizationDays" id="EASA21d4" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<singleSelectionQuestion name="otherProblemNeededFifthHospitalization" choiceGroupId="YesNo" id="EASA21e" label="Precisou internar mais uma vez?" />
+
+		<branch targetPageId="PAGE_109">
+			<rule>
+				<expression questionName="otherProblemNeededFifthHospitalization" operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+	
+	<questionPage nextPageId="PAGE_109" id="PAGE_108">
+		<header>Dados da [b]quinta internação[/b] por outro problema de saúde.</header>
+		
+		<textQuestion name="otherProblemFifthHospitalizationsReason" id="EASA21e1" label="Motivo da internação:" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+	
+		<dateQuestion maxdate="realizationDate" name="otherProblemFifthHospitalizationDate" id="EASA21e2" label="Data" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<textQuestion name="otherProblemFifthHospitalName" id="EASA21e3" label="Nome do hospital" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemFifthHospitalCode" id="EASA21e3cod" decimalNumber="false" label="Código do Hospital-CNES" lowerLimit="0" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		
+		<numericQuestion name="otherProblemFifthHospitalizationDays" id="EASA21e4" decimalNumber="false" label="Dias" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+	</questionPage>
+	
+	<questionPage nextPageId="ALIVE_END_PAGE" id="PAGE_109">
+		<singleSelectionQuestion name="comments" choiceGroupId="YesNo" id="EASAcom" label="Há observações relevantes para investigação?" 
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="commentsText" visibleWhen="YES"/>
+		<textQuestion name="commentsText" id="EASAqcom" label="Qual(is)?" metaDataGroupId="DONT_WANT_KNOW_APPLY"/>
+		
+		<branch targetPageId="DECEASED_END_PAGE">
+			<rule>
+				<expression questionName="participantDied" operator="EQ" value="YES" />
+			</rule>
+		</branch>
+		<branch targetPageId="UNKNOWN_END_PAGE">
+			<rule>
+				<expression questionName="interviewType" operator="EQ" value="REFERRED_EVENT" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<!-- FIM DO FORMULARIO -->
+	<questionPage id="UNKNOWN_END_PAGE" nextPageId="END_PAGE">
+		<textItemQuestion id="UNKNOWN_END_PAGE_msg" name="UNKNOWN_END_PAGE_msg" label="[i]Obrigado.[/i]"> </textItemQuestion>
+	</questionPage>
+
+	<questionPage id="ALIVE_END_PAGE" nextPageId="END_PAGE">
+		<textItemQuestion id="ALIVE_END_PAGE_msg" name="ALIVE_END_PAGE_msg"
+						  label="[i]Agora, para encerrar, gostaria de atualizar endereços e contatos do/a Sr./Sra. [/i]"> </textItemQuestion>
+	</questionPage>
+
+	<questionPage id="DECEASED_END_PAGE" nextPageId="END_PAGE">
+		<textItemQuestion id="DECEASED_END_PAGE_msg" name="DECEASED_END_PAGE_msg"
+						  label="[i]Muito obrigado por responder essas perguntas. Novamente sinto muito por sua perda. Estou realmente grato pelo seu tempo e pela sua
+			cooperação com o estudo ELSA. Se necessário entraremos em contato novamente. Se o/a Sr./Sra tiver qualquer dúvida ou quiser informações
+			adicionais, por favor sinta-se à vontade para nos telefonar no número_______________[/i]"> </textItemQuestion>
+	</questionPage>
+
+	<questionPage id="END_PAGE">
+		<textItemQuestion id="end" label=""> </textItemQuestion>
+	</questionPage>
+
+</survey>

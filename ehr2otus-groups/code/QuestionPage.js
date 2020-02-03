@@ -114,7 +114,7 @@ class QuestionPage {
                 globalVars.dictQuestionNameId[question.name] = question.id;
 
                 if (questionObj.basicGroup) {
-                   this. _addQuestionInQuestionGroup(question.id, question.basicGroup);
+                   this._addQuestionInQuestionGroup(question.id, question.basicGroup);
                 }
 
                 if(question.hiddenQuestion){
@@ -123,6 +123,8 @@ class QuestionPage {
                         hiddenBy: question.id
                     });
                 }
+
+                question.label
             }
         }
         catch (e) {
@@ -241,7 +243,7 @@ class QuestionPage {
 
     _setRoutesByCutIndexes(){
         const n = this.questions.length;
-        if(n == 0){
+        if(n === 0){
             return null;
         }
 
@@ -296,10 +298,14 @@ class QuestionPage {
     }
 
     _addNewRoute(originIndex, targetIndex, conditions=[]){
-
         try{
             const originId = this.questions[originIndex].id;
             const targetId = this._getNextQuestionId(targetIndex-1);// -1 coz method look for arg+1
+
+            if(!targetId || targetId===''){
+                console.log(this.id, originId);
+            }
+
             try{
                 this.routes[originId].push(new Route(originId, targetId, conditions));
             }catch (e) {
