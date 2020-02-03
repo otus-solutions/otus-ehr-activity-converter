@@ -434,6 +434,9 @@ function _indexOfQuestionByIdInArr(questionId, questionArr){
 
 function  _getQuestionIdDefaultRouteToNextPage(nextPageId){
     try {
+        if(!nextPageId){
+            return globalVars.DEFAULT_NODES.END.id;
+        }
         return globalVars.ehrQuestionnaire.getFirstQuestionIdFromQuestionPage(nextPageId);
     }
     catch (e) {

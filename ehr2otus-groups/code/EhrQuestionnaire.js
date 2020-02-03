@@ -41,9 +41,9 @@ class EhrQuestionnaire {
     }
 
     getFirstQuestionIdFromQuestionPage(searchQuestionPageId){
-        if(searchQuestionPageId === this.endPage.id){
-            throw this.endPage.id;
-        }
+        // if(searchQuestionPageId === this.endPage.id){
+        //     throw this.endPage.id;
+        // }
         return this.getQuestionPage(searchQuestionPageId).getFirstQuestion().id;
     }
 
@@ -64,7 +64,7 @@ class EhrQuestionnaire {
         }
         globalVars.choiceGroups.set(this.choiceGroups);
 
-        const ehrQuestionPages = ehrTemplate.questionPage.filter((questionPage) => questionPage.id !== this.endPage.id);
+        const ehrQuestionPages = ehrTemplate.questionPage//.filter((questionPage) => questionPage.id !== this.endPage.id);
 
         let setFirstQuestionPage = false;
 
