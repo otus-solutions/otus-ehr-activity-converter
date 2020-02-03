@@ -284,17 +284,55 @@ class QuestionPage {
 
             const targetId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
 
-            let conditions = [];
+            originId = this.getLastQuestionNotHidden().id;
+            const lastQuestionId = this.getLastQuestion().id;
+            const lastIsHiddenQuestion = this.hiddenIndexes.includes(this.questions.length-1);
+
+            let conditions = [], conditionsWithHidden=[];
             for(let condition of branch.rules){
                 for(let expression of condition.expressions){
                     let question = globalVars.ehrQuestionnaire.findQuestionById(expression.questionId);
                     expression.value = question.getAnswerValue(expression.value, expression.isMetadata);
                 }
-                conditions.push(condition.expressions);
+
+                if(lastIsHiddenQuestion && condition.expressions.filter(expr => expr.questionId===lastQuestionId).length > 0){
+                    conditionsWithHidden.push(condition.expressions);
+                }
+                else{
+                    conditions.push(condition.expressions);
+                }
             }
 
-            this.routes[originId].push(new Route(originId, targetId, conditions));
+            if(lastIsHiddenQuestion){
+                if(conditionsWithHidden.length > 0){
+                    console.log("\n" + this.id + " tem regra com *h *********************************************");
+                    this._pushRouteFromBranch(originId, targetId, conditions);
+                    this._pushRouteFromBranch(lastQuestionId, targetId, conditionsWithHidden);
+
+                    // this.routes[originId].push(new Route(originId, targetId, conditionsWithHidden));
+                    // this.routes[lastQuestionId].push(new Route(lastQuestionId, targetId, conditions));
+                }
+                else{
+                    console.log("\n" + this.id);
+                    this._pushRouteFromBranch(originId, targetId, conditions);
+                    this._pushRouteFromBranch(lastQuestionId, targetId, conditions);
+
+                    // this.routes[originId].push(new Route(originId, targetId, conditions));
+                    // this.routes[lastQuestionId].push(new Route(lastQuestionId, targetId, conditions));
+                }
+            }
+            else{
+                this.routes[originId].push(new Route(originId, targetId, conditions));
+            }
         }
+    }
+
+    _pushRouteFromBranch(originId, targetId, conditions){
+        if(conditions.length == 0){
+            return;
+        }
+        this.routes[originId].push(new Route(originId, targetId, conditions));
+        console.log(`add route ${originId} -> ${targetId}\t` + JSON.stringify(conditions));//.
     }
 
     _addNewRoute(originIndex, targetIndex, conditions=[]){

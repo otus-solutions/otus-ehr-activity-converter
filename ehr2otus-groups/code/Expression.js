@@ -23,9 +23,10 @@ class Expression {
         return OtusTemplatePartsGenerator.getExpression(this.questionId, operatorDict[this.operator], this.value, this.isMetadata);
     }
     
-    // toJSON(){
-    //     return `${this.questionName} (${this.questionId}) ${this.operator} ${this.value}`;
-    // }
+    toJSON(){
+        const isMetadata = (this.isMetadata ? " (meta)" : "");
+        return `${this.questionId} ${this.operator} ${this.value}${isMetadata}`;
+    }
 }
 
 module.exports = Expression;
