@@ -2,12 +2,25 @@ const EhrQuestion = require('./EhrQuestion');
 
 class DateQuestion extends EhrQuestion{
 
-    constructor(jsonObject, pageId){
-        super(jsonObject, pageId,"CalendarQuestion","LocalDate");
+    constructor(ehrQuestionObj, pageId){
+        super(ehrQuestionObj, pageId,"CalendarQuestion","LocalDate");
+        this.maxDate = ehrQuestionObj.maxDate;
     }
 
     toOtusTemplate(){
-        return this.getOtusStudioQuestionHeader();
+        const questionObj = this.getOtusStudioQuestionHeader();
+        if(this.maxDate){
+            questionObj.fillingRules["pastDate"] = {
+                "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "pastDate",
+                    "data": {
+                        "canBeIgnored": false,
+                        "reference": true
+                }
+            };
+        }
+        return questionObj;
     }
 
 }
