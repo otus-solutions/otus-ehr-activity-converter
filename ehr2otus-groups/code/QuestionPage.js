@@ -304,7 +304,7 @@ class QuestionPage {
 
             if(lastIsHiddenQuestion){
                 if(conditionsWithHidden.length > 0){
-                    console.log("\n" + this.id + " tem regra com *h *********************************************");
+                    //console.log("\n" + this.id + " tem regra com *h *********************************************");
                     this._pushRouteFromBranch(originId, targetId, conditions);
                     this._pushRouteFromBranch(lastQuestionId, targetId, conditionsWithHidden);
 
@@ -312,7 +312,7 @@ class QuestionPage {
                     // this.routes[lastQuestionId].push(new Route(lastQuestionId, targetId, conditions));
                 }
                 else{
-                    console.log("\n" + this.id);
+                    //console.log("\n" + this.id);
                     this._pushRouteFromBranch(originId, targetId, conditions);
                     this._pushRouteFromBranch(lastQuestionId, targetId, conditions);
 
@@ -332,7 +332,7 @@ class QuestionPage {
             return;
         }
         this.routes[originId].push(new Route(originId, targetId, conditions));
-        console.log(`add route ${originId} -> ${targetId}\t` + JSON.stringify(conditions));//.
+        //console.log(`add route ${originId} -> ${targetId}\t` + JSON.stringify(conditions));//.
     }
 
     _addNewRoute(originIndex, targetIndex, conditions=[]){
@@ -429,31 +429,43 @@ class QuestionPage {
     }
 
     resumeBranches(){
-        return this._resumeBranches(this.id, this.nextPageId);
+        let content = `${this.id} -> ${this.nextPageId} *\n`;
+        for(let branch of this.branches){
+            let conditions = [];
+            for(let condition of branch.rules){
+                conditions.push(condition.expressions);
+            }
+            content += `${branch.originPageId} -> ${branch.targetPageId} \t ${JSON.stringify(conditions)}\n`;
+        }
+        return content;
     }
 
     resumeBranchesWithQuestions(){
+        if(this.id.includes("END_PAGE")){
+            return "";
+        }
         const n = this.questions.length;
         const lastIsHiddenQuestion = this.hiddenIndexes.includes(n-1);
         const origin = (lastIsHiddenQuestion? `${this.questions[n-2].id}/${this.questions[n-1].id}(*h)` : this.questions[n-1].id);
-        const target = globalVars.ehrQuestionnaire.getQuestionPage(this.nextPageId);
-        return this._resumeBranches(origin, target);
-    }
+        const nextId = _getFirstQuestionOfPage(this.nextPageId);
 
-    _resumeBranches(origin, target){
-        let content = `${origin} -> ${target} *\n`;
+        //let content = `(${this.id}) ${origin} -> ${nextId} (${this.nextPageId}) *\n`;
+        let content = `${origin} -> ${nextId} *\n`;
+
         for(let branch of this.branches){
             let conditions = [];
-            let size = 1;
             for(let condition of branch.rules){
                 conditions.push(condition.expressions);
-                size *= condition.expressions.length;
             }
-            size *= conditions.length;
-            content += `${branch.originPageId} -> ${branch.targetPageId}` +
-                (size === 1 ? "\t"+JSON.stringify(conditions) : "\n"+JSON.stringify(conditions, null, 4)) +
-                "\n";
+
+            const expressions = JSON.stringify(conditions)
+                .replace(/ EQ /gi, " equal ").replace(/ GT /gi, " greater ");
+
+            const branchTargetId = _getFirstQuestionOfPage(branch.targetPageId);
+            //content += `(${branch.originPageId}) ${origin} -> ${branchTargetId} (${branch.targetPageId}) \t ${JSON.stringify(conditions)}\n`;
+            content += `${origin} -> ${branchTargetId} ${expressions}\n`;
         }
+        
         return content;
     }
 
@@ -518,4 +530,12 @@ function  _getQuestionIdDefaultRouteToNextPage(nextPageId){
         }
         return globalVars.DEFAULT_NODES.END.id;
     }
+}
+
+function _getFirstQuestionOfPage(targetId){
+    const targetPage = globalVars.ehrQuestionnaire.getQuestionPage(targetId);
+    if(!targetPage){
+        return targetId;
+    }
+    return targetPage.getFirstQuestion().id;
 }

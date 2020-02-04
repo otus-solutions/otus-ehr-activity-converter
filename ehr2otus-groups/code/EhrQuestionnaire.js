@@ -150,7 +150,7 @@ class EhrQuestionnaire {
     resumeBranchesWithQuestions(){
         let content = "";
         for (let questionPage of this.questionPages) {
-            content += questionPage.resumeBranchesWithQuestions() + "\n";
+            content += questionPage.resumeBranchesWithQuestions();
         }
         return content;
     }

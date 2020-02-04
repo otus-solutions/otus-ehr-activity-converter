@@ -8,6 +8,10 @@ function outputDirPath(){
     return process.cwd() + "/output/";
 }
 
+function outputResumePath(acronym){
+    return outputDirPath() + acronym + "/resume/" + acronym + "-";
+}
+
 main();
 
 function main(){
@@ -46,40 +50,43 @@ function readAndParse(acronym, templateInfo, outputPath){
     ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(ehrTemplate.survey, 1);
     FileHandler.writeJson(outputPath + acronym+"-filtered.json", ehrTemplate);
 
+    const resumePath = outputResumePath(acronym);
+
     const ehr = new EhrQuestionnaire();
     ehr.readFromJsonObj(ehrTemplate);
-    exportResumes(ehr, acronym, outputPath);
+    const ehrBranchesQuestions = exportResumes(ehr, resumePath);
 
     let otusTemplate = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
     ehr.toOtusStudioTemplate(otusTemplate);
     FileHandler.writeJson(outputPath + acronym + "-otus-result.json", otusTemplate);
 
-    resumeOtusTemplateNavigation(outputPath + "/resume/" + acronym + "-otus-result-navigation-resume.txt", otusTemplate.navigationList);
+    const otusNavigationResume = resumeOtusTemplateNavigation(otusTemplate.navigationList, resumePath + "otus-result-navigation-resume.txt");
+
+    compareNavigations(ehrBranchesQuestions, otusNavigationResume, resumePath+"comparison.txt");
 }
 
-function exportResumes(ehr, acronym, path){
-    path += "resume/";
-    FileHandler.mkdir(path);
-    path += acronym;
-    FileHandler.write(path + "-resume0-questions.txt", ehr.resume());
-    FileHandler.write(path + "-resume0-branches.txt", ehr.resumeBranches());
-    FileHandler.write(path + "-resume0-branches-with-questions.txt", ehr.resumeBranchesWithQuestions());
-    FileHandler.write(path + "-resume1-cuts.txt", ehr.resumeCuts());
-    FileHandler.writeJson(path + "-resume2-routes.json", ehr.resumeRoutesJson());
-    FileHandler.writeJson(path + "-resume3-groups.json", ehr.resumeGroupsJson());
+function exportResumes(ehr, path){
+    FileHandler.write(path + "resume0-questions.txt", ehr.resume());
+    FileHandler.write(path + "resume0-branches.txt", ehr.resumeBranches());
+    const ehrBranchesQuestions = ehr.resumeBranchesWithQuestions();
+    FileHandler.write(path + "resume0-branches-with-questions.txt", ehrBranchesQuestions);
+    FileHandler.write(path + "resume1-cuts.txt", ehr.resumeCuts());
+    FileHandler.writeJson(path + "resume2-routes.json", ehr.resumeRoutesJson());
+    FileHandler.writeJson(path + "resume3-groups.json", ehr.resumeGroupsJson());
     // FileHandler.writeJson("dictQuestionNameId.json", globalVars.dictQuestionNameId);
+
+    return ehrBranchesQuestions.split("\n");
 }
 
-function resumeOtusTemplateNavigation(outputPath, otusTemplateNavigationList){
-
-    FileHandler.write(outputPath, "");
+function resumeOtusTemplateNavigation(otusTemplateNavigationList, outputPath){
+    let content = "";
 
     for(let item of otusTemplateNavigationList){
         const origin = item.origin;
         for(let route of item.routes){
-            let content = `${origin} -> ${route.destination} `;
+            content += `${origin} -> ${route.destination} `;
             if(route.isDefault){
-                content += "*";
+                content += "*\n";
             }
             else{
                 let conditions = [];
@@ -90,10 +97,48 @@ function resumeOtusTemplateNavigation(outputPath, otusTemplateNavigationList){
                     }
                     conditions.push(rules);
                 }
-                content += "\t" + JSON.stringify(conditions) ;
+                content += JSON.stringify(conditions) + "\n";
             }
-
-            FileHandler.append(outputPath, content + "\n");
         }
     }
+
+    FileHandler.write(outputPath, content);
+
+    return content.split("\n");
+}
+
+function compareNavigations(ehrBranchesQuestions, otusNavigationResume, outputPath){
+    let content = "";
+    let found = false;
+
+    const HIDDEN_QUESTION_SiGN = "(*h)";
+    const BRANCH_SIGN = " -> ";
+
+    for(let line of ehrBranchesQuestions){
+        if(!otusNavigationResume.includes(line)){
+            found = true;
+            let parts = line.split(BRANCH_SIGN);
+            let origins = parts[0];
+            const rightHand = parts[1];
+            if(!origins.includes(HIDDEN_QUESTION_SiGN)){
+                content += line + "\n";
+                continue;
+            }
+            origins = origins.split("/");
+            for(let origin of origins){
+                let origin2 = origin.replace(HIDDEN_QUESTION_SiGN, "");
+                const branch = origin2 + BRANCH_SIGN + rightHand;
+                if(!otusNavigationResume.includes(branch)){
+                    content += branch + "\n";
+                }
+            }
+        }
+    }
+
+    if(!found){
+        console.log("All ok!");
+        return;
+    }
+
+    FileHandler.write(outputPath, content);
 }
