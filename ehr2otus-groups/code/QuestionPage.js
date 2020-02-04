@@ -321,7 +321,8 @@ class QuestionPage {
                 }
             }
             else{
-                this.routes[originId].push(new Route(originId, targetId, conditions));
+                // this.routes[originId].push(new Route(originId, targetId, conditions));
+                this._pushRouteFromBranch(originId, targetId, conditions);
             }
         }
     }
