@@ -45,7 +45,6 @@ class FileHandler {
                 throw err;
             }
         });
-        //console.log(`The file ${path.replace(process.cwd(), ".")} was appended!`);
     }
 
     static delete(path){
@@ -54,7 +53,6 @@ class FileHandler {
                 throw err;
             }
         });
-        //console.log(`The file ${path} was deleted!`);
     }
 
     // -------------------------------------------------
