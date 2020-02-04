@@ -428,7 +428,7 @@ class QuestionPage {
     }
 
     resumeBranches(){
-        let content = "";
+        let content = `${this.id} -> ${this.nextPageId} *\n`;
         for(let branch of this.branches){
             let conditions = [];
             let size = 1;
@@ -438,7 +438,7 @@ class QuestionPage {
             }
             size *= conditions.length;
             content += `${branch.originPageId} -> ${branch.targetPageId}` + 
-                (size == 1 ? "\t"+JSON.stringify(conditions) :  "\n"+JSON.stringify(conditions, null, 4)) + 
+                (size === 1 ? "\t"+JSON.stringify(conditions) : "\n"+JSON.stringify(conditions, null, 4)) +
                 "\n";
         }
         return content;

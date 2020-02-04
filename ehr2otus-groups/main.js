@@ -75,31 +75,24 @@ function resumeOtusTemplateNavigation(outputPath, otusTemplateNavigationList){
 
     for(let item of otusTemplateNavigationList){
         const origin = item.origin;
-        let content = "";
         for(let route of item.routes){
-            content = `${origin} -> ${route.destination}` + (route.isDefault? " *" : "") + "\n";
-            if(route.conditions.length > 0)
-            {
+            let content = `${origin} -> ${route.destination} `;
+            if(route.isDefault){
+                content += "*";
+            }
+            else{
                 let conditions = [];
-                let size = 1;
                 for(let condition of route.conditions){
                     let rules = [];
                     for(let rule of condition.rules){
                         rules.push(new Expression("", rule.when, rule.operator, rule.answer, rule.isMetadata));
                     }
-                    size *= rules.length;
                     conditions.push(rules);
                 }
-                size *= conditions.length;
-                if(size === 1){
-                    content += JSON.stringify(conditions) + "\n";
-                }
-                else {
-                    content += JSON.stringify(conditions, null, 2) + "\n";
-                }
+                content += "\t" + JSON.stringify(conditions) ;
             }
-        }
 
-        FileHandler.append(outputPath, content + "\n");
+            FileHandler.append(outputPath, content + "\n");
+        }
     }
 }
