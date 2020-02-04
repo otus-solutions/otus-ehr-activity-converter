@@ -2,6 +2,7 @@ const FileHandler = require('./code/FileHandler');
 const EhrQuestionnaire = require("./code/EhrQuestionnaire");
 const ehrTemplateFilter = require('./code/ehrTemplateFilter');
 const OtusTemplatePartsGenerator = require("./code/OtusTemplatePartsGenerator");
+const Expression = require('./code/Expression');
 
 function outputDirPath(){
     return process.cwd() + "/output/";
@@ -52,6 +53,8 @@ function readAndParse(acronym, templateInfo, outputPath){
     let otusTemplate = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
     ehr.toOtusStudioTemplate(otusTemplate);
     FileHandler.writeJson(outputPath + acronym + "-otus-result.json", otusTemplate);
+
+    resumeOtusTemplateNavigation(outputPath + "/resume/" + acronym + "-otus-result-navigation-resume.txt", otusTemplate.navigationList);
 }
 
 function exportResumes(ehr, acronym, path){
@@ -64,4 +67,39 @@ function exportResumes(ehr, acronym, path){
     FileHandler.writeJson(path + "-resume2-routes.json", ehr.resumeRoutesJson());
     FileHandler.writeJson(path + "-resume3-groups.json", ehr.resumeGroupsJson());
     // FileHandler.writeJson("dictQuestionNameId.json", globalVars.dictQuestionNameId);
+}
+
+function resumeOtusTemplateNavigation(outputPath, otusTemplateNavigationList){
+
+    FileHandler.write(outputPath, "");
+
+    for(let item of otusTemplateNavigationList){
+        const origin = item.origin;
+        let content = "";
+        for(let route of item.routes){
+            content = `${origin} -> ${route.destination}` + (route.isDefault? " *" : "") + "\n";
+            if(route.conditions.length > 0)
+            {
+                let conditions = [];
+                let size = 1;
+                for(let condition of route.conditions){
+                    let rules = [];
+                    for(let rule of condition.rules){
+                        rules.push(new Expression("", rule.when, rule.operator, rule.answer, rule.isMetadata));
+                    }
+                    size *= rules.length;
+                    conditions.push(rules);
+                }
+                size *= conditions.length;
+                if(size === 1){
+                    content += JSON.stringify(conditions) + "\n";
+                }
+                else {
+                    content += JSON.stringify(conditions, null, 2) + "\n";
+                }
+            }
+        }
+
+        FileHandler.append(outputPath, content + "\n");
+    }
 }
