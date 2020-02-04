@@ -429,7 +429,19 @@ class QuestionPage {
     }
 
     resumeBranches(){
-        let content = `${this.id} -> ${this.nextPageId} *\n`;
+        return this._resumeBranches(this.id, this.nextPageId);
+    }
+
+    resumeBranchesWithQuestions(){
+        const n = this.questions.length;
+        const lastIsHiddenQuestion = this.hiddenIndexes.includes(n-1);
+        const origin = (lastIsHiddenQuestion? `${this.questions[n-2].id}/${this.questions[n-1].id}(*h)` : this.questions[n-1].id);
+        const target = globalVars.ehrQuestionnaire.getQuestionPage(this.nextPageId);
+        return this._resumeBranches(origin, target);
+    }
+
+    _resumeBranches(origin, target){
+        let content = `${origin} -> ${target} *\n`;
         for(let branch of this.branches){
             let conditions = [];
             let size = 1;
@@ -438,7 +450,7 @@ class QuestionPage {
                 size *= condition.expressions.length;
             }
             size *= conditions.length;
-            content += `${branch.originPageId} -> ${branch.targetPageId}` + 
+            content += `${branch.originPageId} -> ${branch.targetPageId}` +
                 (size === 1 ? "\t"+JSON.stringify(conditions) : "\n"+JSON.stringify(conditions, null, 4)) +
                 "\n";
         }

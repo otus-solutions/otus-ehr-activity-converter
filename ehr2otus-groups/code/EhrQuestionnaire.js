@@ -1,6 +1,5 @@
 const globalVars = require('./globalVars');
 const QuestionPage = require('./QuestionPage');
-const EndPage = require('./EndPage');
 const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
 
 class EhrQuestionnaire {
@@ -144,6 +143,14 @@ class EhrQuestionnaire {
         let content = "";
         for (let questionPage of this.questionPages) {
             content += questionPage.resumeBranches() + "\n";
+        }
+        return content;
+    }
+
+    resumeBranchesWithQuestions(){
+        let content = "";
+        for (let questionPage of this.questionPages) {
+            content += questionPage.resumeBranchesWithQuestions() + "\n";
         }
         return content;
     }
