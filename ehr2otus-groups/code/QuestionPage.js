@@ -107,28 +107,23 @@ class QuestionPage {
             "textQuestion": TextQuestion,
             "timeQuestion": TimeQuestion
         };
-        try {
-            for (let questionObj of questionObjsArr) {
-                let questionClazz = questionFuncDict[questionObj.type];
-                let question = new questionClazz(questionObj, this.id);
-                this.questions.push(question);
-                globalVars.dictQuestionNameId[question.name] = question.id;
 
-                if (questionObj.basicGroup) {
-                   this._addQuestionInQuestionGroup(question.id, question.basicGroup);
-                }
+        for (let questionObj of questionObjsArr) {
+            let QuestionClazz = questionFuncDict[questionObj.type];
+            let question = new QuestionClazz(questionObj, this.id);
+            this.questions.push(question);
+            globalVars.dictQuestionNameId[question.name] = question.id;
 
-                if(question.hiddenQuestion){
-                    this.hiddenQuestions.push({
-                        hidden: question.hiddenQuestion.name,
-                        hiddenBy: question.id
-                    });
-                }
+            if (questionObj.basicGroup) {
+                this._addQuestionInQuestionGroup(question.id, question.basicGroup);
             }
-        }
-        catch (e) {
-            console.log(e);
-            throw e;
+
+            if(question.hiddenQuestion){
+                this.hiddenQuestions.push({
+                    hidden: question.hiddenQuestion.name,
+                    hiddenBy: question.id
+                });
+            }
         }
     }
 
@@ -311,22 +306,13 @@ class QuestionPage {
     }
 
     _addNewRoute(originIndex, targetIndex, conditions=[]){
+        const originId = this.questions[originIndex].id;
+        const targetId = this._getNextQuestionId(targetIndex-1);// -1 because method look for arg+1
         try{
-            const originId = this.questions[originIndex].id;
-            const targetId = this._getNextQuestionId(targetIndex-1);// -1 coz method look for arg+1
-
-            if(!targetId || targetId===''){
-                console.log(this.id, originId);
-            }
-
-            try{
-                this.routes[originId].push(new Route(originId, targetId, conditions));
-            }catch (e) {
-                this.routes[originId] = [new Route(originId, targetId, conditions)];
-            }
+            this.routes[originId].push(new Route(originId, targetId, conditions));
         }
         catch (e) {
-            throw e;
+            this.routes[originId] = [new Route(originId, targetId, conditions)];
         }
     }
 
