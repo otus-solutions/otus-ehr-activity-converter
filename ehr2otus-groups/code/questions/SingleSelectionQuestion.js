@@ -6,6 +6,7 @@ class SingleSelectionQuestion extends EhrQuestion {
 
     constructor(ehrQuestionObj, pageId){
         super(ehrQuestionObj, pageId, "SingleSelectionQuestion","Integer");
+        this.answerIsCustom = false;
         this.choiceGroupId = ehrQuestionObj.choiceGroupId;
     }
 
@@ -20,8 +21,6 @@ class SingleSelectionQuestion extends EhrQuestion {
     getAnswerToShowHiddenQuestion(){
         const answer = super.getAnswerToShowHiddenQuestion();
         return this.getAnswerValue(answer);
-        //const choice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === value)[0];
-        //return choice.value;
     }
 
     toOtusTemplate(){

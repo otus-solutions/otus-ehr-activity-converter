@@ -1,3 +1,4 @@
+const globalVars = require('./globalVars');
 const OtusTemplatePartsGenerator = require("./OtusTemplatePartsGenerator");
 
 class Expression {
@@ -15,11 +16,12 @@ class Expression {
     }
 
     toOtusTemplate(){
+        const isCustom = globalVars.ehrQuestionnaire.findQuestionById(this.questionId).answerIsCustom;
         const operatorDict = {
             "EQ": OtusTemplatePartsGenerator.operators.EQ,
             "GT": OtusTemplatePartsGenerator.operators.GT
         };
-        return OtusTemplatePartsGenerator.getExpression(this.questionId, operatorDict[this.operator], this.value, this.isMetadata);
+        return OtusTemplatePartsGenerator.getExpression(this.questionId, operatorDict[this.operator], this.value, this.isMetadata, isCustom);
     }
     
     toJSON(){

@@ -25,6 +25,7 @@ class EhrQuestion {
         this.index = currIndex++;
         this.basicGroup = ehrQuestionObj.basicGroup;
         this.hiddenQuestion = this._extractHiddenQuestion(ehrQuestionObj);
+        this.answerIsCustom = true;
     }
 
     _extractHiddenQuestion(ehrQuestionObj) {
