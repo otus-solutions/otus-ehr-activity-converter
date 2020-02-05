@@ -8,9 +8,9 @@ class BooleanQuestion extends EhrQuestion{
 
     getAnswerToShowHiddenQuestion(){
         if(super.getAnswerToShowHiddenQuestion() !== "true"){
-            console.log(`ATENTION! getAnswerToShowHiddenQuestion method for question ${this.id} found value  = 'false'`);//.
+            console.log(`ATTENTION! getAnswerToShowHiddenQuestion method for boolean question ${this.id} found value = 'false'`);
         }
-        return this.label;
+        return this.label;S
     }
 
     toOtusTemplate(){

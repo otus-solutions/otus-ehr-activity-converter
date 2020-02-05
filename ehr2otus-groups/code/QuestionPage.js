@@ -123,8 +123,6 @@ class QuestionPage {
                         hiddenBy: question.id
                     });
                 }
-
-                question.label
             }
         }
         catch (e) {
@@ -204,7 +202,6 @@ class QuestionPage {
 
     _readRules(ehrBranchArr){        
         for(let ehrBranch of ehrBranchArr) {
-            //const branch = new Branch(this.id, ehrBranch);//.
             this.branches.push(new Branch(this.id, ehrBranch));
         }
     }
@@ -230,14 +227,6 @@ class QuestionPage {
                 this.groups.push(new Group(group, group[0].basicGroup));
             }
             start = index+1;
-        }
-    }
-
-    _someGroupContainsQuestion(questionId){
-        for(let group of this.groups){
-            if(group.containsQuestion(questionId)){
-                return group;
-            }
         }
     }
 
@@ -276,12 +265,6 @@ class QuestionPage {
 
     _setRoutesFromBranches(){
         for(let branch of this.branches) {
-            // let originId =  this.questions[0].id;
-            // let group = this._someGroupContainsQuestion(originId);
-            // if(group){
-            //     originId = group.getLastQuestion();
-            // }
-
             const originId = this.getLastQuestionNotHidden().id;
             const targetId = _getQuestionIdDefaultRouteToNextPage(branch.targetPageId);
             const lastQuestionId = this.getLastQuestion().id;
@@ -304,35 +287,26 @@ class QuestionPage {
 
             if(lastIsHiddenQuestion){
                 if(conditionsWithHidden.length > 0){
-                    //console.log("\n" + this.id + " tem regra com *h *********************************************");
                     this._pushRouteFromBranch(originId, targetId, conditions);
                     this._pushRouteFromBranch(lastQuestionId, targetId, conditionsWithHidden);
-
-                    // this.routes[originId].push(new Route(originId, targetId, conditionsWithHidden));
-                    // this.routes[lastQuestionId].push(new Route(lastQuestionId, targetId, conditions));
                 }
                 else{
-                    //console.log("\n" + this.id);
                     this._pushRouteFromBranch(originId, targetId, conditions);
                     this._pushRouteFromBranch(lastQuestionId, targetId, conditions);
-
-                    // this.routes[originId].push(new Route(originId, targetId, conditions));
-                    // this.routes[lastQuestionId].push(new Route(lastQuestionId, targetId, conditions));
                 }
             }
             else{
-                // this.routes[originId].push(new Route(originId, targetId, conditions));
                 this._pushRouteFromBranch(originId, targetId, conditions);
             }
         }
     }
 
     _pushRouteFromBranch(originId, targetId, conditions){
-        if(conditions.length == 0){
+        if(conditions.length === 0){
             return;
         }
         this.routes[originId].push(new Route(originId, targetId, conditions));
-        //console.log(`add route ${originId} -> ${targetId}\t` + JSON.stringify(conditions));//.
+        //console.log(`add route ${originId} -> ${targetId}\t` + JSON.stringify(conditions));
     }
 
     _addNewRoute(originIndex, targetIndex, conditions=[]){
@@ -401,7 +375,6 @@ class QuestionPage {
             content += " - prev of 1st: " + this.prevOfFirstQuestion.id + "\n";
         }
         else{
-            console.log(this.id);//.
             content += "\n";
         }
 

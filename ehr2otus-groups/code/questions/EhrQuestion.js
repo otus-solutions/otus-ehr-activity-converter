@@ -132,14 +132,9 @@ class EhrQuestion {
     }
 
     label2Otus(){
-        this.label = `${this.id} ${this.label}`;//TODO takeoff
         return OtusTemplatePartsGenerator.getLabel(this.label);
     }
 
 }
 
 module.exports = EhrQuestion;
-
-function readLabel(label){
-    return label.replaceAll("[", "<").replaceAll("]", ">");
-}
