@@ -54,7 +54,7 @@ function checkHiddenQuestions(questions){
             }
 
             if(j !== i+1){
-                console.log(`ATENTION: question ${i} (${questions[i].id}) hide ${j} (${questions[j].id})`);
+                console.log(`ATTENTION: question ${i} (${questions[i].id}) hide ${j} (${questions[j].id})`);
             }
         }
     }

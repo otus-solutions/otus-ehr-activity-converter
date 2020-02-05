@@ -1,4 +1,3 @@
-const globalVars = require('./globalVars');
 const OtusTemplatePartsGenerator = require("./OtusTemplatePartsGenerator");
 
 class Expression {

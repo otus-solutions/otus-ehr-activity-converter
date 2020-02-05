@@ -1,6 +1,5 @@
 const fileSystem    = require('file-system');
 const fs            = require('fs');
-const loadJsonFile  = require('load-json-file');
 const xml2js        = require('xml2js');
 
 class FileHandler {

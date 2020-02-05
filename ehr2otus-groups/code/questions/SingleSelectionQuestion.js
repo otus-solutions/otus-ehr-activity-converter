@@ -8,12 +8,6 @@ class SingleSelectionQuestion extends EhrQuestion {
         super(ehrQuestionObj, pageId, "SingleSelectionQuestion","Integer");
         this.choiceGroupId = ehrQuestionObj.choiceGroupId;
     }
-    
-    replaceHiddenQuestionAnswerValue(){
-        this.hiddenQuestionIsVisibleWhenMyAnswerIs = choiceGroups.findChoiceLabelInSpecificChoiceGroup(
-            this.choiceGroupId, 
-            this.hiddenQuestionIsVisibleWhenMyAnswerIs);
-    }
 
     getAnswerValue(answer, isMetadata){
         if(isMetadata){

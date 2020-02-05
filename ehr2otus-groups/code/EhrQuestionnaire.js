@@ -17,33 +17,12 @@ class EhrQuestionnaire {
         return this.questionPages[0];
     }
 
-    get getLastQuestionPage(){
-        return this.questionPages[this.questionPages.length-1];
-    }
-
     getQuestionPage(searchQuestionPageId){
         return (this.questionPages.filter((questionPage) => questionPage.id === searchQuestionPageId))[0];
-    }
-    getQuestionPageByNumber(searchQuestionPageNumber){
-        const searchQuestionPageId = "PAGE_" + String(searchQuestionPageNumber).padStart(3, '0');
-        return (this.questionPages.filter((questionPage) => questionPage.id === searchQuestionPageId))[0];
-    }
-
-    getPreviousQuestionPageOf(searchQuestionPageId){
-        let searchQuestionPageIndex = this.defaultRouteQuestionIds.indexOf(searchQuestionPageId);
-        if(searchQuestionPageIndex === 0){
-            throw globalVars.DEFAULT_NODES.BEGIN;
-        }
-        let prevQuestionPageId = this.defaultRouteQuestionIds[searchQuestionPageIndex-1];
-        return (this.questionPages.filter((questionPage) => questionPage.id === prevQuestionPageId))[0];
     }
 
     getFirstQuestionIdFromQuestionPage(searchQuestionPageId){
         return this.getQuestionPage(searchQuestionPageId).getFirstQuestion().id;
-    }
-
-    getLastQuestionIdFromQuestionPage(searchQuestionPageId){
-        return this.getQuestionPage(searchQuestionPageId).getLastQuestion().id;
     }
 
     readFromJsonObj(ehrTemplate){
@@ -131,7 +110,7 @@ class EhrQuestionnaire {
      * Debug
      */
 
-   resume(){
+    resume(){
         let content = "";
         for (let questionPage of this.questionPages) {
             content += questionPage.resume() + "\n";

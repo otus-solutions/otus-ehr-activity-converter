@@ -2,9 +2,8 @@ const OtusTemplatePartsGenerator = require("./OtusTemplatePartsGenerator");
 
 class Group {
 
-    constructor(questionIds, groupId='') {
+    constructor(questionIds) {
         this.questions = questionIds;
-        //this.id = groupId;
     }
 
     getFirstQuestion(){
@@ -13,10 +12,6 @@ class Group {
 
     getLastQuestion(){
         return this.questions[this.questions.length-1];
-    }
-
-    containsQuestion(questionId){
-        return this.questions.includes(questionId);
     }
 
     toOtusTemplate(){

@@ -27,29 +27,6 @@ class EhrQuestion {
         this.hiddenQuestion = this._extractHiddenQuestion(ehrQuestionObj);
     }
 
-    toJSON() {
-        let obj = {
-            id: this.id,
-            index: this.index,
-            questionType: this.questionType
-        };
-        if (this.hiddenQuestion) {
-            obj['hiddenQuestion'] = {
-                id: this.hiddenQuestion.id,
-                name: this.hiddenQuestion.name,
-                isVisibleWhenThisAnswerIs: this.hiddenQuestion.isVisibleWhenThisAnswerIs
-            };
-        }
-        return obj;
-    }
-
-    extractIdIndexObj() {
-        return {
-            id: this.id,
-            index: this.index
-        };
-    }
-
     _extractHiddenQuestion(ehrQuestionObj) {
         if (ehrQuestionObj.hiddenQuestion) {
             return {
@@ -60,38 +37,8 @@ class EhrQuestion {
         }
     }
 
-    setHiddenQuestionIdFromDict() {
-        this.hiddenQuestion.id = globalVars.dictQuestionNameId[this.hiddenQuestion.name];
-    }
-
-    equals(otherQuestion) {
-        if (!otherQuestion instanceof EhrQuestion) {
-            return false;
-        }
-        return (otherQuestion.id === this.id && otherQuestion.name === this.name);
-    }
-
     // Must be implemented by children classes
     toOtusTemplate() {
-
-    }
-
-    replaceHiddenQuestionInfo(basicQuestionGroups) {
-        if (this.hiddenQuestion) {
-            // find id
-            let hiddenQuestionId = globalVars.dictQuestionNameId[this.hiddenQuestion.name];
-            if (hiddenQuestionId.includes("Group")) { // its a basic question group
-                let basicQuestionGroup = basicQuestionGroups.filter((x) => x.name === this.hiddenQuestion.name)[0];
-                hiddenQuestionId = basicQuestionGroup.getFirstQuestionId();
-            }
-            this.hiddenQuestion.id = hiddenQuestionId;
-            // find option value
-            this.replaceHiddenQuestionAnswerValue();
-        }
-    }
-
-    // Must be implemented by children classes
-    replaceHiddenQuestionAnswerValue() {
 
     }
 

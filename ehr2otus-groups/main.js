@@ -73,8 +73,6 @@ function exportResumes(ehr, path){
     FileHandler.write(path + "resume1-cuts.txt", ehr.resumeCuts());
     FileHandler.writeJson(path + "resume2-routes.json", ehr.resumeRoutesJson());
     FileHandler.writeJson(path + "resume3-groups.json", ehr.resumeGroupsJson());
-    // FileHandler.writeJson("dictQuestionNameId.json", globalVars.dictQuestionNameId);
-
     return ehrBranchesQuestions.split("\n");
 }
 

@@ -224,7 +224,7 @@ class QuestionPage {
         for(let index of this.cutIndexes.concat([n-1])){
             const group = this.questions.slice(start, index+1).map(q => q.id);
             if(group.length >= 2){
-                this.groups.push(new Group(group, group[0].basicGroup));
+                this.groups.push(new Group(group));
             }
             start = index+1;
         }
