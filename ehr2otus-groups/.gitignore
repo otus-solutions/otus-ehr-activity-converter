@@ -1,0 +1,9 @@
+# directories
+.idea/*
+.vscode/*
+node_modules/*
+output/*
+code_backup/*
+# files
+input/*
+package-lock.json
