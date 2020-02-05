@@ -98,6 +98,7 @@ class QuestionPage {
     _readQuestions(questionObjsArr){
         const questionFuncDict = {
             "textItemQuestion": TextItemQuestion,
+            "textAreaQuestion": TextItemQuestion,
             "autocompleteQuestion": AutoCompleteQuestion,
             "booleanQuestion": BooleanQuestion,
             "dateQuestion": DateQuestion,
