@@ -212,7 +212,7 @@ class OtusTemplatePartsGenerator {
             "operator": operator,
             "answer": answer,
             "isMetadata": isMetadata,
-            "isCustom": false
+            "isCustom": true
         };
     }
 }
