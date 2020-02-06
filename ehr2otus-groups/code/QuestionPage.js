@@ -193,7 +193,7 @@ class QuestionPage {
         }
 
         this.cutIndexes = this.cutIndexes.filter(x => x < lastPageQuestionIndex && !groupCutIndexes.includes(x))
-            .concat(groupCutIndexes).sort();
+            .concat(groupCutIndexes).sort((a,b) => { return a-b; });
     }
 
     _readRules(ehrBranchArr){        
