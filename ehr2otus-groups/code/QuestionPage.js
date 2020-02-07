@@ -263,9 +263,9 @@ class QuestionPage {
 
                 let nextIndex = i+1;
                 if(hiddenIndex === i+1){
-                    const basicGroupWithHidden = this.basicQuestionGroups[question.hiddenQuestion.name]
-                    const shift = (basicGroupWithHidden? 1+basicGroupWithHidden.length : 1);
-                    nextIndex = i + shift;
+                    const basicGroupWithHidden = this.basicQuestionGroups[question.hiddenQuestion.name];
+                    const shift = (basicGroupWithHidden? basicGroupWithHidden.length : 1);
+                    nextIndex = i + shift + 1;
                 }
 
                 if (nextIndex < n){
