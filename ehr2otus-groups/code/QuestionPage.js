@@ -152,10 +152,7 @@ class QuestionPage {
             let hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
 
             const basicGroup = this.basicQuestionGroups[hiddenQuestion.hidden]
-
-            let str = "";//.
             if(basicGroup){
-                str = `\nhidden group: ${hiddenQuestion.hidden}, hiddenQuestionId = ${basicGroup[0]}, index = `;//.
                 hiddenQuestionId = basicGroup[0];
             }
 
@@ -164,8 +161,6 @@ class QuestionPage {
             let hiddenIndex = this._indexOfQuestionById(hiddenQuestionId);
 
             if(basicGroup){
-                const question = this.getQuestionById(hiderId);
-                str += hiddenIndex + `\n\thider ${hiderId} , hidderId: old=${question.hiddenQuestion.id}, new=`;//.
                 this.getQuestionById(hiderId).setHiddenQuestionId(hiddenQuestionId);
             }
 
@@ -173,7 +168,6 @@ class QuestionPage {
                 const id = this._getBasicGroupFirstQuestion(hiddenQuestion.hidden);
                 hiddenIndex = this._indexOfQuestionById(id);
             }
-
             if(hiddenIndex === index-1){
                 [this.questions[index], this.questions[hiddenIndex]] = [this.questions[hiddenIndex], this.questions[index]];
                 hiddenIndex = index;
@@ -282,12 +276,7 @@ class QuestionPage {
                 }
 
                 const operator = Expression.equalOperator();
-                let value = question.hiddenQuestion.isVisibleWhenThisAnswerIs;
-
-                if(question instanceof SingleSelectionQuestion){
-                    value = parseInt(globalVars.choiceGroups.findChoiceValueInSpecificChoiceGroup(question.choiceGroupId, value), 10);
-                }
-
+                const value = question.getAnswerToShowHiddenQuestion();
                 const condition = [ new Expression(question.name, question.id, operator, value) ];
                 this._addRouteByQuestionIndexes(i, hiddenIndex, [condition]);
                 lastQuestionInDefaultRoute = this.questions[i];
