@@ -282,7 +282,12 @@ class QuestionPage {
                 }
 
                 const operator = Expression.equalOperator();
-                const value = question.hiddenQuestion.isVisibleWhenThisAnswerIs;
+                let value = question.hiddenQuestion.isVisibleWhenThisAnswerIs;
+
+                if(question instanceof SingleSelectionQuestion){
+                    value = parseInt(globalVars.choiceGroups.findChoiceValueInSpecificChoiceGroup(question.choiceGroupId, value), 10);
+                }
+
                 const condition = [ new Expression(question.name, question.id, operator, value) ];
                 this._addRouteByQuestionIndexes(i, hiddenIndex, [condition]);
                 lastQuestionInDefaultRoute = this.questions[i];

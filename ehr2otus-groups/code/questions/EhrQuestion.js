@@ -26,6 +26,7 @@ class EhrQuestion {
         this.basicGroup = ehrQuestionObj.basicGroup;
         this.hiddenQuestion = this._extractHiddenQuestion(ehrQuestionObj);
         this.answerIsCustom = true;
+        this.choiceGroup = ehrQuestionObj.choiceGroupId;
     }
 
     _extractHiddenQuestion(ehrQuestionObj) {
