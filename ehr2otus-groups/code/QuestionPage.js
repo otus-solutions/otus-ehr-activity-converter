@@ -49,7 +49,11 @@ class QuestionPage {
     }
 
     _indexOfQuestionById(questionId){
-        return _indexOfQuestionByIdInArr(questionId, this.questions);
+        return _indexOfQuestion("id", questionId, this.questions);
+    }
+
+    _indexOfQuestionByName(questionName){
+        return _indexOfQuestion("name", questionName, this.questions);
     }
 
     _getNextQuestionId(questionIndex){
@@ -145,10 +149,25 @@ class QuestionPage {
 
     _reorganizeQuestionsThatHiddenQuestion2(){
         for(let hiddenQuestion of this.hiddenQuestions){
-            const id = hiddenQuestion.hiddenBy;
-            const hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
-            const index = this._indexOfQuestionById(id);
+            let hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
+
+            const basicGroup = this.basicQuestionGroups[hiddenQuestion.hidden]
+
+            let str = "";//.
+            if(basicGroup){
+                str = `\nhidden group: ${hiddenQuestion.hidden}, hiddenQuestionId = ${basicGroup[0]}, index = `;//.
+                hiddenQuestionId = basicGroup[0];
+            }
+
+            const hiderId = hiddenQuestion.hiddenBy;
+            const index = this._indexOfQuestionById(hiderId);
             let hiddenIndex = this._indexOfQuestionById(hiddenQuestionId);
+
+            if(basicGroup){
+                const question = this.getQuestionById(hiderId);
+                str += hiddenIndex + `\n\thider ${hiderId} , hidderId: old=${question.hiddenQuestion.id}, new=`;//.
+                this.getQuestionById(hiderId).setHiddenQuestionId(hiddenQuestionId);
+            }
 
             if(hiddenIndex < 0){
                 const id = this._getBasicGroupFirstQuestion(hiddenQuestion.hidden);
@@ -167,10 +186,10 @@ class QuestionPage {
     _setCutIndexes(){
         const lastPageQuestionIndex = this.questions.length-1;
         let groupCutIndexes = [];
-        for(let arr of Object.values(this.basicQuestionGroups)){
-            let n = arr.length;
+        for(let basicGroup of Object.values(this.basicQuestionGroups)){
+            let n = basicGroup.length;
             if(n > 1){
-                const firstIndex = this._indexOfQuestionById(arr[0]);
+                const firstIndex = this._indexOfQuestionById(basicGroup[0]);
                 if(this.hiddenIndexes.includes(firstIndex)){
                     this.hiddenIndexes = this.hiddenIndexes.filter(x => x !== firstIndex);
                 }
@@ -178,7 +197,7 @@ class QuestionPage {
                     groupCutIndexes.push(firstIndex-1);
                 }
 
-                const lastIndex = this._indexOfQuestionById(arr[n-1]);
+                const lastIndex = this._indexOfQuestionById(basicGroup[n-1]);
                 if(!this.hiddenIndexes.includes(lastIndex) && lastIndex !== lastPageQuestionIndex){
                     groupCutIndexes.push(lastIndex);
                 }
@@ -235,22 +254,45 @@ class QuestionPage {
         let lastQuestionInDefaultRoute = null;
         
         for (let i = 0; i < n-1; i++) {
-            if(this.hiddenIndexes.includes(i+1)){
-                this._addNewRoute(i, i+2);
+            let question = this.questions[i];
+            if(question.hiddenQuestion){
+                let hiddenIndex = this._indexOfQuestionById(question.hiddenQuestion.id);
+                if(hiddenIndex < 0){
+                    hiddenIndex = this._indexOfQuestionByName(question.hiddenQuestion.name);
+                }
 
-                let question = this.questions[i];
+                let nextIndex = i+1;
+                if(hiddenIndex === i+1){
+                    const basicGroupWithHidden = this.basicQuestionGroups[question.hiddenQuestion.name]
+                    const shift = (basicGroupWithHidden? 1+basicGroupWithHidden.length : 1);
+                    nextIndex = i + shift;
+                }
+
+                if (nextIndex < n){
+                    this._addRouteByQuestionIndexes(i, nextIndex);
+
+                    if(nextIndex === n-1){
+                        const targetId = _getQuestionIdDefaultRouteToNextPage(this.nextPageId);
+                        this._addRouteByQuestionIds(question.id, targetId, []);
+                    }
+                }
+                else{
+                    const targetId = _getQuestionIdDefaultRouteToNextPage(this.nextPageId);
+                    this._addRouteByQuestionIds(question.id, targetId, []);
+                }
+
                 const operator = Expression.equalOperator();
-                const value = question.getAnswerToShowHiddenQuestion();
+                const value = question.hiddenQuestion.isVisibleWhenThisAnswerIs;
                 const condition = [ new Expression(question.name, question.id, operator, value) ];
-                this._addNewRoute(i, i+1, [condition]);
+                this._addRouteByQuestionIndexes(i, hiddenIndex, [condition]);
                 lastQuestionInDefaultRoute = this.questions[i];
             }
             else{
-                this._addNewRoute(i, i+1);
+                this._addRouteByQuestionIndexes(i, i+1);
             }
         }
         
-        this._addNewRoute(n-1, n);
+        this._addRouteByQuestionIndexes(n-1, n);
 
         if(!this.hiddenIndexes.includes(n-1)){
             lastQuestionInDefaultRoute = this.questions[n-1];
@@ -283,37 +325,38 @@ class QuestionPage {
 
             if(lastIsHiddenQuestion){
                 if(conditionsWithHidden.length > 0){
-                    this._pushRouteFromBranch(originId, targetId, conditions);
-                    this._pushRouteFromBranch(lastQuestionId, targetId, conditionsWithHidden);
+                    this._addRouteByQuestionIds(originId, targetId, conditions);
+                    this._addRouteByQuestionIds(lastQuestionId, targetId, conditionsWithHidden);
                 }
                 else{
-                    this._pushRouteFromBranch(originId, targetId, conditions);
-                    this._pushRouteFromBranch(lastQuestionId, targetId, conditions);
+                    this._addRouteByQuestionIds(originId, targetId, conditions);
+                    this._addRouteByQuestionIds(lastQuestionId, targetId, conditions);
                 }
             }
             else{
-                this._pushRouteFromBranch(originId, targetId, conditions);
+                this._addRouteByQuestionIds(originId, targetId, conditions);
             }
         }
     }
 
-    _pushRouteFromBranch(originId, targetId, conditions){
-        if(conditions.length === 0){
-            return;
+    _addRouteByQuestionIds(originId, targetId, conditions){
+        if(!this.routes[originId]){
+            this.routes[originId] = [];
         }
-        this.routes[originId].push(new Route(originId, targetId, conditions));
-        //console.log(`add route ${originId} -> ${targetId}\t` + JSON.stringify(conditions));
+        const originRoutes = this.routes[originId];
+        let i=0, found=false;
+        while(i < originRoutes.length && !found){
+            found = (originRoutes[i++].destination === targetId);
+        }
+        if(!found){
+            originRoutes.push(new Route(originId, targetId, conditions));
+        }
     }
 
-    _addNewRoute(originIndex, targetIndex, conditions=[]){
+    _addRouteByQuestionIndexes(originIndex, targetIndex, conditions=[]){
         const originId = this.questions[originIndex].id;
         const targetId = this._getNextQuestionId(targetIndex-1);// -1 because method look for arg+1
-        try{
-            this.routes[originId].push(new Route(originId, targetId, conditions));
-        }
-        catch (e) {
-            this.routes[originId] = [new Route(originId, targetId, conditions)];
-        }
+        this._addRouteByQuestionIds(originId, targetId, conditions);
     }
 
     /* -----------------------------------------------------
@@ -337,12 +380,10 @@ class QuestionPage {
 
     _getOtusQuestionNavigationObj(questionIndex, prevQuestion, otusStudioTemplate){
         const question = this.questions[questionIndex];
-        
         let otusRoutes = [];
         for(let route of this.routes[question.id]){
             otusRoutes.push(route.toOtusTemplate());
         }
-
         otusStudioTemplate[OTUS_NAVIGATION_LIST].push(
             OtusTemplatePartsGenerator.getNavigationNode(question.id, question.index, prevQuestion.id, prevQuestion.index, otusRoutes)
         );
@@ -351,6 +392,10 @@ class QuestionPage {
     /*
      * Debug
      */
+
+    condToLog(){
+        return (this.id === "PAGE_003");
+    }
 
     hasQuestion(questionId){
         return (this.questions.filter(question => question.id === questionId).length > 0);
@@ -465,11 +510,11 @@ module.exports = QuestionPage;
  * Private static functions
  */
 
-function _indexOfQuestionByIdInArr(questionId, questionArr){
+function _indexOfQuestion(questionAttrName, questionAttrValue, questionArr){
     let i=0;
     let found = false;
     while(!found && i <  questionArr.length){
-        found = questionArr[i++].id === questionId;
+        found = (questionArr[i++][questionAttrName] === questionAttrValue);
     }
     if(found){
         return i-1;

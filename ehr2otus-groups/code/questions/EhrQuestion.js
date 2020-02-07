@@ -38,6 +38,10 @@ class EhrQuestion {
         }
     }
 
+    setHiddenQuestionId(id){
+        this.hiddenQuestion.id = id;
+    }
+
     // Must be implemented by children classes
     toOtusTemplate() {
 
