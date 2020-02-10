@@ -448,7 +448,6 @@ class QuestionPage {
         const origin = (lastIsHiddenQuestion? `${this.questions[n-2].id}/${this.questions[n-1].id}(*h)` : this.questions[n-1].id);
         const nextId = _getFirstQuestionOfPage(this.nextPageId);
 
-        //let content = `(${this.id}) ${origin} -> ${nextId} (${this.nextPageId}) *\n`;
         let content = `${origin} -> ${nextId} *\n`;
 
         for(let branch of this.branches){
@@ -461,7 +460,6 @@ class QuestionPage {
                 .replace(/ EQ /gi, " equal ").replace(/ GT /gi, " greater ");
 
             const branchTargetId = _getFirstQuestionOfPage(branch.targetPageId);
-            //content += `(${branch.originPageId}) ${origin} -> ${branchTargetId} (${branch.targetPageId}) \t ${JSON.stringify(conditions)}\n`;
             content += `${origin} -> ${branchTargetId} ${expressions}\n`;
         }
         
@@ -496,6 +494,32 @@ class QuestionPage {
         }
         return content;
     }
+
+    fillEHRGraphViz(ehrGraphViz){        
+        const sep = "\n";
+        ehrGraphViz.addNodeWithLabel(this.id, this.id + sep + this.questions.map(q => q.id).join(sep));
+        
+        if(this.id === "END_PAGE") {
+            return;
+        }
+
+        ehrGraphViz.addNode(this.nextPageId);
+        ehrGraphViz.addEdge(this.id, this.nextPageId);
+
+        for(let branch of this.branches){
+            branch.fillGraphViz(ehrGraphViz);
+        }
+    }
+
+    fillOtusGraphViz(otusGraphViz){
+        for (let question of this.questions) {
+            otusGraphViz.addNode(question.id);
+            for(let route of this.routes[question.id]){
+                route.fillGraphViz(otusGraphViz);
+            }
+        }
+    }
+
 }
 
 module.exports = QuestionPage;

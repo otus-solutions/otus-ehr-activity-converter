@@ -24,6 +24,25 @@ class Route {
 
         return OtusTemplatePartsGenerator.getRoute(this.origin, this.destination, (n==0), conditions);
     }
+
+    fillGraphViz(graphViz){
+        graphViz.addNode(this.destination);
+        if(this.conditions.length === 0){
+            graphViz.addEdge(this.origin, this.destination);
+            return;
+        }
+       
+        let orExpressions= [];
+        for(let condition of this.conditions){
+            let andExpressions = [];
+            for(let expression of condition){
+                andExpressions.push(expression.toJSON());
+            }
+            orExpressions.push(andExpressions.join(" and "));
+        }
+        graphViz.addEdge(this.origin, this.destination, orExpressions.join(" or\n"));
+    }
+
 }
 
 module.exports = Route;

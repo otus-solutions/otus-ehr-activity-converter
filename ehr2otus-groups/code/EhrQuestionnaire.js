@@ -1,6 +1,7 @@
 const globalVars = require('./globalVars');
 const QuestionPage = require('./QuestionPage');
 const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
+const GraphViz = require('./GraphViz');
 
 class EhrQuestionnaire {
 
@@ -158,6 +159,26 @@ class EhrQuestionnaire {
             }
         }
         return json;
+    }
+
+    toGraphViz(outputPath){
+        const totalPages = this.questionPages.length,
+              numPagesByFile = 5;
+
+        for (let k = 0; k < totalPages; k=k+numPagesByFile) {
+            const start = k, 
+                  end = Math.min(k+numPagesByFile, totalPages-1),
+                  ehrGraphViz = new GraphViz(),
+                  otusGraphViz = new GraphViz();
+
+            for (let i = start; i < end; i++) {
+                this.questionPages[i].fillEHRGraphViz(ehrGraphViz);
+                this.questionPages[i].fillOtusGraphViz(otusGraphViz);
+            }
+
+            ehrGraphViz.save(`${outputPath}${this.questionPages[start].id}-${this.questionPages[end].id}-ehr`);
+            otusGraphViz.save(`${outputPath}${this.questionPages[start].id}-${this.questionPages[end].id}-otus`);
+        }
     }
 
 }
