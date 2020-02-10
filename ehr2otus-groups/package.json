@@ -12,6 +12,7 @@
   "dependencies": {
     "file-system": "^2.2.2",
     "fs": "0.0.1-security",
+    "graphviz": "0.0.9",
     "load-json-file": "^6.2.0",
     "path": "^0.12.7",
     "xml2js": "^0.4.22"

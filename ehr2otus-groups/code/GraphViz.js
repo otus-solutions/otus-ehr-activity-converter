@@ -1,5 +1,6 @@
 const FileHandler = require('./FileHandler');
 const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 const dotCommand = "dot"; // '"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe"'; //. on Windows
 
 class GraphViz {
@@ -43,8 +44,9 @@ class GraphViz {
 		return (found? i-1 : -1);
 	}
 
-	addEdge(originNodeId, targetNodeId, label='*'){
-		this.edges.push(`${originNodeId} -> ${targetNodeId} [label=\"${label}\"];`);
+	addEdge(originNodeId, targetNodeId, label=''){
+		const color = (label==='' ? "blue" : "black");
+		this.edges.push(`${originNodeId} -> ${targetNodeId} [label=\"${label}\" color=${color}];`);
 	}
 }
 
@@ -71,14 +73,15 @@ class Node {
 
 function dotToPng(dotFilePath, pngFilePath){
 	const command = `${dotCommand} -Tpng ${dotFilePath} > ${pngFilePath}`;
-	exec(command,
-		function (error) {
-			if (error) {
-				console.error('\nexec error in command: ' + command);
-				console.error(error);
-				throw error;
-			}
-		}
-	);
+	// exec(command,
+	// 	function (error) {
+	// 		if (error) {
+	// 			console.error('\nexec error in command: ' + command);
+	// 			console.error(error);
+	// 			throw error;
+	// 		}
+	// 	}
+	// );
+	execSync(command);
 	console.log('Saved ' + pngFilePath);//.
 }
