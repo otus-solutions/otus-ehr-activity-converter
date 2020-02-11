@@ -60,7 +60,7 @@ class EhrQuestion {
     }
 
     getAnswerToShowHiddenQuestion() {
-        return this.hiddenQuestion.isVisibleWhenThisAnswerIs;
+        return this.hiddenQuestion.isVisibleWhenThisAnswerIs.split(",");
     }
 
     getOtusHeader() {
