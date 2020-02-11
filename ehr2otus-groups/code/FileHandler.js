@@ -25,6 +25,14 @@ class FileHandler {
         console.log(`The file ${path.replace(process.cwd(), ".")} was saved!`);
     }
 
+    static writeNoMessage(path, content){
+        fileSystem.writeFile(path, content, function(err) {
+            if(err) {
+                throw err;
+            }
+        });
+    }
+
     /*
      * json
      */

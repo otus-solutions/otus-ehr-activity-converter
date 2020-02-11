@@ -495,26 +495,40 @@ class QuestionPage {
         return content;
     }
 
-    fillEHRGraphViz(ehrGraphViz){        
+    fillEHRGraphViz(ehrGraphViz, nodeColor){
         const sep = "\n";
-        ehrGraphViz.addNodeWithLabel(this.id, this.id + sep + this.questions.map(q => q.id).join(sep));
+        ehrGraphViz.addNodeWithLabel(this.id, nodeColor, 
+            this.id + sep + 
+            this.questions.map((q,i) => q.id + (this.hiddenIndexes.includes(i)? "*" : "") )
+            .join(sep));
         
         if(this.id === "END_PAGE") {
             return;
         }
 
-        ehrGraphViz.addNode(this.nextPageId);
+        function getLabelForTargetPageNode(targetPageId){
+            const targetPage = globalVars.ehrQuestionnaire.getQuestionPage(targetPageId);
+            return targetPageId + sep + 
+                targetPage.questions[0].id + 
+                (targetPage.questions.length>1 ? sep+"..." : "");
+        }
+
+        ehrGraphViz.addNodeWithLabel(this.nextPageId, "white", getLabelForTargetPageNode(this.nextPageId));
         ehrGraphViz.addEdge(this.id, this.nextPageId);
 
         for(let branch of this.branches){
+            ehrGraphViz.addNodeWithLabel(branch.targetPageId, "white", getLabelForTargetPageNode(branch.targetPageId));
             branch.fillGraphViz(ehrGraphViz);
         }
     }
 
-    fillOtusGraphViz(otusGraphViz){
-        for (let question of this.questions) {
-            otusGraphViz.addNode(question.id);
-            for(let route of this.routes[question.id]){
+    fillOtusGraphViz(otusGraphViz, nodeColor){
+        for (let i = 0; i < this.questions.length; i++) {
+            const questionId = this.questions[i].id;
+            const isDashed = this.hiddenIndexes.includes(i);
+            otusGraphViz.addNode(questionId, nodeColor, isDashed);
+            for(let route of this.routes[questionId]){
+                otusGraphViz.addNode(route.destination);
                 route.fillGraphViz(otusGraphViz);
             }
         }

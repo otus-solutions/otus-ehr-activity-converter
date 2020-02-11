@@ -161,9 +161,10 @@ class EhrQuestionnaire {
         return json;
     }
 
-    toGraphViz(outputPath){
-        const totalPages = this.questionPages.length,
-              numPagesByFile = 5;
+    toGraphViz(ehrOutputPath, otusOutputPath){
+        const totalPages = 10,// this.questionPages.length,
+            numPagesByFile = 5,
+            colors = ['"#faeed8"', '"#eddff7"', '"#bbceb2"', '"#fbaea6"', '"#66d8ff"'];
 
         for (let k = 0; k < totalPages; k=k+numPagesByFile) {
             const start = k, 
@@ -172,12 +173,13 @@ class EhrQuestionnaire {
                   otusGraphViz = new GraphViz();
 
             for (let i = start; i < end; i++) {
-                this.questionPages[i].fillEHRGraphViz(ehrGraphViz);
-                this.questionPages[i].fillOtusGraphViz(otusGraphViz);
+                const nodeColor = colors[i%numPagesByFile];
+                this.questionPages[i].fillEHRGraphViz(ehrGraphViz, nodeColor);
+                this.questionPages[i].fillOtusGraphViz(otusGraphViz, nodeColor);
             }
 
-            ehrGraphViz.save(`${outputPath}${this.questionPages[start].id}-${this.questionPages[end].id}-ehr`);
-            otusGraphViz.save(`${outputPath}${this.questionPages[start].id}-${this.questionPages[end].id}-otus`);
+            ehrGraphViz.save(`${ehrOutputPath}/${this.questionPages[start].id}-${this.questionPages[end].id}-ehr`);
+            otusGraphViz.save(`${otusOutputPath}/${this.questionPages[start].id}-${this.questionPages[end].id}-otus`);
         }
     }
 

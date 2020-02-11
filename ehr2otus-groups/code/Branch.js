@@ -12,8 +12,6 @@ class Branch {
     }
 
     fillGraphViz(graphViz){
-        graphViz.addNode(this.targetPageId);
-       
         let orExpressions= [];
         for(let rule of this.rules){
             let andExpressions = [];

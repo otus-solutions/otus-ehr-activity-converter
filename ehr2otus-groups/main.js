@@ -144,9 +144,13 @@ function compareNavigations(ehrBranchesQuestions, otusNavigationResume, outputPa
 
 function buildAndExportGraph(acronym, ehrQuestionnaire){
 
-    const path = 'output/' + acronym + "/graph/";
+    const path = 'output/' + acronym + "/graph";
     FileHandler.mkdir(path);
     //const path = 'output\\' + acronym + "\\graph\\"; on Windows
 
-    ehrQuestionnaire.toGraphViz(path);
+    const ehrOutputPath = path + "/ehr", otusOutputPath = path + "/otus";
+    FileHandler.mkdir(ehrOutputPath);
+    FileHandler.mkdir(otusOutputPath);
+
+    ehrQuestionnaire.toGraphViz(ehrOutputPath, otusOutputPath);
 }

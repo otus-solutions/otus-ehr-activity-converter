@@ -26,7 +26,6 @@ class Route {
     }
 
     fillGraphViz(graphViz){
-        graphViz.addNode(this.destination);
         if(this.conditions.length === 0){
             graphViz.addEdge(this.origin, this.destination);
             return;

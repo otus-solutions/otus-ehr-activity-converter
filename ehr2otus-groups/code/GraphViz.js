@@ -1,7 +1,9 @@
 const FileHandler = require('./FileHandler');
 const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
-const dotCommand = "dot"; // '"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe"'; //. on Windows
+const dotCommand = "dot"; //'"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe"'; //. on Windows
+
+const DEFAULT_NODE_LABEL = "";
 
 class GraphViz {
 
@@ -16,36 +18,35 @@ class GraphViz {
 			content += node.toGraphViz();
 		}
 		content += this.edges.join("\n") + "\n}";
-		FileHandler.write(pathNoExtension + ".dot", content);
-		dotToPng(pathNoExtension + ".dot", pathNoExtension + ".png");
+		FileHandler.writeNoMessage(pathNoExtension + ".dot", content);
+		//dotToPng(pathNoExtension + ".dot", pathNoExtension + ".png");
 	}
 	 
-	addNode(id){
-		if(this._indexOfNode(id) < 0){
-			this.nodes.push(new Node(id));
-		}
-	}
-
-	addNodeWithLabel(id, label){
+	addNode(id, fillColor="white", isDashed=false){
 		try {
-			let index = this._indexOfNode(id);
-			this.nodes[index].label = label;
+			const index = this._indexOfNode(id, this.nodes);
+			this.nodes[index].update(fillColor);
+			this.nodes[index].setAsDashed(isDashed);
 		} 
-		catch (e) {
-			this.nodes.push(new Node(id, label));
+		catch (error) {
+			const node = new Node(id, fillColor);
+			node.setAsDashed(isDashed);
+			this.nodes.push(node);
 		}
 	}
 
-	_indexOfNode(id){
-		let i = 0, found = false;
-		while(!found && i < this.nodes.length){
-			found = (this.nodes[i++].id === id);
+	addNodeWithLabel(id, fillColor, label){
+		try {
+			let index = this._indexOfNode(id, this.nodes);
+			this.nodes[index].update(fillColor, label);
+		} 
+		catch (error) {
+			this.nodes.push(new Node(id, fillColor, label));
 		}
-		return (found? i-1 : -1);
-	}
+	}	
 
-	addEdge(originNodeId, targetNodeId, label=''){
-		const color = (label==='' ? "blue" : "black");
+	addEdge(originNodeId, targetNodeId, label=DEFAULT_NODE_LABEL){
+		const color = (label===DEFAULT_NODE_LABEL ? "blue" : "black");
 		this.edges.push(`${originNodeId} -> ${targetNodeId} [label=\"${label}\" color=${color}];`);
 	}
 }
@@ -58,18 +59,39 @@ module.exports = GraphViz;
 
 class Node {
 
-	constructor(id, label){
+	constructor(id, fillColor, label){
 		this.id = id;
+		this.fillColor = fillColor;
+		this.label = label;
+		this.isDashed = false;
+	}
+
+	update(fillColor, label){
+		this.fillColor = fillColor;
 		this.label = label;
 	}
 
+	setAsDashed(isDashed){
+		this.isDashed = isDashed;
+	}
+
 	toGraphViz(){
+		const style = (this.isDashed? '"dashed,filled"' : '"filled"');
 		if(!this.label){
-			return this.id + "\n";
+			return `${this.id} [fillcolor=${this.fillColor},style=${style}]\n`;
 		}
-		return `${this.id} [label=\"${this.label}\"]\n`;
+		return `${this.id} [label=\"${this.label}\",fillcolor=${this.fillColor},style=${style}]\n`;
 	}
 }
+
+function _indexOfNode(id, nodes){
+	let i = 0, found = false;
+	while(!found && i < nodes.length){
+		found = (nodes[i++].id === id);
+	}
+	return (found? i-1 : -1);
+}
+
 
 function dotToPng(dotFilePath, pngFilePath){
 	const command = `${dotCommand} -Tpng ${dotFilePath} > ${pngFilePath}`;
