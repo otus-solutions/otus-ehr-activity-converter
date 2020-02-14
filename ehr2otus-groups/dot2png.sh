@@ -1,5 +1,5 @@
 #!/bin/sh
-ACRONYM="ELEA"
+ACRONYM="CARA"
 PNG_OUTPUT="./output/$ACRONYM/graph"
 EHR_FILES="./output/$ACRONYM/graph/ehr/*.dot"
 OTUS_FILES="./output/$ACRONYM/graph/otus/*.dot"

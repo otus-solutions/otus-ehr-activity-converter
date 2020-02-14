@@ -163,8 +163,8 @@ class EhrQuestionnaire {
 
     toGraphViz(ehrOutputPath, otusOutputPath){
         const totalPages = this.questionPages.length,
-            numPagesByFile = 5,
-            colors = ['"#faeed8"', '"#eddff7"', '"#bbceb2"', '"#fbaea6"', '"#66d8ff"'];
+            numPagesByFile = 6,
+            colors = ['"#faeed8"', '"#eddff7"', '"#bbceb2"', '"#fbaea6"', '"#66d8ff"', '"#3377cc"'];
 
         for (let k = 0; k < totalPages; k=k+numPagesByFile) {
             const start = k, 

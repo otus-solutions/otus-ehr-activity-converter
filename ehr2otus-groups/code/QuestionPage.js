@@ -111,23 +111,30 @@ class QuestionPage {
             "textQuestion": TextQuestion,
             "timeQuestion": TimeQuestion
         };
+        let questionObj;
+        try {
 
-        for (let questionObj of questionObjsArr) {
-            let QuestionClazz = questionFuncDict[questionObj.type];
-            let question = new QuestionClazz(questionObj, this.id);
-            this.questions.push(question);
-            globalVars.dictQuestionNameId[question.name] = question.id;
+            for (questionObj of questionObjsArr) {
+                let QuestionClazz = questionFuncDict[questionObj.type];
+                let question = new QuestionClazz(questionObj, this.id);
+                this.questions.push(question);
+                globalVars.dictQuestionNameId[question.name] = question.id;
 
-            if (questionObj.basicGroup) {
-                this._addQuestionInQuestionGroup(question.id, question.basicGroup);
+                if (questionObj.basicGroup) {
+                    this._addQuestionInQuestionGroup(question.id, question.basicGroup);
+                }
+
+                if (question.hiddenQuestion) {
+                    this.hiddenQuestions.push({
+                        hidden: question.hiddenQuestion.name,
+                        hiddenBy: question.id
+                    });
+                }
             }
 
-            if(question.hiddenQuestion){
-                this.hiddenQuestions.push({
-                    hidden: question.hiddenQuestion.name,
-                    hiddenBy: question.id
-                });
-            }
+        }
+        catch (e) {
+            throw e;
         }
     }
 
