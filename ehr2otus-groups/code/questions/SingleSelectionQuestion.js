@@ -25,9 +25,14 @@ class SingleSelectionQuestion extends EhrQuestion {
 
     toOtusTemplate(){
         let questionObj = this.getOtusStudioQuestionHeader();
-        const choiceGroupObjArr = choiceGroups.choiceObj[this.choiceGroupId];
+        const choiceGroupObjArr = choiceGroups.choiceObj[this.choiceGroupId]
+            .sort(function(a,b){
+                const va = parseInt(a["value"], 10);
+                const vb = parseInt(b["value"], 10);
+                return va - vb;
+            });
         let options = [];
-        let value = 1;
+        let value = 0;
         for(let choiceObj of choiceGroupObjArr){
             options.push({
                 "extents": "StudioObject",
