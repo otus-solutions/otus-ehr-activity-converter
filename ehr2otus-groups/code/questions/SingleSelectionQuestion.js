@@ -27,16 +27,15 @@ class SingleSelectionQuestion extends EhrQuestion {
         let questionObj = this.getOtusStudioQuestionHeader();
         const choiceGroupObjArr = choiceGroups.choiceObj[this.choiceGroupId];
         let options = [];
+        let value = 1;
         for(let choiceObj of choiceGroupObjArr){
-            let numericValue = parseInt(choiceObj["value"], 10);
-            let label = choiceObj["label"];
             options.push({
                 "extents": "StudioObject",
                 "objectType": "AnswerOption",
-                "value": numericValue,
-                "extractionValue": numericValue,
+                "value": value++,
+                "extractionValue": parseInt(choiceObj["value"], 10),
                 "dataType": "Integer",
-                "label":  OtusTemplatePartsGenerator.getLabel(label)
+                "label":  OtusTemplatePartsGenerator.getLabel(choiceObj["label"])
             });
         }
         questionObj["options"] = options;
