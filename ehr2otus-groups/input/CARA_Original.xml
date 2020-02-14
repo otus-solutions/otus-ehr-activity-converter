@@ -1,0 +1,2481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<survey xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="survey.xsd"
+	title="Investigação de Internações Hospitalares: Cardiovasculares"
+	shortName="CAR" version="A" group="OUTCOMES">
+
+	<metaDataGroup id="DONT_WANT_KNOW_APPLY">
+		<metaDataValue>DOES_NOT_WANT_TO_ANSWER</metaDataValue>
+		<metaDataValue>DOES_NOT_KNOW</metaDataValue>
+		<metaDataValue>DOES_NOT_APPLY</metaDataValue>
+	</metaDataGroup>
+
+	<metaDataGroup id="DONT_WANT_KNOW_APPLY_ACCEPT">
+		<metaDataValue>DOES_NOT_WANT_TO_ANSWER</metaDataValue>
+		<metaDataValue>DOES_NOT_KNOW</metaDataValue>
+		<metaDataValue>DOES_NOT_APPLY</metaDataValue>
+		<metaDataValue>ACCEPT_ANSWER</metaDataValue>
+	</metaDataGroup>
+
+	<choiceGroup id="YesNoUnknown">
+		<choice name="YES" label="Sim" value="1" />
+		<choice name="NO" label="Não" value="0" />
+		<choice name="UNKNOWN" label="DESCONHECIDO" value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="YesNoUnknownLowercase">
+		<choice name="YES" label="Sim" value="1" />
+		<choice name="NO" label="Não" value="0" />
+		<choice name="UNKNOWN" label="Desconhecido" value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="VitalCondition">
+		<choice name="LIVE" label="Vivo" value="1" />
+		<choice name="DEAD" label="Morto" value="0" />
+	</choiceGroup>
+
+	<choiceGroup id="YesNo">
+		<choice name="YES" label="Sim" value="1" />
+		<choice name="NO" label="Não" value="0" />
+	</choiceGroup>
+
+	<choiceGroup id="YesNoNotFound">
+		<choice name="YES" label="Sim" value="1" />
+		<choice name="NO" label="Não" value="0" />
+		<choice name="NOTFOUND" label="NÃO ENCONTRADO" value="2" />
+	</choiceGroup>
+
+	<choiceGroup id="YesNoNotFoundAndUnknown">
+		<choice name="YES" label="Sim" value="1" />
+		<choice name="NO" label="Não" value="0" />
+		<choice name="NOTFOUND" label="NÃO ENCONTRADO" value="2" />
+		<choice name="UNKNOWN" label="DESCONHECIDO" value="3" />
+	</choiceGroup>
+
+	<unit label="%" id="percentage" />
+
+	<questionPage id="PAGE_01" nextPageId="PAGE_02">
+
+		<textQuestion id="CARAIDI" name="investigationId" label="ID DA INVESTIGAÇÃO:"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" maxLength="10" minLength="10" />
+
+		<basicQuestionGroup name="informationAboutAdmission"
+			id="informationAboutAdmission" label="[b]1. INFORMAÇÕES SOBRE A ADMISSÃO:[/b]">
+
+			<dateQuestion name="admissionDate" id="CARA1"
+				label="1. Data da admissão:" maxdate="today"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"/>
+			<textQuestion name="dossierQuestionCARA1p" id="CARA1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" />
+
+			<dateQuestion name="deathDate" id="CARA2"
+				label="2. Data da alta ou óbito:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" maxdate="today" />
+			<textQuestion name="dossierQuestionCARA2p" id="CARA2p"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<dateQuestion name="eventDate" id="CARA3" label="3. Data do evento:"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" maxdate="today" />
+			<textQuestion name="dossierQuestionCARA3p" id="CARA3p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" />
+
+		</basicQuestionGroup>
+
+		<basicQuestionGroup name="informationAboutHospital"
+			id="informationAboutHospital" label="[b]2. INFORMAÇÕES DO HOSPITAL:[/b]">
+			<textQuestion name="reasonToAdmission" id="CARA4"
+				label="4. Qual foi a razão primária (diagnóstico de admissão) para essa admissão?[br][br] Especifique:"
+				printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion name="dossierQuestionCARA4p" id="CARA4p"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="electiveHospitalization"
+				id="CARA4a" choiceGroupId="YesNoUnknown" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				label="4a. Trata-se de uma internação eletiva?" printLine="false" />
+
+			<textQuestion name="dossierQuestionCARA4ap" id="CARA4ap"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_03">
+			<rule>
+				<expression questionName="electiveHospitalization"
+					operator="EQ" value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_02" nextPageId="PAGE_03">
+
+		<singleSelectionQuestion name="hospitalTransport"
+			id="CARA4b" choiceGroupId="YesNoUnknown"
+			label="4b. O paciente foi transportado para este hospital por serviço de atenção pré-hospitalar?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+			hiddenQuestion="dossierQuestionCARA4bp" visibleWhen="YES" />
+
+		<textQuestion name="dossierQuestionCARA4bp" id="CARA4bp"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+			printLine="false" />
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_03" nextPageId="PAGE_04">
+
+		<singleSelectionQuestion name="transferredPatient"
+			id="CARA5" choiceGroupId="YesNoUnknown"
+			label="5. O paciente foi transferido para este hospital vindo de algum outro hospital, ou desse hospital para outro?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA5p"
+			visibleWhen="YES" printLine="false" />
+
+		<textQuestion name="dossierQuestionCARA5p" id="CARA5p"
+			label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="treatedInIntensiveCareUnit"
+			id="CARA6" choiceGroupId="YesNoUnknown"
+			label="6. O paciente foi tratado em alguma unidade de tratamento intensivo durante a hospitalização?"
+			hiddenQuestion="dossierQuestionCARA6p" visibleWhen="YES"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+			infoLabel="[b]SE Sim PREENCHA O FORMULÁRIO DE INTERNAÇÕES HOSPITALARES CARDIOVASCULARES PARA CADA INTERNAÇÃO.[/b]" />
+
+		<textQuestion name="dossierQuestionCARA6p" id="CARA6p"
+			label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="cardiacMassage"
+			id="CARA7" choiceGroupId="YesNoUnknown"
+			label="7. Foi administrada massagem cardíaca externa ao paciente?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA7p"
+			visibleWhen="YES" printLine="false" />
+
+		<textQuestion name="dossierQuestionCARA7p" id="CARA7p"
+			label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="cardioversionPatients"
+			label="8. Foi realizada cardioversão no paciente?" id="CARA8"
+			choiceGroupId="YesNoUnknown" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+			hiddenQuestion="dossierQuestionCARA8p" visibleWhen="YES" printLine="false" />
+
+		<textQuestion name="dossierQuestionCARA8p" id="CARA8p"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+			printLine="false" />
+
+
+		<branch targetPageId="PAGE_05">
+			<rule>
+				<expression questionName="cardioversionPatients"
+					operator="EQ" value="NO" />
+			</rule>
+		</branch>
+	</questionPage>
+
+
+	<questionPage id="PAGE_04" nextPageId="PAGE_05">
+
+		<basicQuestionGroup name="rhythmsBeforeCardioversion"
+			id="rhythmsBeforeCardioversion" label="9. Quais ritmos estiveram presentes antes da cardioversão?">
+
+			<singleSelectionQuestion name="otherRhythmOccurrences"
+				id="CARA9a" choiceGroupId="YesNoUnknown" label="Fibrilação/Flutter Ventricular"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA9ap"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA9ap" id="CARA9ap"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="atrialFibrillation"
+				id="CARA9b" choiceGroupId="YesNoUnknown" label="Fibrilação Atrial"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA9bp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA9bp" id="CARA9bp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="ventricularTachycardia"
+				id="CARA9c" choiceGroupId="YesNoUnknown" label="Taquicardia Ventricular"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA9cp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA9cp" id="CARA9cp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="assistolia"
+				id="CARA9d" choiceGroupId="YesNoUnknown" label="Assistolia"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA9dp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA9dp" id="CARA9dp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="totalAVBlock"
+				id="CARA9e" choiceGroupId="YesNoUnknown" label="Bloqueio AV Total (3º grau)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA9ep"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA9ep" id="CARA9ep"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="other" id="CARA9f"
+				choiceGroupId="YesNoUnknown" label="Outro" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				hiddenQuestion="dossierQuestionAndToSpecify" visibleWhen="YES"
+				printLine="true" />
+			<basicQuestionGroup name="dossierQuestionAndToSpecify"
+				id="dossierQuestionAndToSpecify">
+				<textQuestion name="specify" id="CARA9fqo" label="Especifique:"
+					printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+				<textQuestion name="dossierQuestionCARA9p" id="CARA9fp"
+					label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+			</basicQuestionGroup>
+
+		</basicQuestionGroup>
+	</questionPage>
+
+	<questionPage id="PAGE_05" nextPageId="PAGE_06">
+
+		<singleSelectionQuestion name="vitalConditionPatient"
+			id="CARA10" choiceGroupId="VitalCondition"
+			label="10. Qual era a condição vital do paciente ao receber alta?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+			hiddenQuestion="vitalConditionIfDead" visibleWhen="DEAD" />
+
+		<textQuestion name="dossierQuestionCARA10p" id="CARA10p"
+			label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<basicQuestionGroup name="vitalConditionIfDead" id="vitalConditionIfDead" >
+			<singleSelectionQuestion name="autopsyPerformed"
+				id="CARA11" choiceGroupId="YesNoUnknown" label="11. Foi realizada autópsia?"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA11p"
+				visibleWhen="YES" printLine="false" />
+
+			<textQuestion name="dossierQuestionCARA11p" id="CARA11p"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="patientWasFoundDead"
+				id="CARA12" choiceGroupId="YesNoUnknown"
+				label="12. O paciente foi encontrado morto (ex.: Não foi observado no momento de sua morte)?"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA12p"
+				visibleWhen="YES" postInfoLabel="[b]SE FALECEU NA UTI/CTI, FAVOR MARCAR Não.[/b]"
+				printLine="false" />
+
+			<textQuestion name="dossierQuestionCARA12p" id="CARA12p"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="painBeforeDying"
+				id="CARA13" choiceGroupId="YesNoUnknown"
+				label="13. Houve algum episódio de dor no peito, no braço esquerdo ou na mandíbula nas 72 horas que antecederam a morte?"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA13p"
+				visibleWhen="YES" printLine="false" />
+
+			<textQuestion name="dossierQuestionCARA13p" id="CARA13p"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_06" nextPageId="PAGE_08">
+
+		<basicQuestionGroup name="medicalHistory" id="medicalHistory"
+			label="[b]3. HISTÓRIA MÉDICA:[/b][br] 14. Algum médico indicou algum desses diagnósticos na história médica do paciente?">
+
+			<singleSelectionQuestion name="coronaryDisease"
+				id="CARA14a" choiceGroupId="YesNo" label="Doença Coronariana"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA14ap"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA14ap" id="CARA14ap"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="valvularDisease"
+				id="CARA14b" choiceGroupId="YesNo" label="Doença Valvular"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA14bp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA14bp" id="CARA14bp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="arrhythmia"
+				id="CARA14c" choiceGroupId="YesNo" label="Arritmia" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				hiddenQuestion="dossierQuestionCARA14cp" visibleWhen="YES"
+				printLine="true" />
+			<textQuestion name="dossierQuestionCARA14cp" id="CARA14cp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="arterialHypertension"
+				id="CARA14d" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				label="Hipertensão Arterial" hiddenQuestion="dossierQuestionCARA14dp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA14dp" id="CARA14dp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="lungDisease"
+				id="CARA14e" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				label="Doença Pulmonar" hiddenQuestion="dossierQuestionCARA14ep"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA14ep" id="CARA14ep"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="pulmonaryInfection"
+				id="CARA14f" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				label="Infecção Pulmonar" hiddenQuestion="dossierQuestionCARA14fp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA14fp" id="CARA14fp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<basicQuestionGroup name="acuteCardiovascularEvents"
+			id="acuteCardiovascularEvents" label="[b]4. EVENTOS CARDIOVASCULARES AGUDOS:[/b]">
+
+			<singleSelectionQuestion name="eventBeforeHospitalization"
+				id="CARA15" choiceGroupId="YesNoUnknown"
+				label="15. Houve algum episódio agudo de dor, desconforto ou aperto no peito, no braço esquerdo ou na mandíbula nas 72 horas que antecederam a hospitalização ou nas primeiras 72 h de internação?"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA15p"
+				visibleWhen="YES" printLine="false" />
+
+			<textQuestion name="dossierQuestionCARA15p" id="CARA15p"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_07">
+			<rule>
+				<expression questionName="eventBeforeHospitalization"
+					operator="EQ" value="YES" />
+			</rule>
+		</branch>
+	</questionPage>
+
+	<questionPage id="PAGE_07" nextPageId="PAGE_08">
+
+		<singleSelectionQuestion name="startOfAcuteEpisode"
+			id="CARA16" choiceGroupId="YesNoUnknown"
+			label="16. O início do episódio agudo ocorreu previamente à admissão?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA16p"
+			visibleWhen="YES" printLine="true" />
+
+		<textQuestion name="dossierQuestionCARA16p" id="CARA16p"
+			label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="discomfortAndPainWithoutCardiacOrigin"
+			id="CARA17" choiceGroupId="YesNoUnknown" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+			label="17. O desconforto ou a dor foram diagnosticados como de origem [b]Não[/b] cardíaca?"
+			hiddenQuestion="dossierQuestionCARA17p" visibleWhen="YES" printLine="false" />
+
+		<textQuestion name="dossierQuestionCARA17p" id="CARA17p"
+			label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+	</questionPage>
+
+	<questionPage id="PAGE_08" nextPageId="PAGE_09">
+
+		<basicQuestionGroup name="diagnosisDuringHospitalization"
+			id="diagnosisDuringHospitalization"
+			label="18. Algum médico indicou qualquer um destes diagnósticos como presentes durante a hospitalização?">
+
+			<singleSelectionQuestion name="anginaDiagnosis"
+				id="CARA18a" choiceGroupId="YesNo" label="Diagnóstico de angina"
+				hiddenQuestion="dossierQuestionCARA18ap" visibleWhen="YES"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				infoLabel="[b]MARQUE TODAS QUE SE APLIQUEM, EXCLUA EPISÓDIOS ANTIGOS, INCLUA SOMENTE CONDIÇÕES ATUAIS (EXCETO PARA O ÚLTIMO)[/b]"
+				printLine="true" />
+			<textQuestion name="dossierQuestionCARA18ap" id="CARA18ap"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="myocardialInfarction"
+				id="CARA18b" choiceGroupId="YesNo" label="Infarto do miocárdio"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18bp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18bp" id="CARA18bp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="heartFailure"
+				id="CARA18c" choiceGroupId="YesNo"
+				label="Insuficiência cardíaca congestiva ou edema pulmonar"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18cp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18cp" id="CARA18cp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="lamenessLowerMembers"
+				id="CARA18d" choiceGroupId="YesNo" label="Claudicação de membros inferiores"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18dp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18dp" id="CARA18dp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="ateroscleroseLowerMembers"
+				id="CARA18e" choiceGroupId="YesNo"
+				label="Aterosclerose de artérias dos membros inferiores e/ou superiores"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18ep"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18ep" id="CARA18ep"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="arterialEmbolism"
+				id="CARA18f" choiceGroupId="YesNo"
+				label="Embolia arterial ou trombose dos membros inferiores e/ou superiores"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18fp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18fp" id="CARA18fp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="aneurism" id="CARA18g"
+				choiceGroupId="YesNo" label="Aneurisma da aorta abdominal"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18gp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18gp" id="CARA18gp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="cardiogenicShock"
+				id="CARA18h" choiceGroupId="YesNo" label="Choque ou choque cardiogênico"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18hp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18hp" id="CARA18hp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="ventricularFibrillation"
+				id="CARA18i" choiceGroupId="YesNo"
+				label="Fibrilação ventricular, PCR ou assistolia" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				hiddenQuestion="dossierQuestionCARA18ip" visibleWhen="YES"
+				printLine="true" />
+			<textQuestion name="dossierQuestionCARA18ip" id="CARA18ip"
+				printLine="true" label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="venousThrombosis"
+				id="CARA18j" choiceGroupId="YesNo"
+				label="Trombose venosa profunda ou embolia pulmonar"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18jp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18jp" id="CARA18jp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="stElevation"
+				id="CARA18k" choiceGroupId="YesNo"
+				label="Elevação de ST > 1mm, associada a dor, que está ausente no ECG na ausência de dor"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18kp"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA18kp" id="CARA18kp"
+				label="Nº da página dossiê:" printLine="true" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="historyOfPainInTheChest"
+				id="CARA18l" choiceGroupId="YesNo"
+				label="História de dor (isquêmica) no peito, braço esquerdo ou mandíbula em algum momento no passado"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA18lp"
+				visibleWhen="YES" printLine="false" />
+			<textQuestion name="dossierQuestionCARA18lp" id="CARA18lp"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_09" nextPageId="PAGE_10">
+
+		<basicQuestionGroup name="therapiesDuringHospitalization"
+			id="therapiesDuringHospitalization"
+			label="19. O paciente recebeu alguma das seguintes terapias durante a hospitalização ou ao receber alta?">
+
+			<singleSelectionQuestion name="nitroglicerina"
+				id="CARA19a" choiceGroupId="YesNo" label="Nitroglicerina e ou nitratos"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19a" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19a"
+				id="showQuestionsIfYesCARA19a">
+				<textQuestion name="drugNameCARA19a1" id="CARA19a1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19ap" id="CARA19ap"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="betaBlockers"
+				id="CARA19b" choiceGroupId="YesNo" label="Beta bloqueadores"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19b" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19b"
+				id="showQuestionsIfYesCARA19b">
+				<textQuestion name="drugNameCARA19b1" id="CARA19b1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19bp" id="CARA19bp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="blockersCalciumChannels"
+				id="CARA19c" choiceGroupId="YesNo" label="Bloqueadores de canais de cálcio"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19c" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19c"
+				id="showQuestionsIfYesCARA19c">
+				<textQuestion name="drugNameCARA19c1" id="CARA19c1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19cp" id="CARA19cp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+			<singleSelectionQuestion name="diuretics" id="CARA19d"
+				choiceGroupId="YesNo" label="Diuréticos" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" hiddenQuestion="showQuestionsIfYesCARA19d"
+				visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19d"
+				id="showQuestionsIfYesCARA19d">
+				<textQuestion name="drugNameCARA19d1" id="CARA19d1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19dp" id="CARA19dp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="digitalis" id="CARA19e"
+				choiceGroupId="YesNo" label="Digitálicos" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" hiddenQuestion="showQuestionsIfYesCARA19e"
+				visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19e"
+				id="showQuestionsIfYesCARA19e">
+				<textQuestion name="drugNameCARA19e1" id="CARA19e1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19ep" id="CARA19ep"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="aceInhibitors"
+				id="CARA19f" choiceGroupId="YesNo" label="Inibidores de ECA"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19f" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19f"
+				id="showQuestionsIfYesCARA19f">
+				<textQuestion name="drugNameCARA19f1" id="CARA19f1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19fp" id="CARA19fp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+			<singleSelectionQuestion name="vasodilatadores"
+				id="CARA19g" choiceGroupId="YesNo"
+				label="Outros vasodilatadores (Hidralazina e outros)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19g" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19g"
+				id="showQuestionsIfYesCARA19g">
+				<textQuestion name="drugNameCARA19g1" id="CARA19g1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19gp" id="CARA19gp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="aspirinRegularly"
+				id="CARA19h" choiceGroupId="YesNo" label="Aspirina regularmente (não s/n)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19h" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19h"
+				id="showQuestionsIfYesCARA19h">
+				<textQuestion name="drugNameCARA19h1" id="CARA19h1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19hp" id="CARA19hp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+			<singleSelectionQuestion name="heparinOrEnoxaparin"
+				id="CARA19i" choiceGroupId="YesNo" label="Heparina ou Enoxaparina"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19i" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19i"
+				id="showQuestionsIfYesCARA19i">
+				<textQuestion name="drugNameCARA19i1" id="CARA19i1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19ip" id="CARA19ip"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="coumadin" id="CARA19j"
+				choiceGroupId="YesNo" label="Coumadin, varfarina, dicumarol"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19j" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19j"
+				id="showQuestionsIfYesCARA19j">
+				<textQuestion name="drugNameCARA19j1" id="CARA19j1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19jp" id="CARA19jp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+			<singleSelectionQuestion name="antiPlateletAgents"
+				id="CARA19k" choiceGroupId="YesNo"
+				label="Agentes anti-plaquetários (não-aspirínicos)" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" hiddenQuestion="showQuestionsIfYesCARA19k"
+				visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19k"
+				id="showQuestionsIfYesCARA19k">
+				<textQuestion name="drugNameCARA19k1" id="CARA19k1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19kp" id="CARA19kp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="thrombolyticTherapy"
+				id="CARA19l" choiceGroupId="YesNo"
+				label="Terapia trombolítica intra-arterial ou intravenosa"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19l" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19l"
+				id="showQuestionsIfYesCARA19l">
+				<textQuestion name="drugNameCARA19l1" id="CARA19l1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19lp" id="CARA19lp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="vasopressores"
+				id="CARA19m" choiceGroupId="YesNo" label="Vasopressores"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19m" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19m"
+				id="showQuestionsIfYesCARA19m">
+				<textQuestion name="drugNameCARA19m1" id="CARA19m1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19mp" id="CARA19mp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="vasodilatorsIntravenous"
+				id="CARA19n" choiceGroupId="YesNo" label="Vasodilatadores Intravenosos"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestionsIfYesCARA19n" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19n"
+				id="showQuestionsIfYesCARA19n">
+				<textQuestion name="drugNameCARA19n1" id="CARA19n1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19np" id="CARA19np"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="antiarritmics"
+				id="CARA19o" choiceGroupId="YesNo" label="Antiarrítimicos"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="showQuestionsIfYesCARA19o" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestionsIfYesCARA19o"
+				id="showQuestionsIfYesCARA19o">
+				<textQuestion name="drugNameCARA19o1" id="CARA19o1"
+					label="Nome da droga:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+				<textQuestion name="dossierQuestionCARA19op" id="CARA19op"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_10" nextPageId="PAGE_11">
+
+		<basicQuestionGroup name="proceduresDuringHospitalization"
+			id="proceduresDuringHospitalization"
+			label="[b]5. PROCEDIMENTOS:[/b][br][br] 20. Durante a hospitalização, alguns dos seguintes procedimentos intervencionistas especiais ou cirurgia foram realizados:">
+
+			<singleSelectionQuestion name="surgeryCRVM"
+				id="CARA20a" choiceGroupId="YesNoNotFound"
+				label="Cirurgia de revascularização do miocárdio (CRVM)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestions20a" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestions20a" id="showQuestions20a">
+				<dateQuestion name="dateCARA20a1" id="CARA20a1" label="Data:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" maxdate="realizationDate" />
+				<timeQuestion name="timeCARA20a2" id="CARA20a2" label="Hora:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+				<textQuestion name="dossierQuestionCARA20ap" id="CARA20ap"
+					label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+			</basicQuestionGroup>
+
+			<singleSelectionQuestion name="coronaryAtherectomy"
+				id="CARA20b" choiceGroupId="YesNoNotFound" label="Aterectomia coronária"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestions20b" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestions20b" id="showQuestions20b">
+				<dateQuestion name="dateCARA20b1" id="CARA20b1" label="Data:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" maxdate="realizationDate" />
+				<timeQuestion name="timeCARA20b2" id="CARA20b2" label="Hora:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+				<textQuestion name="dossierQuestionCARA20bp" id="CARA20bp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="stentInCoronary"
+				id="CARA20c" choiceGroupId="YesNoNotFound" label="Colocação de stent na coronária"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestions20c" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestions20c" id="showQuestions20c">
+				<dateQuestion name="dateCARA20c1" id="CARA20c1" label="Data:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" maxdate="realizationDate" />
+				<timeQuestion name="timeCARA20c2" id="CARA20c2" label="Hora:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+				<textQuestion name="dossierQuestionCARA20cp" id="CARA20cp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+			<singleSelectionQuestion name="angioplasty"
+				id="CARA20d" choiceGroupId="YesNoNotFound" label="Angioplastia da artéria coronária"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestions20d" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestions20d" id="showQuestions20d">
+				<dateQuestion name="dateCARA20d1" id="CARA20d1" label="Data:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" maxdate="realizationDate" />
+				<timeQuestion name="timeCARA20d2" id="CARA20d2" label="Hora:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+				<textQuestion name="dossierQuestionCARA20dp" id="CARA20dp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="defibrillation"
+				id="CARA20e" choiceGroupId="YesNoNotFound" label="Desfibrilação"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="showQuestions20e" visibleWhen="YES" />
+
+			<basicQuestionGroup name="showQuestions20e" id="showQuestions20e">
+				<dateQuestion name="dateCARA20e1" id="CARA20e1" label="Data:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" maxdate="realizationDate" />
+				<timeQuestion name="timeCARA20e2" id="CARA20e2" label="Hora:"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+				<textQuestion name="dossierQuestionCARA20ep" id="CARA20ep"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+
+			<singleSelectionQuestion name="intraAorticBalloon"
+				id="CARA20f" choiceGroupId="YesNoNotFound" label="Balão intra-aortico"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA20fp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20fp" id="CARA20fp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="marcapasso"
+				id="CARA20g" choiceGroupId="YesNoNotFound" label="Marcapasso (temporário ou permanente)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA20gp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20gp" id="CARA20gp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="cardiodesfribiladorCDI"
+				id="CARA20h" choiceGroupId="YesNoNotFound" label="Cardiodesfribilador implantável (CDI)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA20hp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20hp" id="CARA20hp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="multisitioMarcapasso"
+				id="CARA20i" choiceGroupId="YesNoNotFound"
+				label="Ressincronizador cardíaco (marcapasso multisitio)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA20ip" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20ip" id="CARA20ip"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="intubationAndMechanicalVentilation"
+				id="CARA20j" choiceGroupId="YesNoNotFound" label="Intubação e ventilação mecânica"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA20jp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20jp" id="CARA20jp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="vascularSurgeryOrAngioplasty"
+				id="CARA20k" choiceGroupId="YesNoNotFound"
+				label="Cirurgia vascular periférica ou angioplastia de vasos periféricos"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA20kp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20kp" id="CARA20kp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="amputationOfBodyMember"
+				id="CARA20l" choiceGroupId="YesNoNotFound"
+				label="Amputação de um ou mais dedos ou parte dos membros inferiores e/ou superiores devido a isquemia ou gangrena"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA20lp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20lp" id="CARA20lp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="aneurysmSurgery"
+				id="CARA20m" choiceGroupId="YesNoNotFound"
+				label="Procedimento cirúrgico ou vascular para aneurisma de aorta abdominal"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA20mp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA20mp" id="CARA20mp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_11" nextPageId="PAGE_13">
+
+		<basicQuestionGroup name="someDiagnosticProcedures"
+			id="CARA21a_GROUP"
+			label="21. Foram realizados alguns procedimentos diagnósticos seguintes durante a hospitalização?">
+
+			<singleSelectionQuestion name="ventriculografiaOrCateterismo"
+				id="CARA21a" choiceGroupId="YesNoNotFound"
+				label="[b]21a.[/b] Ventriculografia/Cateterismo cardíaco"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_12">
+			<rule>
+				<expression questionName="ventriculografiaOrCateterismo"
+					operator="EQ" value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_12" nextPageId="PAGE_13">
+
+		<basicQuestionGroup name="ventriculografiaOrCateterismoResult"
+			id="ventriculografiaOrCateterismoResult" label="[b]21a.[/b] Ventriculografia/Cateterismo cardíaco">
+			<singleSelectionQuestion name="resultDilatedVentricle"
+				id="CARA21a1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Ventrículo dilatado ou função ventricular prejudicada."
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA21a1p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21a1p" id="CARA21a1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="valvularHeartDiseaseCARA21a2"
+				id="CARA21a2" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Doença cardíaca valvular" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				hiddenQuestion="dossierQuestionCARA21a2p" visibleWhen="YES"
+				printLine="true" />
+
+			<textQuestion name="dossierQuestionCARA21a2p" id="CARA21a2p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_13" nextPageId="PAGE_15">
+
+		<singleSelectionQuestion name="coronaryAngiography"
+			id="CARA21b" choiceGroupId="YesNoNotFound" label="[b]21b.[/b] Angiografia da coronária"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_14">
+			<rule>
+				<expression questionName="coronaryAngiography" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_14" nextPageId="PAGE_15">
+
+		<basicQuestionGroup name="resultCoronaryAngiography"
+			id="resultCoronaryAngiography" label="[b]21b.[/b] Angiografia da coronária">
+
+			<singleSelectionQuestion name="coronaryArteryObstruction"
+				id="CARA21b1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Obstrução de 70% ou mais de qualquer artéria coronária"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA21b1p"
+				visibleWhen="YES" printLine="true" />
+			<textQuestion name="dossierQuestionCARA21b1p" id="CARA21b1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="valvularHeartDiseaseCARA21b2"
+				id="CARA21b2" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Doença cardíaca valvular" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" hiddenQuestion="dossierQuestionCARA21b2p"
+				visibleWhen="YES" />
+			<textQuestion name="dossierQuestionCARA21b2p" id="CARA21b2p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_15" nextPageId="PAGE_17">
+
+		<singleSelectionQuestion name="exerciseOrStressTest"
+			id="CARA21c" choiceGroupId="YesNoNotFound"
+			label="[b]21c[/b].Exercício ergométrico ou teste de estresse farmacológico"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_16">
+			<rule>
+				<expression questionName="exerciseOrStressTest" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_16" nextPageId="PAGE_17">
+
+		<basicQuestionGroup name="resultExerciseOrStressTest"
+			id="resultExerciseOrStressTest"
+			label="[b]21c.[/b]Exercício ergométrico ou teste de estresse farmacológico">
+
+			<singleSelectionQuestion name="resultExerciseOrStressTestCARA21c1"
+				id="CARA21c1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Maior ou igual a 1mm de depressão/elevação de ST"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA21c1p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21c1p" id="CARA21c1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="resultExerciseOrStressTestCARA21c2"
+				id="CARA21c2" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Ocorrência de dor isquêmica ou equivalente"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21c2p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21c2p" id="CARA21c2p"
+				label="Nº da página dossiê" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_17" nextPageId="PAGE_19">
+
+		<singleSelectionQuestion name="echocardiogramOne"
+			id="CARA21da" choiceGroupId="YesNoNotFound" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+			label="[b]21d.[/b] Ecocardiograma (1)" printLine="false" />
+
+		<branch targetPageId="PAGE_18">
+			<rule>
+				<expression questionName="echocardiogramOne" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_18" nextPageId="PAGE_19">
+
+		<basicQuestionGroup name="resultEchocardiogramOne"
+			id="resultEchocardiogram" label="[b]21d.[/b]Ecocardiograma (1)">
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d1a"
+				id="CARA21d1a" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Doença cardíaca valvar" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" hiddenQuestion="dossierQuestionCARA21d1pa"
+				visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d1pa" id="CARA21d1pa"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d2a"
+				id="CARA21d2a" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Teste de estresse positivo para isquemia"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA21d2pa" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d2pa" id="CARA21d2pa"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d3a"
+				id="CARA21d3a" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Ventrículo dilatado ou função ventricular prejudicada"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA21d3pa" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d3pa" id="CARA21d3pa"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<numericQuestion id="CARA21d4a" name="ejectionFractionCARA21d4a"
+				label="Fração de ejeção VE:" unitID="percentage" lowerLimit="20"
+				upperLimit="85" printLine="true" decimalNumber="false" integer="2"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" hiddenQuestion="dossierQuestionCARA21d4pa"
+				visibleWhen="0" />
+
+			<textQuestion name="dossierQuestionCARA21d4pa" id="CARA21d4pa"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d5a"
+				id="CARA21d5a" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Hipertrofia ventricular esquerda (HVE)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21d5pa" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d5pa" id="CARA21d5pa"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_19" nextPageId="PAGE_21">
+
+		<singleSelectionQuestion name="echocardiogramTwo"
+			id="CARA21db" choiceGroupId="YesNoNotFound" label="[b]21d.[/b]Ecocardiograma (2)"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_20">
+			<rule>
+				<expression questionName="echocardiogramTwo" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_20" nextPageId="PAGE_21">
+
+		<basicQuestionGroup name="resultEchocardiogramTwo"
+			id="resultEchocardiogramTwo" label="[b]21d.[/b]Ecocardiograma (2)">
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d1b"
+				id="CARA21d1b" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Doença cardíaca valvar" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" hiddenQuestion="dossierQuestionCARA21d1pb"
+				visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d1pb" id="CARA21d1pb"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d2p"
+				id="CARA21d2b" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Teste de estresse positivo para isquemia"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA21d2pb" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d2pb" id="CARA21d2pb"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d3b"
+				id="CARA21d3b" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Ventrículo dilatado ou função ventricular prejudicada"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA21d3pb" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d3pb" id="CARA21d3pb"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<numericQuestion id="CARA21d4b" name="ejectionFractionCARA21d4b"
+				label="Fração de ejeção VE:" unitID="percentage" lowerLimit="20"
+				upperLimit="85" printLine="true" decimalNumber="false" integer="2"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" hiddenQuestion="dossierQuestionCARA21d4pb"
+				visibleWhen="0" />
+
+			<textQuestion name="dossierQuestionCARA21d4pb" id="CARA21d4bpa"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="resultEchocardiogramCARA21d5b"
+				id="CARA21d5b" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Hipertrofia ventricular esquerda (HVE)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21d5pb" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21d5pb" id="CARA21d5pb"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_21" nextPageId="PAGE_23">
+
+		<singleSelectionQuestion name="ventriculogramByRadionuclidio"
+			id="CARA21e"
+			label="[b]21e.[/b]Ventriculograma por radionuclídio (VGR) ou multigated aquisition (MUGA)"
+			choiceGroupId="YesNoNotFound" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+			printLine="false" />
+
+		<branch targetPageId="PAGE_22">
+			<rule>
+				<expression questionName="ventriculogramByRadionuclidio"
+					operator="EQ" value="YES" />
+			</rule>
+		</branch>
+	</questionPage>
+
+
+	<questionPage id="PAGE_22" nextPageId="PAGE_23">
+
+		<basicQuestionGroup name="resultVentriculogramByRadionuclidio"
+			id="resultVentriculogramByRadionuclidio"
+			label="[b]21e.[/b] Ventriculograma por radionuclídio (VGR) ou multigated aquisition (MUGA)">
+
+			<singleSelectionQuestion
+				name="resultVentriculogramByRadionuclidioCARA21e1" id="CARA21e1"
+				choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Teste de estresse positivo para isquemia"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" hiddenQuestion="dossierQuestionCARA21e1p"
+				visibleWhen="YES" printLine="true" />
+
+			<textQuestion name="dossierQuestionCARA21e1p" id="CARA21e1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion
+				name="resultVentriculogramByRadionuclidioCARA21e2" id="CARA21e2"
+				choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Ventrículo dilatado ou função ventricular prejudicada"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21e2p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21e2p" id="CARA21e2p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_23" nextPageId="PAGE_25">
+
+		<singleSelectionQuestion name="bloodPressure"
+			id="CARA21f" choiceGroupId="YesNoNotFound"
+			label="[b]21f.[/b]Razão da pressão sanguínea sistólica tornozelo braço"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_24">
+			<rule>
+				<expression questionName="bloodPressure" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_24" nextPageId="PAGE_27">
+
+		<basicQuestionGroup name="resultBloodPressure" id="CARA21f1_GROUP"
+			label="[b]21f.[/b]Razão da pressão sanguínea sistólica tornozelo braço">
+
+			<singleSelectionQuestion name="resultBloodPressureCARA21f1"
+				id="CARA21f1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: ITB menor ou igual a 0.80" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" hiddenQuestion="dossierQuestionCARA21f1p"
+				visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21f1p" id="CARA21f1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_25" nextPageId="PAGE_27">
+
+		<singleSelectionQuestion name="exerciseTestingForClaudication"
+			id="CARA21g" choiceGroupId="YesNoNotFound"
+			label="[b]21g.[/b]Teste do exercício para claudicação de membros inferiores"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_26">
+			<rule>
+				<expression questionName="exerciseTestingForClaudication"
+					operator="EQ" value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_26" nextPageId="PAGE_27">
+
+		<basicQuestionGroup name="resultExerciseTestingForClaudication"
+			id="resultExerciseTestingForClaudication"
+			label="[b]21g.[/b]Teste do exercício para claudicação de membros inferiores">
+
+			<singleSelectionQuestion
+				name="resultExerciseTestingForClaudicationCARA21g1" id="CARA21g1"
+				choiceGroupId="YesNoNotFoundAndUnknown" label="[i]Resultado[/i]: Testepositivo"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21g1p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21g1p" id="CARA21g1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_27" nextPageId="PAGE_29">
+
+		<singleSelectionQuestion name="dopplerExamination"
+			id="CARA21h" choiceGroupId="YesNoNotFound"
+			label="[b]21h.[/b]Exame de Doppler das artérias dos membros inferiores e/ou superiores"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_28">
+			<rule>
+				<expression questionName="dopplerExamination" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_28" nextPageId="PAGE_29">
+
+		<basicQuestionGroup name="resultDopplerExamination"
+			id="resultDopplerExamination" label="[b]21h.[/b]Exame de Doppler das artérias dos membros inferiores e/ou superiores">
+
+			<singleSelectionQuestion name="resultDopplerExaminationCARA21h1"
+				id="CARA21h1" choiceGroupId="YesNoNotFoundAndUnknown"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				label="[i]Resultado[/i]: Ausência de pulso em vasos principais"
+				hiddenQuestion="dossierQuestionCARA21h1p" visibleWhen="YES"
+				printLine="false" />
+
+			<textQuestion name="dossierQuestionCARA21h1p" id="CARA21h1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_29" nextPageId="PAGE_31">
+
+		<singleSelectionQuestion name="angiographyArteries"
+			id="CARA21i" choiceGroupId="YesNoNotFound"
+			label="[b]21i.[/b]Angiografia das artérias dos membros inferiores e/ou superiores"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_30">
+			<rule>
+				<expression questionName="angiographyArteries" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_30" nextPageId="PAGE_31">
+
+		<basicQuestionGroup name="resultAngiographyArteries"
+			id="resultAngiographyArteries" label="[b]21i.[/b]Angiografia das artérias dos membros inferiores e/ou superiores">
+
+			<singleSelectionQuestion name="resultAngiographyArteriesCARA21i1"
+				id="CARA21i1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado[/i]: Placa ulcerada ou obstrução maior ou igual a 75% da área de secção transversa ou que 50 % do diâmetro"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21i1p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21i1p" id="CARA21i1p"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" label="Nº da página dossiê:"
+				printLine="false" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_31" nextPageId="PAGE_33">
+
+		<singleSelectionQuestion name="duplexScan" id="CARA21j"
+			choiceGroupId="YesNoNotFound"
+			label="[b]21j.[/b] Duplex scan/doppler venoso dos membros inferiores/superiores"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_32">
+			<rule>
+				<expression questionName="duplexScan" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_32" nextPageId="PAGE_33">
+
+		<basicQuestionGroup name="resultDuplexScan" id="resultDuplexScan"
+			label="[b]21j.[/b]Duplex scan/doppler venoso dos membros inferiores/superiores">
+			<singleSelectionQuestion name="resultDuplexScanCARA21j1"
+				id="CARA21j1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado:[/i] Alterações sugestivas de TVP"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21j1p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21j1p" id="CARA21j1p"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				label="Nº da página dossiê:" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_33" nextPageId="PAGE_35">
+
+		<singleSelectionQuestion name="cateterismodeSwanGanz"
+			id="CARA21k" choiceGroupId="YesNoNotFound"
+			label="[b]21k.[/b] Cateterismode Swan-Ganz ou do Coração Direito"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_34">
+			<rule>
+				<expression questionName="cateterismodeSwanGanz"
+					operator="EQ" value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_34" nextPageId="PAGE_35">
+
+		<basicQuestionGroup name="resultCateterismodeSwanGanz"
+			id="resultCateterismodeSwanGanz" label="[b]21k.[/b] Cateterismo de Swan-Ganz ou do Coração Direito">
+
+			<singleSelectionQuestion name="resultCateterismodeSwanGanzCARA21k1"
+				id="CARA21k1" choiceGroupId="YesNoNotFoundAndUnknown"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" label="[i]Resultado:[/i] Débito cardíaco reduzido"
+				hiddenQuestion="dossierQuestionCARA21k1p" printLine="true"
+				visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21k1p" id="CARA21k1p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="resultCateterismodeSwanGanzCARA21k2"
+				id="CARA21k2" choiceGroupId="YesNoNotFoundAndUnknown"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" label="[i]Resultado:[/i] Pressão de enchimento aumentada"
+				printLine="false" hiddenQuestion="dossierQuestionCARA21k2p"
+				visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21k2p" id="CARA21k2p"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_35" nextPageId="PAGE_37">
+
+		<singleSelectionQuestion name="magneticResonance"
+			id="CARA21l" choiceGroupId="YesNoNotFound"
+			label="[b]21l.[/b] Ressonância magnética (RM) cardíaca"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_36">
+			<rule>
+				<expression questionName="magneticResonance" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_36" nextPageId="PAGE_37">
+
+		<basicQuestionGroup name="resultMagneticResonance"
+			id="resultMagneticResonance" label="[b]21l.[/b] Ressonância magnética (RM) cardíaca">
+
+			<singleSelectionQuestion name="resultMagneticResonanceCARA21l1"
+				id="CARA21l1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado:[/i] Hipertrofia ventricular esquerda (HVE)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21l1p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21l1p" id="CARA21l1p"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				label="Nº da página dossiê:" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_37" nextPageId="PAGE_39">
+
+		<singleSelectionQuestion name="doplerCTorMRI"
+			id="CARA21m" choiceGroupId="YesNoNotFound" label="[b]21m.[/b] Dopler, TC ou RM do Abdômen"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_38">
+			<rule>
+				<expression questionName="doplerCTorMRI" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_38" nextPageId="PAGE_39">
+
+		<basicQuestionGroup name="resultDoplerCTorMRI" id="resultDoplerCTorMRI"
+			label="[b]21m.[/b] Dopler, TC ou RM do Abdômen">
+
+			<singleSelectionQuestion name="resultDoplerCTorMRICARA21m1"
+				id="CARA21m1" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="[i]Resultado:[/i] Positivo para aneurisma de aorta abdominal (AAA)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA21m1p" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA21m1p" id="CARA21m1p"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				label="Nº da página dossiê:" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_39" nextPageId="PAGE_40">
+
+		<basicQuestionGroup name="symptomsBeforeAdmission"
+			id="symptomsBeforeAdmission"
+			label="22. O paciente apresentou alguns dos sintomas seguintes imediatamente antes da internação ou durante a internação?">
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22a"
+				id="CARA22a" choiceGroupId="YesNoUnknown" label="Tosse noturna"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA22ap" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22ap" id="CARA22ap"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22b"
+				id="CARA22b" choiceGroupId="YesNoUnknown" label="Tosse produtiva"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA22bp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22bp" id="CARA22bp"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22c"
+				id="CARA22c" choiceGroupId="YesNoUnknown" label="Dispnéia de repouso"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA22cp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22cp" id="CARA22cp"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22d"
+				id="CARA22d" choiceGroupId="YesNoUnknown"
+				label="Dispnéia a esforços usuais (mínimos a moderados), como andar no plano"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA22dp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22dp" id="CARA22dp"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22e"
+				id="CARA22e" choiceGroupId="YesNoUnknown" label="Dispnéia a exercícios extremos"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA22ep" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22ep" id="CARA22ep"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22f"
+				id="CARA22f" choiceGroupId="YesNoUnknown" label="Dispnéia paroxística noturna(DPN)"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA22fp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22fp" id="CARA22fp"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22g"
+				id="CARA22g" choiceGroupId="YesNoUnknown" label="Ortopnéia"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA22gp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22gp" id="CARA22gp"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion name="symptomsBeforeAdmissionCARA22h"
+				id="CARA22h" choiceGroupId="YesNoUnknown" label="Dispnéia não especificada/fôlego curto"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA22hp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA22hp" id="CARA22hp"
+				label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_40" nextPageId="PAGE_41">
+
+		<basicQuestionGroup name="conditionsRecordedByTheDoctor"
+			id="CARA23" label="23. Alguma das condições abaixo foram registradas pelo médico?">
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23a"
+				id="conditionsRecordedByTheDoctorCARA23a" label="[b]Pescoço[/b]">
+
+				<singleSelectionQuestion name="neckQuestion23a"
+					id="CARA23a" choiceGroupId="YesNo" label="Distensão da Veia de Jugular (DVJ)"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+					hiddenQuestion="dossierQuestionCARA23ap" visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23ap" id="CARA23ap"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+
+			</basicQuestionGroup>
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23b"
+				id="conditionsRecordedByTheDoctorCARA23b" label="[b]Pulmão[/b]">
+
+				<singleSelectionQuestion name="lungQuestion23b"
+					id="CARA23b" choiceGroupId="YesNo" label="Estertores ou somente Sibilos na Base"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+					hiddenQuestion="dossierQuestionCARA23bp" visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23bp" id="CARA23bp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+
+			</basicQuestionGroup>
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23c"
+				id="conditionsRecordedByTheDoctorCARA23c">
+
+				<singleSelectionQuestion name="estertoresOrSibilosUpToBases"
+					id="CARA23c" choiceGroupId="YesNo" label="Estertores ou Sibilos acima das Bases"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+					hiddenQuestion="dossierQuestionCARA23cp" visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23cp" id="CARA23cp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="true" />
+
+			</basicQuestionGroup>
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23d"
+				id="conditionsRecordedByTheDoctorCARA23d" label="[b]Cardíaca[/b]">
+
+				<singleSelectionQuestion name="heartQuestion23D"
+					id="CARA23d" choiceGroupId="YesNo" label="Galope de B3"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+					hiddenQuestion="dossierQuestionCARA23dp" visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23dp" id="CARA23dp"
+					label="Nº da página dossiê:" printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			</basicQuestionGroup>
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23e"
+				id="conditionsRecordedByTheDoctorCARA23e">
+
+				<singleSelectionQuestion name="tachycardiaQuestion"
+					id="CARA23e" label="Taquicardia (freqüência cardíaca >120)"
+					choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="true" hiddenQuestion="dossierQuestionCARA23ep"
+					visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23ep" id="CARA23ep"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+
+			</basicQuestionGroup>
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23f"
+				id="conditionsRecordedByTheDoctorCARA23f" label="[b]Abdominal[/b]">
+
+				<singleSelectionQuestion name="abdominalQuestion"
+					id="CARA23f" choiceGroupId="YesNo" label="Refluxo Hepatojugular"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+					hiddenQuestion="dossierQuestionCARA23fp" visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23fp" id="CARA23fp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+
+			</basicQuestionGroup>
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23g"
+				id="conditionsRecordedByTheDoctorCARA23g">
+
+				<singleSelectionQuestion name="hepatomegalyQuestion"
+					id="CARA23g" choiceGroupId="YesNo" label="Hepatomegalia"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+					hiddenQuestion="dossierQuestionCARA23gp" visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23gp" id="CARA23gp"
+					label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" />
+			</basicQuestionGroup>
+
+			<basicQuestionGroup name="conditionsRecordedByTheDoctorCARA23h"
+				id="conditionsRecordedByTheDoctorCARA23h" label="[b]Membros[/b]">
+
+				<singleSelectionQuestion name="memberQuestion"
+					id="CARA23h" choiceGroupId="YesNo"
+					label="Edema de Tornozelo/Periférico (bilateral)" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+					printLine="false" hiddenQuestion="dossierQuestionCARA23hp"
+					visibleWhen="YES" />
+
+				<textQuestion name="dossierQuestionCARA23hp" id="CARA23hp"
+					metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+					label="Nº da página dossiê:" />
+
+			</basicQuestionGroup>
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_41" nextPageId="PAGE_43">
+
+		<singleSelectionQuestion name="weightLossWithTreatment"
+			id="CARA24" choiceGroupId="YesNoUnknown"
+			label="24. Houve perda de 5 kg de peso como o tratamento diurético em 5 dias?"
+			printLine="false" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<singleSelectionQuestion name="raioXchest" id="CARA25"
+			choiceGroupId="YesNoUnknown"
+			label="25. Foi realizado raio-x de tórax durante a internação?"
+			metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false" />
+
+		<branch targetPageId="PAGE_42">
+			<rule>
+				<expression questionName="raioXchest" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_42" nextPageId="PAGE_43">
+
+		<basicQuestionGroup name="itemsRecordedInTheXRay"
+			id="itemsRecordedInTheXRay"
+			label="26. Algum dos itens a seguir foram registrados em qualquer raio-x de tórax associado a esseevento?">
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26a"
+				id="CARA26a" choiceGroupId="YesNo" label="Edema agudo de pulmão"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA26ap" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26ap" id="CARA26ap"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26b"
+				id="CARA26b" choiceGroupId="YesNo"
+				label="Congestão venosa pulmonar ou ingurgitamento vascular"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA26bp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26bp" id="CARA26bp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26c"
+				id="CARA26c" choiceGroupId="YesNo" label="Insuficiência cardíaca congestiva"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA26cp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26cp" id="CARA26cp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26d"
+				id="CARA26d" choiceGroupId="YesNo" label="Derrame pleural"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA26dp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26dp" id="CARA26dp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26e"
+				id="CARA26e" choiceGroupId="YesNo"
+				label="Cardiomegalia ou razão cardiotorácica > 0.50"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA26ep" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26ep" id="CARA26ep"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26f"
+				id="CARA26f" choiceGroupId="YesNo"
+				label="Redistribuição do fluxo nas regiões superiores"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA26fp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26fp" id="CARA26fp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26g"
+				id="CARA26g" choiceGroupId="YesNo" label="Atelectasia"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="true"
+				hiddenQuestion="dossierQuestionCARA26gp" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26gp" id="CARA26gp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26h"
+				id="CARA26h" choiceGroupId="YesNo"
+				label="Doença Pulmonar Obstrutiva Crônica (DPOC)" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="true" hiddenQuestion="dossierQuestionCARA26hp"
+				visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26hp" id="CARA26hp"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+			<singleSelectionQuestion name="itemsRecordedInTheXRayCARA26i"
+				id="CARA26i" choiceGroupId="YesNo" label="Infiltração pulmonar/Pneumonia"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="dossierQuestionCARA26ip" visibleWhen="YES" />
+
+			<textQuestion name="dossierQuestionCARA26ip" id="CARA26ip"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY"
+				printLine="false" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_43" nextPageId="PAGE_49">
+
+		<basicQuestionGroup name="electrocardiogramsCARA27"
+			id="electrocardiogramsCARA27" label="[b]6. ELETROCARDIOGRAMAS:[/b]">
+
+			<singleSelectionQuestion name="registeredElectrocardiograms"
+				id="CARA27" choiceGroupId="YesNoNotFoundAndUnknown"
+				label="27. Foram registrados eletrocardiogramas (ECG)?"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" printLine="false"
+				hiddenQuestion="howManyCARA27a" visibleWhen="YES"
+				postInfoLabel="[b]Envie uma cópia ao centro de leitura do ECG e anexe uma cópia a este formulário:[br] -- Se quatro ou menos traçados foram realizados, inclua todos os traçados.[br] -- Se mais de quatro traçados foram realizados, inclua: [br] 1. Os dois primeiros traçados codificáveis após a admissão ou do pronto atendimento caso a ida ao Pronto Atendimento resulte na admissão. [br] 2. O último traçado codificável antes da alta ou do óbito (traçado da alta) (ECG-Último). [br] 3. O último traçado codificável do terceiro dia (ou o primeiro traçado a partir de então) acompanhando uma admissão ou um evento de internação (ECG#3). [br] 4. O próximo traçado codificável após o terceiro dia. [br] -- Se o paciente for readmitido (transferido) à UTI/UCO devido a um novo." />
+
+			<numericQuestion name="howManyCARA27a" id="CARA27a"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" printLine="false"
+				label="27a. Quantos?" lowerLimit="1" upperLimit="10" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_44">
+			<rule>
+				<expression questionName="howManyCARA27a" operator="GT"
+					value="0" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_44" nextPageId="PAGE_49">
+
+		<basicQuestionGroup name="firstEcgGroup" id="FIRST_ECG_GROUP"
+			label="ECG#1(primeiro)">
+
+			<dateQuestion id="CARA27b1" name="firstEcgDate" label="Data"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion id="CARA27b2" name="firstEcgCopy"
+				label="Copia Incluída?" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA27bp" name="firstEcgPageNumber"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_45">
+			<rule>
+				<expression questionName="howManyCARA27a" operator="GT"
+					value="1" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_45" nextPageId="PAGE_49">
+
+		<basicQuestionGroup name="lastEcgGroup" id="LAST_ECG_GROUP"
+			label="ECG (último)">
+
+			<dateQuestion id="CARA27c1" name="lastEcgDate" label="Data"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion id="CARA27c2" name="lastEcgCopy"
+				label="Copia Incluída?" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA27cp" name="lastEcgPageNumber"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_46">
+			<rule>
+				<expression questionName="howManyCARA27a" operator="GT"
+					value="2" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_46" nextPageId="PAGE_49">
+
+		<basicQuestionGroup name="secondEcgGroup" id="SECOND_ECG_GROUP"
+			label="ECG#2">
+
+			<dateQuestion id="CARA27d1" name="secondEcgDate" label="Data"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion id="CARA27d2" name="secondEcgCopy"
+				label="Copia Incluída?" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA27dp" name="secondEcgPageNumber"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_47">
+			<rule>
+				<expression questionName="howManyCARA27a" operator="GT"
+					value="3" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_47" nextPageId="PAGE_49">
+
+		<basicQuestionGroup name="thirdEcgGroup" id="THIRD_ECG_GROUP"
+			label="ECG#3">
+
+			<dateQuestion id="CARA27e1" name="thirdEcgDate" label="Data"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion id="CARA27e2" name="thirdEcgCopy"
+				label="Copia Incluída?" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA27ep" name="thirdEcgPageNumber"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_48">
+			<rule>
+				<expression questionName="howManyCARA27a" operator="GT"
+					value="4" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_48" nextPageId="PAGE_49">
+
+		<basicQuestionGroup name="ecgGroup" id="ECG_GROUP"
+			label="ECG">
+
+			<dateQuestion id="CARA27f1" name="ecgDate" label="Data"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<singleSelectionQuestion id="CARA27f2" name="ecgCopy"
+				label="Copia Incluída?" choiceGroupId="YesNo" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA27fp" name="ecgPageNumber" label="Nº da página dossiê:"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_49" nextPageId="PAGE_67">
+
+		<basicQuestionGroup name="enzymesGroup" id="ENZYMES_GROUP"
+			label="[b]7. ENZIMAS SÉRICAS:[/b]">
+
+			<singleSelectionQuestion id="CARA28"
+				name="cardiacEnzymesDosage"
+				label="28. Foram realizadas dosagens de enzimas cardíacas durante a internação?"
+				choiceGroupId="YesNoNotFoundAndUnknown" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_50">
+			<rule>
+				<expression questionName="cardiacEnzymesDosage" operator="EQ"
+					value="YES" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_50" nextPageId="PAGE_56">
+
+		<singleSelectionQuestion id="CARA29" name="hepaticDisease"
+			label="29. O paciente teve alguma doença hepática em atividade (cirrose, hepatite, câncer hepático, etc.)?"
+			choiceGroupId="YesNo" hiddenQuestion="whatHepaticDisease"
+			visibleWhen="YES" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<basicQuestionGroup name="whatHepaticDisease" id="whatHepaticDisease">
+
+			<textQuestion id="CARA29a" name="whatHepaticDiseaseCARA29a"
+				label="Especifique:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA29p" name="hepaticDiseasePageNumber"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion id="CARA30" name="hemolyticDisease"
+			label="30. Houve alguma evidência de doença hemolítica durante essa internação?"
+			choiceGroupId="YesNo" hiddenQuestion="whatHemolyticDisease"
+			visibleWhen="YES" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<basicQuestionGroup name="whatHemolyticDisease" id="whatHemolyticDisease">
+
+			<textQuestion id="CARA30a" name="whatHemolyticDiseaseCARA30a"
+				label="Especifique:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA30p" name="hemolyticDiseasePageNumber"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<singleSelectionQuestion id="CARA31"
+			name="traumaOrSurgicalProcedure"
+			label="31. O paciente mencionou (ou há registro de) ter sofrido algum trauma, procedimento cirúrgico ou rabdomiólise uma semana antes da dosagem de enzimas cardíacas?"
+			choiceGroupId="YesNoUnknownLowercase" hiddenQuestion="traumaOrSurgicalProcedurePageNumber"
+			visibleWhen="YES" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<textQuestion id="CARA31p" name="traumaOrSurgicalProcedurePageNumber"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		<branch targetPageId="PAGE_51">
+			<rule>
+				<expression questionName="traumaOrSurgicalProcedure"
+					operator="EQ" value="YES" />
+			</rule>
+		</branch>
+	</questionPage>
+
+
+	<questionPage id="PAGE_51" nextPageId="PAGE_56">
+
+		<numericQuestion id="CARA31a"
+			name="howManyHabdomyolysisOrProcedureOcurrences"
+			label="31a. Quantos eventos de trauma, procedimento cirúrgico ou rabdomiólise ocorreram em uma semana antes da dosagem de enzimas cardíacas?"
+			lowerLimit="1" upperLimit="7" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_52">
+			<rule>
+				<expression questionName="howManyHabdomyolysisOrProcedureOcurrences"
+					operator="GT" value="0" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_52" nextPageId="PAGE_56">
+
+		<basicQuestionGroup name="eventOne" id="eventOne"
+			label="[i]Evento 1[/i]">
+
+			<dateQuestion id="CARA31b1" name="howManyHabdomyolysisOcurrencesDate"
+				label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31b2" name="whatTraumaOrProcedure"
+				label="Tipo de Trauma ou Procedimento:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31bp" name="habdomyolysisPageNumber"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_53">
+			<rule>
+				<expression questionName="howManyHabdomyolysisOrProcedureOcurrences"
+					operator="GT" value="1" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_53" nextPageId="PAGE_56">
+
+		<basicQuestionGroup name="eventTwo" id="eventTwo"
+			label="[i]Evento 2[/i]">
+
+			<dateQuestion id="CARA31c1" name="howManyHabdomyolysisOcurrencesDateTwo"
+				label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31c2" name="whatTraumaOrProcedureTwo"
+				label="Tipo de Trauma ou Procedimento:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31cp" name="habdomyolysisPageNumberTwo"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_54">
+			<rule>
+				<expression questionName="howManyHabdomyolysisOrProcedureOcurrences"
+					operator="GT" value="2" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_54" nextPageId="PAGE_56">
+
+		<basicQuestionGroup name="eventThree" id="eventThree"
+			label="[i]Evento 3[/i]">
+			<dateQuestion id="CARA31d1"
+				name="howManyHabdomyolysisOcurrencesDateThree" label="Data:"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31d2" name="whatTraumaOrProcedureThree"
+				label="Tipo de Trauma ou Procedimento:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31dp" name="habdomyolysisPageNumberThree"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_55">
+			<rule>
+				<expression questionName="howManyHabdomyolysisOrProcedureOcurrences"
+					operator="GT" value="3" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_55" nextPageId="PAGE_56">
+
+		<basicQuestionGroup name="eventFour" id="eventFour"
+			label="[i]Evento 4[/i]">
+
+			<dateQuestion id="CARA31e1"
+				name="howManyHabdomyolysisOcurrencesDateFour" label="Data:"
+				metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31e2" name="whatTraumaOrProcedureFour"
+				label="Tipo de Trauma ou Procedimento:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+			<textQuestion id="CARA31ep" name="habdomyolysisPageNumberFour"
+				label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY" />
+
+		</basicQuestionGroup>
+
+	</questionPage>
+
+	<questionPage id="PAGE_56" nextPageId="PAGE_67">
+
+		<basicQuestionGroup name="enzymesBoard" id="ENZYMES_BOARD_GROUP"
+			label="[b]8. QUADRO DE ENZIMAS:[/b][br][br]Registre todos os resultados das dosagens de enzimas (data, horário, tipo de enzima, resultado e valor de referência). É muito importante o registro dos valores de referência pois há kits diferentes para dosagem de uma mesma enzima.">
+
+			<numericQuestion id="CARA33" name="enzymesDosageAvailable"
+				label="Quantos resultados de dosagens de enzimas estão disponíveis?"
+				lowerLimit="0" upperLimit="10"
+				infoLabel="Registre todos os valores de enzimas séricas do prontuário do paciente. Exceção quando tiverem sido realizadas mais de 12 medidas, registre os valores mais altos (picos) para cada enzima dosada."
+				metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		</basicQuestionGroup>
+
+		<branch targetPageId="PAGE_57">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="0" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_57" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33a1" name="enzymesDosageDateOne"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33a2" name="enzymesDosageTimeOne"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33a3" name="enzymesDosageMarkerOne"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33a4" name="enzymesDosageResultOne"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33a5" name="enzymesDosageReferenceOne"
+			label="Valor de referência:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33ap" name="enzymesDosagePageNumberOne"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_58">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="1" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_58" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33b1" name="enzymesDosageDateTwo"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33b2" name="enzymesDosageTimeTwo"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33b3" name="enzymesDosageMarkerTwo"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33b4" name="enzymesDosageResultTwo"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33b5" name="enzymesDosageReferenceTwo"
+			label="Valor de referência:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33bp" name="enzymesDosagePageNumberTwo"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_59">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="2" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_59" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33c1" name="enzymesDosageDateThree"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33c2" name="enzymesDosageTimeThree"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33c3" name="enzymesDosageMarkerThree"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33c4" name="enzymesDosageResultThree"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33c5" name="enzymesDosageReferenceThree"
+			label="Valor de referência" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33cp" name="enzymesDosagePageNumberThree"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_60">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="3" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_60" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33d1" name="enzymesDosageDateFour"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33d2" name="enzymesDosageTimeFour"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33d3" name="enzymesDosageMarkerFour"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33d4" name="enzymesDosageResultFour"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33d5" name="enzymesDosageReferenceFour"
+			label="Valor de referência" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33dp" name="enzymesDosagePageNumberFour"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_61">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="4" />
+			</rule>
+		</branch>
+
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_61" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33e1" name="enzymesDosageDateFive"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33e2" name="enzymesDosageTimeFive"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33e3" name="enzymesDosageMarkerFive"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33e4" name="enzymesDosageResultFive"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33e5" name="enzymesDosageReferenceFive"
+			label="Valor de referência:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33ep" name="enzymesDosagePageNumberFive"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_62">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="5" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_62" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33f1" name="enzymesDosageDateSix"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33f2" name="enzymesDosageTimeSix"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33f3" name="enzymesDosageMarkerSix"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33f4" name="enzymesDosageResultSix"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33f5" name="enzymesDosageReferenceSix"
+			label="Valor de referência:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33fp" name="enzymesDosagePageNumberSix"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_63">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="6" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_63" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33g1" name="enzymesDosageDateSeven"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33g2" name="enzymesDosageTimeSeven"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33g3" name="enzymesDosageMarkerSeven"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33g4" name="enzymesDosageResultSeven"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33g5" name="enzymesDosageReferenceSeven"
+			label="Valor de referência:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33gp" name="enzymesDosagePageNumberSeven"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_64">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="7" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_64" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33h1" name="enzymesDosageDateEight"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33h2" name="enzymesDosageTimeEight"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33h3" name="enzymesDosageMarkerEight"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33h4" name="enzymesDosageResultEight"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33h5" name="enzymesDosageReferenceEight"
+			label="Valor de referência" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33hp" name="enzymesDosagePageNumberEight"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_65">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="8" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+
+	<questionPage id="PAGE_65" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33i1" name="enzymesDosageDateNine"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33i2" name="enzymesDosageTimeNine"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33i3" name="enzymesDosageMarkerNine"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33i4" name="enzymesDosageResultNine"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33i5" name="enzymesDosageReferenceNine"
+			label="Valor de referência:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33ip" name="enzymesDosagePageNumberNine"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<branch targetPageId="PAGE_66">
+			<rule>
+				<expression questionName="enzymesDosageAvailable"
+					operator="GT" value="9" />
+			</rule>
+		</branch>
+
+	</questionPage>
+
+	<questionPage id="PAGE_66" nextPageId="PAGE_67">
+
+		<dateQuestion id="CARA33j1" name="enzymesDosageDateTen"
+			label="Data:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<timeQuestion id="CARA33j2" name="enzymesDosageTimeTen"
+			label="Horário:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33j3" name="enzymesDosageMarkerTen"
+			label="Enzima/marcador:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33j4" name="enzymesDosageResultTen"
+			label="Resultado:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33j5" name="enzymesDosageReferenceTen"
+			label="Valor de referência:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+		<textQuestion id="CARA33jp" name="enzymesDosagePageNumberTen"
+			label="Nº da página dossiê:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+	</questionPage>
+
+	<questionPage id="PAGE_67" nextPageId="END_PAGE">
+
+		<textAreaQuestion id="CARA32" name="investigationNotes"
+			label="32. Notas da Investigação:" metaDataGroupId="DONT_WANT_KNOW_APPLY_ACCEPT" />
+
+	</questionPage>
+
+	<finalPage id="END_PAGE">
+
+		<header>Obrigado.</header>
+
+	</finalPage>
+
+</survey>
