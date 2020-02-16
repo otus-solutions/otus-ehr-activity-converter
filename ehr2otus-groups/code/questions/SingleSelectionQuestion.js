@@ -15,7 +15,7 @@ class SingleSelectionQuestion extends EhrQuestion {
             return super.getAnswerValue(answer, isMetadata);
         }
         const choice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === answer)[0];
-        return parseInt(choice.value, 10);
+        return (1 + parseInt(choice.value, 10)); // +1 because option values start in 1 not in 0
     }
 
     getAnswerToShowHiddenQuestion(){
@@ -32,7 +32,7 @@ class SingleSelectionQuestion extends EhrQuestion {
                 return va - vb;
             });
         let options = [];
-        let value = 0;
+        let value = 1;
         for(let choiceObj of choiceGroupObjArr){
             options.push({
                 "extents": "StudioObject",
