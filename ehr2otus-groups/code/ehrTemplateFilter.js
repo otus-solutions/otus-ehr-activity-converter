@@ -62,6 +62,16 @@ function extractQuestionsFromArrays(template, filterLevel){
 
     for(let questionPage of template.questionPage){
         let outputQuestions = [];
+
+        if(questionPage.header){
+            outputQuestions.push({
+                id: `${questionPage.id}_header`,
+                name: `${questionPage.id}_header`,
+                label: questionPage.header[0],
+                type: "textItemQuestion"
+            });
+        }
+
         const questionArr = Object.entries(questionPage).filter(([key,value]) => key.includes('Question'));
         extractQuestionsFromBasicGroup(questionArr, outputQuestions);
         checkHiddenQuestions(outputQuestions);
@@ -73,7 +83,6 @@ function extractQuestionsFromArrays(template, filterLevel){
         outputQuestionPages.push({
             id: questionPage.id,
             nextPageId: questionPage.nextPageId,
-            header: questionPage.header,
             questions: outputQuestions,
             branch: questionPage.branch
         });
