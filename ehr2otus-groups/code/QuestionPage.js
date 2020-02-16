@@ -339,9 +339,12 @@ class QuestionPage {
             this.routes[originId] = [];
         }
         const originRoutes = this.routes[originId];
+        const isDefaultRoute = (conditions.length === 0);
         let i=0, found=false;
         while(i < originRoutes.length && !found){
-            found = (originRoutes[i++].destination === targetId);
+            const isDefaultRouteToo = (originRoutes[i].conditions.length === 0 && isDefaultRoute);
+            found = (originRoutes[i].destination === targetId || isDefaultRouteToo);
+            i++;
         }
         if(!found){
             originRoutes.push(new Route(originId, targetId, conditions));
