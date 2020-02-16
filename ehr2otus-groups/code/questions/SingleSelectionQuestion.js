@@ -20,7 +20,7 @@ class SingleSelectionQuestion extends EhrQuestion {
 
     getAnswerToShowHiddenQuestion(){
         const answers = super.getAnswerToShowHiddenQuestion();
-        return answers.map(answer => parseInt(choiceGroups.findChoiceValueInSpecificChoiceGroup(this.choiceGroupId, answer), 10));
+        return answers.map(answer => 1 + parseInt(choiceGroups.findChoiceValueInSpecificChoiceGroup(this.choiceGroupId, answer), 10));
     }
 
     toOtusTemplate(){
