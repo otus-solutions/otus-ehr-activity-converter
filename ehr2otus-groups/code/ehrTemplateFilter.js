@@ -57,7 +57,7 @@ function checkHiddenQuestions(questions){
     }
 }
 
-function extractQuestionsFromArrays(template, filterLevel){
+function extractQuestionsFromArrays(acronym, template, filterLevel){
     let outputQuestionPages = [];
 
     for(let questionPage of template.questionPage){
@@ -65,8 +65,8 @@ function extractQuestionsFromArrays(template, filterLevel){
 
         if(questionPage.header){
             outputQuestions.push({
-                id: `${questionPage.id}_header`,
-                name: `${questionPage.id}_header`,
+                id: `${acronym}_${questionPage.id}_header`,
+                name: `${acronym}_${questionPage.id}_header`,
                 label: questionPage.header[0],
                 type: "textItemQuestion"
             });

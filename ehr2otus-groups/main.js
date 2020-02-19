@@ -47,7 +47,7 @@ function readAndParse(acronym, templateInfo, outputPath){
 
     const templateName = `${ehrTemplate.survey.title} (${ehrTemplate.survey.version})`;
 
-    ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(ehrTemplate.survey, 1);
+    ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(acronym, ehrTemplate.survey, 1);
     FileHandler.writeJson(outputPath + acronym+"-filtered.json", ehrTemplate);
 
     const resumePath = outputResumePath(acronym);
