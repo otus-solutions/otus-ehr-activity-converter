@@ -18,8 +18,8 @@ class BooleanQuestion extends EhrQuestion{
         let checkboxOption = {
             "extents": "SurveyItem",
             "objectType": "CheckboxAnswerOption",
-            "templateID": this.id,
-            "customID": this.id,
+            "optionID": this.id+"_option",
+            "customOptionID": this.id+"_option",
             "dataType": "Boolean",
             "value": false,
             "label": this.label2Otus()
