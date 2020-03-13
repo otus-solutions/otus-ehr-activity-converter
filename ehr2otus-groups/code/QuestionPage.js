@@ -278,7 +278,6 @@ class QuestionPage {
                 const operator = Expression.equalOperator();
                 const values = question.getAnswerToShowHiddenQuestion();
                 const condition = values.map( value => new Expression(question.name, question.id, operator, value));
-                //const condition = [ new Expression(question.name, question.id, operator, value) ];
                 this._addRouteByQuestionIndexes(i, hiddenIndex, [condition]);
                 lastQuestionInDefaultRoute = this.questions[i];
             }
