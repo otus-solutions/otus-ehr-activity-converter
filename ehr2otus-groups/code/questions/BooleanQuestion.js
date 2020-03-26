@@ -10,7 +10,7 @@ class BooleanQuestion extends EhrQuestion{
         if(super.getAnswerToShowHiddenQuestion()[0] !== "true"){
             console.log(`ATTENTION! getAnswerToShowHiddenQuestion method for boolean question ${this.id} found value = 'false'`);
         }
-        return [this.label];
+        return [generateOptionID(this.id)];
     }
 
     toOtusTemplate(){
@@ -18,8 +18,8 @@ class BooleanQuestion extends EhrQuestion{
         let checkboxOption = {
             "extents": "SurveyItem",
             "objectType": "CheckboxAnswerOption",
-            "optionID": this.id+"_option",
-            "customOptionID": this.id+"_option",
+            "optionID": generateOptionID(this.id),
+            "customOptionID": generateOptionID(this.id),
             "dataType": "Boolean",
             "value": false,
             "label": this.label2Otus()
@@ -31,3 +31,7 @@ class BooleanQuestion extends EhrQuestion{
 }
 
 module.exports = BooleanQuestion;
+
+function generateOptionID(questionID){
+    return questionID+"_check";
+}

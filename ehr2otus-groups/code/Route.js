@@ -22,7 +22,7 @@ class Route {
             );
         }
 
-        return OtusTemplatePartsGenerator.getRoute(this.origin, this.destination, (n==0), conditions);
+        return OtusTemplatePartsGenerator.getRoute(this.origin, this.destination, (n===0), conditions);
     }
 
     fillGraphViz(graphViz){

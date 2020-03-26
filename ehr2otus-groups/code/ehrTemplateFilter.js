@@ -64,9 +64,11 @@ function extractQuestionsFromArrays(acronym, template, filterLevel){
         let outputQuestions = [];
 
         if(questionPage.header){
+            const pageId = questionPage.id.replace(/_/g, "-");
+            const newId = `${acronym}-${pageId}-header`;
             outputQuestions.push({
-                id: `${acronym}_${questionPage.id}_header`,
-                name: `${acronym}_${questionPage.id}_header`,
+                id: newId,
+                name: newId,
                 label: questionPage.header[0],
                 type: "textItemQuestion"
             });
@@ -78,6 +80,10 @@ function extractQuestionsFromArrays(acronym, template, filterLevel){
 
         if(filterLevel > 1) {
             outputQuestions = convertQuestionsOfQuestionPageIntoObject(outputQuestions);
+        }
+
+        if(questionPage.id === "END_PAGE"){
+            outputQuestions[0].id = acronym + "_end";
         }
 
         outputQuestionPages.push({

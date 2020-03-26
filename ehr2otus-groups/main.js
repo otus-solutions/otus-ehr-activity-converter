@@ -1,3 +1,4 @@
+const globalVars = require("./code/globalVars");
 const FileHandler = require('./code/FileHandler');
 const EhrQuestionnaire = require("./code/EhrQuestionnaire");
 const ehrTemplateFilter = require('./code/ehrTemplateFilter');
@@ -15,11 +16,20 @@ function outputResumePath(acronym){
 main();
 
 function main(){
-    const arg = process.argv[process.argv.length-1];
+    const numArgs = process.argv.length;
+    if(numArgs > 4){
+        console.log("Invalid syntax! Use npm run parse \<acronym\> \[id\]");
+        return;
+    }
+    if(numArgs === 4 && process.argv[numArgs-1]==="id"){
+        globalVars.EXPORT_QUESTION_LABEL_WITH_ID = true;
+    }
+
+    const acronym = process.argv[2];
     const templatesInfo = FileHandler.readJsonSync(process.cwd() + "/templateInfo.json");
 
-    if(Object.keys(templatesInfo).includes(arg)){
-        parseTemplate(arg, templatesInfo[arg]);
+    if(Object.keys(templatesInfo).includes(acronym)){
+        parseTemplate(acronym, templatesInfo[acronym]);
     }
     else{
         for(let [acronym, info] of Object.entries(templatesInfo)){

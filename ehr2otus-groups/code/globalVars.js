@@ -24,6 +24,7 @@ let choiceGroups = {
 
 module.exports = {
     // constants
+    EXPORT_QUESTION_LABEL_WITH_ID: false,
     DEFAULT_NODES: {
         BEGIN: {id: "BEGIN NODE", index: 0},
         END: {id: "END NODE", index: 1}

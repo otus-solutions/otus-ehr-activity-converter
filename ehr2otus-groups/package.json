@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "mkdir -p input output",
-    "go": "node main.js go"
+    "parse": "node main.js"
   },
   "author": "Flávia Pereira",
   "license": "ISC",

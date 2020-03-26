@@ -83,16 +83,18 @@ class EhrQuestion {
         for (let label of labels) {
             options.push(
                 OtusTemplatePartsGenerator.getQuestionMetadataOption(value,
-                    globalVars.METADATA_LABEL_TRANSLATION[label]
-                )
+                    globalVars.METADATA_LABEL_TRANSLATION[label])
             );
             value++;
         }
-
         return options;
     }
 
     label2Otus() {
+        if(globalVars.EXPORT_QUESTION_LABEL_WITH_ID) {
+            const formattedId = `\<font color=\"#ff7f7f\"\>${this.id}\</font\>\<br\>`;
+            return OtusTemplatePartsGenerator.getLabel(formattedId + this.label);
+        }
         return OtusTemplatePartsGenerator.getLabel(this.label);
     }
 
