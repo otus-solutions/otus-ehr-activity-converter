@@ -6,6 +6,7 @@ class SingleSelectionQuestion extends EhrQuestion {
 
     constructor(ehrQuestionObj, pageId){
         super(ehrQuestionObj, pageId, "SingleSelectionQuestion","Integer");
+        this.answerIsCustom = false;
         this.choiceGroupId = ehrQuestionObj.choiceGroupId;
     }
 
@@ -13,36 +14,45 @@ class SingleSelectionQuestion extends EhrQuestion {
         if(isMetadata){
             return super.getAnswerValue(answer, isMetadata);
         }
-        const choice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === answer)[0];
-        return parseInt(choice.value, 10);
+        const sortedChoiceArr = choiceGroups.choiceObj[this.choiceGroupId].sort(compareOptionValues);
+        const choice = sortedChoiceArr.filter(choice => choice.name === answer)[0];
+        return parseChoiceValue(choice.value, sortedChoiceArr[0].value);
     }
 
     getAnswerToShowHiddenQuestion(){
-        const answer = super.getAnswerToShowHiddenQuestion();
-        return this.getAnswerValue(answer);
-        //const choice = choiceGroups.choiceObj[this.choiceGroupId].filter(choice => choice.name === value)[0];
-        //return choice.value;
+        const answers = super.getAnswerToShowHiddenQuestion();
+        const firstChoiceValueOfGroup = choiceGroups.choiceObj[this.choiceGroupId].sort(compareOptionValues)[0].value;
+        return answers.map(answer => parseChoiceValue(choiceGroups.findChoiceValueInSpecificChoiceGroup(this.choiceGroupId, answer), firstChoiceValueOfGroup));
     }
 
     toOtusTemplate(){
         let questionObj = this.getOtusStudioQuestionHeader();
-        const choiceGroupObjArr = choiceGroups.choiceObj[this.choiceGroupId];
+        const sortedChoiceArr = choiceGroups.choiceObj[this.choiceGroupId].sort(compareOptionValues);
+        const firstChoiceValueOfArr = sortedChoiceArr[0].value;
         let options = [];
-        for(let choiceObj of choiceGroupObjArr){
-            let numericValue = parseInt(choiceObj["value"], 10);
-            let label = choiceObj["label"];
+        for(let choiceObj of sortedChoiceArr){
             options.push({
                 "extents": "StudioObject",
                 "objectType": "AnswerOption",
-                "value": numericValue,
-                "extractionValue": numericValue,
+                "value": parseChoiceValue(choiceObj.value, firstChoiceValueOfArr),
+                "extractionValue": choiceObj.value,
                 "dataType": "Integer",
-                "label":  OtusTemplatePartsGenerator.getLabel(label)
+                "label":  OtusTemplatePartsGenerator.getLabel(choiceObj.label)
             });
         }
         questionObj["options"] = options;
         return questionObj;
     }
+}
+
+function compareOptionValues(a,b){
+    const va = parseInt(a.value, 10);
+    const vb = parseInt(b.value, 10);
+    return va - vb;
+}
+
+function parseChoiceValue(choiceValue, firstChoiceValueOfArr){
+    return parseInt(choiceValue, 10) + (firstChoiceValueOfArr === "0" ? 1 : 0);
 }
 
 module.exports = SingleSelectionQuestion;

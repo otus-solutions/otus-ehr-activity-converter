@@ -1,3 +1,4 @@
+const globalVars = require("./code/globalVars");
 const FileHandler = require('./code/FileHandler');
 const EhrQuestionnaire = require("./code/EhrQuestionnaire");
 const ehrTemplateFilter = require('./code/ehrTemplateFilter');
@@ -15,11 +16,20 @@ function outputResumePath(acronym){
 main();
 
 function main(){
-    const arg = process.argv[process.argv.length-1];
+    const numArgs = process.argv.length;
+    if(numArgs > 4){
+        console.log("Invalid syntax! Use npm run parse \<acronym\> \[id\]");
+        return;
+    }
+    if(numArgs === 4 && process.argv[numArgs-1]==="id"){
+        globalVars.EXPORT_QUESTION_LABEL_WITH_ID = true;
+    }
+
+    const acronym = process.argv[2];
     const templatesInfo = FileHandler.readJsonSync(process.cwd() + "/templateInfo.json");
 
-    if(Object.keys(templatesInfo).includes(arg)){
-        parseTemplate(arg, templatesInfo[arg]);
+    if(Object.keys(templatesInfo).includes(acronym)){
+        parseTemplate(acronym, templatesInfo[acronym]);
     }
     else{
         for(let [acronym, info] of Object.entries(templatesInfo)){
@@ -47,22 +57,23 @@ function readAndParse(acronym, templateInfo, outputPath){
 
     const templateName = `${ehrTemplate.survey.title} (${ehrTemplate.survey.version})`;
 
-    ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(ehrTemplate.survey, 1);
+    ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(acronym, ehrTemplate.survey, 1);
     FileHandler.writeJson(outputPath + acronym+"-filtered.json", ehrTemplate);
 
     const resumePath = outputResumePath(acronym);
 
-    const ehr = new EhrQuestionnaire();
-    ehr.readFromJsonObj(ehrTemplate);
-    const ehrBranchesQuestions = exportResumes(ehr, resumePath);
+    const ehrQuestionnaire = new EhrQuestionnaire();
+    ehrQuestionnaire.readFromJsonObj(ehrTemplate);
+    const ehrBranchesQuestions = exportResumes(ehrQuestionnaire, resumePath);
 
     let otusTemplate = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
-    ehr.toOtusStudioTemplate(otusTemplate);
+    ehrQuestionnaire.toOtusStudioTemplate(otusTemplate);
     FileHandler.writeJson(outputPath + acronym + "-otus-result.json", otusTemplate);
 
     const otusNavigationResume = resumeOtusTemplateNavigation(otusTemplate.navigationList, resumePath + "otus-result-navigation-resume.txt");
-
     compareNavigations(ehrBranchesQuestions, otusNavigationResume, resumePath+"comparison.txt");
+
+    buildAndExportGraph(acronym, ehrQuestionnaire);
 }
 
 function exportResumes(ehr, path){
@@ -139,4 +150,17 @@ function compareNavigations(ehrBranchesQuestions, otusNavigationResume, outputPa
     }
 
     FileHandler.write(outputPath, content);
+}
+
+function buildAndExportGraph(acronym, ehrQuestionnaire){
+
+    const path = 'output/' + acronym + "/graph";
+    FileHandler.mkdir(path);
+    //const path = 'output\\' + acronym + "\\graph\\"; on Windows
+
+    const ehrOutputPath = path + "/ehr", otusOutputPath = path + "/otus";
+    FileHandler.mkdir(ehrOutputPath);
+    FileHandler.mkdir(otusOutputPath);
+
+    ehrQuestionnaire.toGraphViz(ehrOutputPath, otusOutputPath);
 }

@@ -1,7 +1,6 @@
 const TAG_SEPARATOR = "_";
 
 let basicQuestionGroupId = [];
-let basicQuestionGroupCounter = 0;
 
 function extractQuestionsFromBasicGroup(questionArr, outputQuestions){
     for(let [key, subQuestionArr]  of questionArr){
@@ -9,10 +8,8 @@ function extractQuestionsFromBasicGroup(questionArr, outputQuestions){
         if(key === 'basicQuestionGroup'){
             for(let question of subQuestionArr){
                 basicQuestionGroupId.push(question.id);
-                basicQuestionGroupCounter++;
                 const subSubQuestionArr = Object.entries(question).filter(([key,value]) => key.includes('Question'));
                 extractQuestionsFromBasicGroup(subSubQuestionArr, outputQuestions);
-                basicQuestionGroupCounter--;
                 basicQuestionGroupId.pop();
             }
         }
@@ -54,17 +51,29 @@ function checkHiddenQuestions(questions){
             }
 
             if(j !== i+1){
-                console.log(`ATTENTION: question ${i} (${questions[i].id}) hide ${j} (${questions[j].id})`);
+                console.log(`ATTENTION: question index=${i} (${questions[i].id}) hide question index=${j} (${questions[j].id})`);
             }
         }
     }
 }
 
-function extractQuestionsFromArrays(template, filterLevel){
+function extractQuestionsFromArrays(acronym, template, filterLevel){
     let outputQuestionPages = [];
 
     for(let questionPage of template.questionPage){
         let outputQuestions = [];
+
+        if(questionPage.header){
+            const pageId = questionPage.id.replace(/_/g, "-");
+            const newId = `${acronym}-${pageId}-header`;
+            outputQuestions.push({
+                id: newId,
+                name: newId,
+                label: questionPage.header[0],
+                type: "textItemQuestion"
+            });
+        }
+
         const questionArr = Object.entries(questionPage).filter(([key,value]) => key.includes('Question'));
         extractQuestionsFromBasicGroup(questionArr, outputQuestions);
         checkHiddenQuestions(outputQuestions);
@@ -73,10 +82,13 @@ function extractQuestionsFromArrays(template, filterLevel){
             outputQuestions = convertQuestionsOfQuestionPageIntoObject(outputQuestions);
         }
 
+        if(questionPage.id === "END_PAGE"){
+            outputQuestions[0].id = acronym + "_end";
+        }
+
         outputQuestionPages.push({
             id: questionPage.id,
             nextPageId: questionPage.nextPageId,
-            header: questionPage.header,
             questions: outputQuestions,
             branch: questionPage.branch
         });

@@ -25,6 +25,7 @@ class EhrQuestion {
         this.index = currIndex++;
         this.basicGroup = ehrQuestionObj.basicGroup;
         this.hiddenQuestion = this._extractHiddenQuestion(ehrQuestionObj);
+        this.answerIsCustom = true;
     }
 
     _extractHiddenQuestion(ehrQuestionObj) {
@@ -35,6 +36,10 @@ class EhrQuestion {
                 isVisibleWhenThisAnswerIs: ehrQuestionObj.visibleWhen
             }
         }
+    }
+
+    setHiddenQuestionId(id){
+        this.hiddenQuestion.id = id;
     }
 
     // Must be implemented by children classes
@@ -55,7 +60,7 @@ class EhrQuestion {
     }
 
     getAnswerToShowHiddenQuestion() {
-        return this.hiddenQuestion.isVisibleWhenThisAnswerIs;
+        return this.hiddenQuestion.isVisibleWhenThisAnswerIs.split(",");
     }
 
     getOtusHeader() {
@@ -78,16 +83,18 @@ class EhrQuestion {
         for (let label of labels) {
             options.push(
                 OtusTemplatePartsGenerator.getQuestionMetadataOption(value,
-                    globalVars.METADATA_LABEL_TRANSLATION[label]
-                )
+                    globalVars.METADATA_LABEL_TRANSLATION[label])
             );
             value++;
         }
-
         return options;
     }
 
     label2Otus() {
+        if(globalVars.EXPORT_QUESTION_LABEL_WITH_ID) {
+            const formattedId = `\<font color=\"#ff7f7f\"\>${this.id}\</font\>\<br\>`;
+            return OtusTemplatePartsGenerator.getLabel(formattedId + this.label);
+        }
         return OtusTemplatePartsGenerator.getLabel(this.label);
     }
 

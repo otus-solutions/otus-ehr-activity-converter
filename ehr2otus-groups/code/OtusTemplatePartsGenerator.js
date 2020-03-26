@@ -204,7 +204,7 @@ class OtusTemplatePartsGenerator {
         };
     }
 
-    static getExpression(questionId, operator, answer, isMetadata){
+    static getExpression(questionId, operator, answer, isMetadata, isCustom){
         return {
             "extents": "SurveyTemplateObject",
             "objectType": "Rule",
@@ -212,7 +212,7 @@ class OtusTemplatePartsGenerator {
             "operator": operator,
             "answer": answer,
             "isMetadata": isMetadata,
-            "isCustom": true
+            "isCustom": isCustom
         };
     }
 }

@@ -3,11 +3,11 @@ let choiceGroups = {
     set: function(choiceArr){
         this.choiceObj = choiceArr;
     },
-    findChoiceLabelInSpecificChoiceGroup: function(choiceGroupId, choiceName){
+    findChoiceValueInSpecificChoiceGroup: function(choiceGroupId, choiceName){
         const choiceGroup = this.choiceObj[choiceGroupId];
         for (let choice of choiceGroup) {
             if(choice.name === choiceName){
-                return choice.label;
+                return choice.value;
             }
         }
     },
@@ -24,6 +24,7 @@ let choiceGroups = {
 
 module.exports = {
     // constants
+    EXPORT_QUESTION_LABEL_WITH_ID: false,
     DEFAULT_NODES: {
         BEGIN: {id: "BEGIN NODE", index: 0},
         END: {id: "END NODE", index: 1}

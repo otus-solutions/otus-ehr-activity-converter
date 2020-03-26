@@ -1,6 +1,7 @@
 const globalVars = require('./globalVars');
 const QuestionPage = require('./QuestionPage');
 const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
+const GraphViz = require('./GraphViz');
 
 class EhrQuestionnaire {
 
@@ -158,6 +159,28 @@ class EhrQuestionnaire {
             }
         }
         return json;
+    }
+
+    toGraphViz(ehrOutputPath, otusOutputPath){
+        const totalPages = this.questionPages.length,
+            numPagesByFile = 5,
+            colors = ['"#faeed8"', '"#eddff7"', '"#bbceb2"', '"#fbaea6"', '"#66d8ff"'];
+
+        for (let k = 0; k < totalPages; k=k+numPagesByFile) {
+            const start = k, 
+                  end = Math.min(k+numPagesByFile, totalPages-1),
+                  ehrGraphViz = new GraphViz(),
+                  otusGraphViz = new GraphViz();
+
+            for (let i = start; i < end; i++) {
+                const nodeColor = colors[i%numPagesByFile];
+                this.questionPages[i].fillEHRGraphViz(ehrGraphViz, nodeColor);
+                this.questionPages[i].fillOtusGraphViz(otusGraphViz, nodeColor);
+            }
+
+            ehrGraphViz.save(`${ehrOutputPath}/${this.questionPages[start].id}-${this.questionPages[end].id}-ehr`);
+            otusGraphViz.save(`${otusOutputPath}/${this.questionPages[start].id}-${this.questionPages[end].id}-otus`);
+        }
     }
 
 }
