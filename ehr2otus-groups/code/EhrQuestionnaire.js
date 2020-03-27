@@ -80,8 +80,6 @@ class EhrQuestionnaire {
             this.dataSources[dataSourceId] = new DataSource(dataSourceId);
         }
         this.dataSources[dataSourceId].addQuestionAtBindTo(questionId);
-
-        console.log(`added ${questionId} at dataSource ${dataSourceId}`);//.
     }
 
     toOtusStudioTemplate(emptyOtusStudioTemplate){
@@ -99,7 +97,6 @@ class EhrQuestionnaire {
         }
 
         emptyOtusStudioTemplate['dataSources'] = Object.values(this.dataSources);
-        console.log(JSON.stringify(Object.values(this.dataSources), null, 2));//.
     }
 
     findPageOfQuestionId(questionId){
