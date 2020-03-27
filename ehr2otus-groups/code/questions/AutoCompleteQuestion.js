@@ -1,4 +1,5 @@
 const EhrQuestion = require('./EhrQuestion');
+const globalVars = require('../globalVars');
 
 class AutoCompleteQuestion extends EhrQuestion {
 
@@ -8,6 +9,7 @@ class AutoCompleteQuestion extends EhrQuestion {
     }
 
     toOtusTemplate(){
+        globalVars.ehrQuestionnaire.addQuestionInDataSource(this.itemValue, this.id);
         let questionObj = this.getOtusStudioQuestionHeader();
         questionObj['dataSources'] = [this.itemValue];
         return questionObj;

@@ -1,7 +1,4 @@
 const FileHandler = require('./FileHandler');
-const exec = require('child_process').exec;
-const execSync = require('child_process').execSync;
-const dotCommand = "dot"; //'"C:\\Program Files (x86)\\GraphViz\\bin\\dot.exe"'; //. on Windows
 
 const DEFAULT_NODE_LABEL = "";
 
@@ -17,14 +14,20 @@ class GraphViz {
 		for(let node of this.nodes){
 			content += node.toGraphViz();
 		}
-		content += this.edges.join("\n") + "\n}";
+		for (let edge of this.edges){
+			content += edge.toGraphViz();
+		}
+		content += "\n}";
 		FileHandler.writeNoMessage(pathNoExtension + ".dot", content);
-		//dotToPng(pathNoExtension + ".dot", pathNoExtension + ".png");
+	}
+
+	isEmpty(){
+		return (this.nodes.length===0 && this.edges===0);
 	}
 	 
 	addNode(id, fillColor="white", isDashed=false){
 		try {
-			const index = this._indexOfNode(id, this.nodes);
+			const index = _indexOfNode(id, this.nodes);
 			this.nodes[index].update(fillColor);
 			this.nodes[index].setAsDashed(isDashed);
 		} 
@@ -37,7 +40,7 @@ class GraphViz {
 
 	addNodeWithLabel(id, fillColor, label){
 		try {
-			let index = this._indexOfNode(id, this.nodes);
+			let index = _indexOfNode(id, this.nodes);
 			this.nodes[index].update(fillColor, label);
 		} 
 		catch (error) {
@@ -45,9 +48,29 @@ class GraphViz {
 		}
 	}	
 
-	addEdge(originNodeId, targetNodeId, label=DEFAULT_NODE_LABEL){
-		const color = (label===DEFAULT_NODE_LABEL ? "blue" : "black");
-		this.edges.push(`${originNodeId} -> ${targetNodeId} [label=\"${label}\" color=${color}];`);
+	addEdge(originNodeId, targetNodeId, label=DEFAULT_NODE_LABEL, color="blue", style="solid"){
+		const edge = new Edge(originNodeId, targetNodeId, color, label);
+		edge.style = style;
+
+		let i = 0, found = false;
+		while(!found && i < this.edges.length){
+			found = (this.edges[i++].equals(edge));
+		}
+		if(!found){
+			this.edges.push(edge);
+		}
+	}
+
+	sortNodes(){
+		this.nodes.sort(function(node1, node2){
+			if ( node1.id < node2.id ){
+				return -1;
+			}
+			if ( node1.id > node2.id ){
+				return 1;
+			}
+			return 0;
+		});
 	}
 }
 
@@ -56,6 +79,14 @@ module.exports = GraphViz;
 /*
  * Private things
  */
+
+function _indexOfNode(id, nodes){
+	let i = 0, found = false;
+	while(!found && i < nodes.length){
+		found = (nodes[i++].id === id);
+	}
+	return (found? i-1 : -1);
+}
 
 class Node {
 
@@ -84,26 +115,42 @@ class Node {
 	}
 }
 
-function _indexOfNode(id, nodes){
-	let i = 0, found = false;
-	while(!found && i < nodes.length){
-		found = (nodes[i++].id === id);
+class Edge {
+
+	static get STYLES(){
+		return {
+			SOLID: "solid",
+			DOTTED: "dotted",
+			DASHED: "dashed",
+			BOLD: "bold"
+		};
 	}
-	return (found? i-1 : -1);
-}
 
+	constructor(origin, target, color, label=""){
+		this.origin = origin;
+		this.target = target;
+		this.color = color;
+		this.label = label;
+		this.style = Edge.STYLES.SOLID;
+	}
 
-function dotToPng(dotFilePath, pngFilePath){
-	const command = `${dotCommand} -Tpng ${dotFilePath} > ${pngFilePath}`;
-	// exec(command,
-	// 	function (error) {
-	// 		if (error) {
-	// 			console.error('\nexec error in command: ' + command);
-	// 			console.error(error);
-	// 			throw error;
-	// 		}
-	// 	}
-	// );
-	execSync(command);
-	console.log('Saved ' + pngFilePath);//.
+	update(color, label){
+		this.color = color;
+		this.label = label;
+	}
+
+	setStyle(style){
+		this.style = style;
+	}
+
+	toGraphViz(){
+		return `${this.origin} -> ${this.target} [label=\"${this.label}\" color=${this.color} style=${this.style}]\n`;
+	}
+
+	equals(otherEdge){
+		if(!otherEdge instanceof Edge){
+			return false;
+		}
+		return (this.origin === otherEdge.origin && this.target === otherEdge.target);
+	}
 }

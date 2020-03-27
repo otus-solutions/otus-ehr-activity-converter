@@ -209,9 +209,44 @@ class QuestionPage {
             .concat(groupCutIndexes).sort((a,b) => { return a-b; });
     }
 
-    _readRules(ehrBranchArr){        
+    _readRules(ehrBranchArr){
         for(let ehrBranch of ehrBranchArr) {
             this.branches.push(new Branch(this.id, ehrBranch));
+            //this._searchHugeNonDefaultRoutes(ehrBranch.targetPageId);
+        }
+    }
+
+    _searchHugeNonDefaultRoutes(targetPageId){
+        const originPageNumber = parseInt(this.id.replace("PAGE_", ""), 10);
+        const targetPageNumber = parseInt(targetPageId.replace("PAGE_", ""), 10);
+        if(targetPageNumber - originPageNumber > 50){
+            const hugeJumps = globalVars.ehrQuestionnaire.hugeNonDefaultRoutes;
+            const graph = globalVars.ehrQuestionnaire.hugeNonDefaultRoutesGraph;
+
+            const hugeJump = {
+                origin: this.id,
+                target: targetPageId
+            };
+
+            console.log(`${this.id} -> ${targetPageId}`);
+
+            graph.addNode(this.id);
+            graph.addNode(targetPageId);
+            if(targetPageId.includes("aux")){ // already solved in xml
+                const realTargetPageId = targetPageId.replace(/_aux.*/g, "_z");
+                hugeJump.target = realTargetPageId;
+                hugeJump['aux'] = targetPageId;
+                graph.addNode(realTargetPageId);
+                graph.addEdge(this.id, realTargetPageId, "", "red");
+                //solution: middle point at route
+                graph.addEdge(this.id, targetPageId, "", "green");
+                graph.addEdge(targetPageId, realTargetPageId, "", "green");
+            }
+            else{
+                graph.addEdge(this.id, targetPageId, "", "red");
+            }
+
+            hugeJumps.push(hugeJump);
         }
     }
 
@@ -500,8 +535,8 @@ class QuestionPage {
 
     fillEHRGraphViz(ehrGraphViz, nodeColor){
         const sep = "\n";
-        ehrGraphViz.addNodeWithLabel(this.id, nodeColor, 
-            this.id + sep + 
+        ehrGraphViz.addNodeWithLabel(this.id, nodeColor,
+            this.id + sep +
             this.questions.map((q,i) => q.id + (this.hiddenIndexes.includes(i)? "*" : "") )
             .join(sep));
         
@@ -521,6 +556,22 @@ class QuestionPage {
 
         for(let branch of this.branches){
             ehrGraphViz.addNodeWithLabel(branch.targetPageId, "white", getLabelForTargetPageNode(branch.targetPageId));
+            branch.fillGraphViz(ehrGraphViz);
+        }
+    }
+
+    fillEHRPagesGraphViz(ehrGraphViz, nodeColor){
+        ehrGraphViz.addNodeWithLabel(this.id, nodeColor, this.id);
+
+        if(this.id === "END_PAGE") {
+            return;
+        }
+
+        ehrGraphViz.addNodeWithLabel(this.nextPageId, "white", this.nextPageId);
+        ehrGraphViz.addEdge(this.id, this.nextPageId);
+
+        for(let branch of this.branches){
+            ehrGraphViz.addNodeWithLabel(branch.targetPageId, "white", branch.targetPageId);
             branch.fillGraphViz(ehrGraphViz);
         }
     }
