@@ -5,13 +5,13 @@ class AutoCompleteQuestion extends EhrQuestion {
 
     constructor(ehrQuestionObj, pageId){
         super(ehrQuestionObj, pageId, "AutocompleteQuestion", "String");
-        this.itemValue = ehrQuestionObj.itemValue;
+        this.dataSource = ehrQuestionObj.itemValue;
     }
 
     toOtusTemplate(){
-        globalVars.ehrQuestionnaire.addQuestionInDataSource(this.itemValue, this.id);
+        globalVars.ehrQuestionnaire.addQuestionInDataSource(this.dataSource, this.id);
         let questionObj = this.getOtusStudioQuestionHeader();
-        questionObj['dataSources'] = [this.itemValue];
+        questionObj['dataSources'] = [this.dataSource];
         return questionObj;
     }
 }
