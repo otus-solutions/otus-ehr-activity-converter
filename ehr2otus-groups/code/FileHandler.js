@@ -17,7 +17,7 @@ class FileHandler {
     }
 
     static write(path, content){
-        fileSystem.writeFile(path, content, function(err) {
+        fileSystem.writeFile(path, content, "utf8", function(err) {
             if(err) {
                 throw err;
             }
