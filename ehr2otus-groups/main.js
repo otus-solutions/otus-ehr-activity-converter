@@ -13,6 +13,7 @@ function outputResumePath(acronym){
     return outputDirPath() + acronym + "/resume/" + acronym + "-";
 }
 
+let exportCopyWithQuestionIds = false;
 main();
 
 function main(){
@@ -22,7 +23,7 @@ function main(){
         return;
     }
     if(numArgs === 4 && process.argv[numArgs-1]==="id"){
-        globalVars.EXPORT_QUESTION_LABEL_WITH_ID = true;
+        exportCopyWithQuestionIds = true;
     }
 
     const acronym = process.argv[2];
@@ -60,20 +61,36 @@ function readAndParse(acronym, templateInfo, outputPath){
     ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(acronym, ehrTemplate.survey, 1);
     FileHandler.writeJson(outputPath + acronym+"-filtered.json", ehrTemplate);
 
-    const resumePath = outputResumePath(acronym);
+    if(exportCopyWithQuestionIds){
+        exportTemplateCopyWithIdAtLabels(ehrTemplate, templateName, acronym, templateInfo, outputPath);
+    }
 
     const ehrQuestionnaire = new EhrQuestionnaire();
     ehrQuestionnaire.readFromJsonObj(ehrTemplate);
-    const ehrBranchesQuestions = exportResumes(ehrQuestionnaire, resumePath);
 
     let otusTemplate = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
     ehrQuestionnaire.toOtusStudioTemplate(otusTemplate);
     FileHandler.writeJson(outputPath + acronym + "-otus-result.json", otusTemplate);
 
+    const resumePath = outputResumePath(acronym);
+    const ehrBranchesQuestions = exportResumes(ehrQuestionnaire, resumePath);
     const otusNavigationResume = resumeOtusTemplateNavigation(otusTemplate.navigationList, resumePath + "otus-result-navigation-resume.txt");
     compareNavigations(ehrBranchesQuestions, otusNavigationResume, resumePath+"comparison.txt");
 
     buildAndExportGraph(acronym, ehrQuestionnaire);
+}
+
+function exportTemplateCopyWithIdAtLabels(ehrTemplate, templateName, acronym, templateInfo, outputPath){
+    globalVars.EXPORT_QUESTION_LABEL_WITH_ID = true;
+
+    const ehrQuestionnaire = new EhrQuestionnaire();
+    ehrQuestionnaire.readFromJsonObj(ehrTemplate);
+
+    let otusTemplate2 = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
+    ehrQuestionnaire.toOtusStudioTemplate(otusTemplate2);
+    FileHandler.writeJson(outputPath + acronym + "-otus-result-with-question-ids.json", otusTemplate2);
+
+    globalVars.EXPORT_QUESTION_LABEL_WITH_ID = false;
 }
 
 function exportResumes(ehr, path){
@@ -167,4 +184,29 @@ function buildAndExportGraph(acronym, ehrQuestionnaire){
     //ehrQuestionnaire.hugeJumpsToGraphViz(path + "/hugeJumps");
 
     //console.log(JSON.stringify(ehrQuestionnaire.hugeNonDefaultRoutes, null, 2));
+}
+
+//IDCList();
+function IDCList(){
+    const path = "/home/flavia/Downloads/listaCID10.txt";
+    const originalContent = FileHandler.read(path).split("\n");
+    console.log(JSON.stringify(originalContent.slice(0,50), null, 2));
+
+    const codes = originalContent.map(x => x.split(";")[0]);
+    console.log(JSON.stringify(codes.slice(0,50), null, 2));
+
+    let content = "";
+
+    const n = codes.length;
+    for (let i = 0; i < n; i++) {
+        const code = codes[i];
+        if(!code.includes(".") && codes.slice(i, n).includes(code+".0")){
+            //console.log(code);
+        }
+        else{
+            content += originalContent[i].replace(";", " - ") + "\n";
+        }
+    }
+
+    FileHandler.write("/home/flavia/Downloads/listaCID10.csv", content);
 }
