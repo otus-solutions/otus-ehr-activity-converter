@@ -185,28 +185,3 @@ function buildAndExportGraph(acronym, ehrQuestionnaire){
 
     //console.log(JSON.stringify(ehrQuestionnaire.hugeNonDefaultRoutes, null, 2));
 }
-
-//IDCList();
-function IDCList(){
-    const path = "/home/flavia/Downloads/listaCID10.txt";
-    const originalContent = FileHandler.read(path).split("\n");
-    console.log(JSON.stringify(originalContent.slice(0,50), null, 2));
-
-    const codes = originalContent.map(x => x.split(";")[0]);
-    console.log(JSON.stringify(codes.slice(0,50), null, 2));
-
-    let content = "";
-
-    const n = codes.length;
-    for (let i = 0; i < n; i++) {
-        const code = codes[i];
-        if(!code.includes(".") && codes.slice(i, n).includes(code+".0")){
-            //console.log(code);
-        }
-        else{
-            content += originalContent[i].replace(";", " - ") + "\n";
-        }
-    }
-
-    FileHandler.write("/home/flavia/Downloads/listaCID10.csv", content);
-}
