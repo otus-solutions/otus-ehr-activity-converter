@@ -90,6 +90,8 @@ class QuestionPage {
         this.id = ehrQuestionPageObj.id;
         this.nextPageId = ehrQuestionPageObj.nextPageId;
 
+        _checkDistance(this.id, this.nextPageId, "default");//.
+
         this._readQuestions(ehrQuestionPageObj.questions);
         this._reorganizeQuestionsThatHiddenQuestion2();
         this._setCutIndexes();
@@ -212,7 +214,7 @@ class QuestionPage {
     _readRules(ehrBranchArr){
         for(let ehrBranch of ehrBranchArr) {
             this.branches.push(new Branch(this.id, ehrBranch));
-            //this._searchHugeNonDefaultRoutes(ehrBranch.targetPageId);
+            _checkDistance(this.id, ehrBranch.targetPageId, "branch");//.
         }
     }
 
@@ -629,4 +631,21 @@ function _getFirstQuestionOfPage(targetId){
         return targetId;
     }
     return targetPage.getFirstQuestion().id;
+}
+
+function _checkDistance(originPageId, targetPageId, routeType){
+    try {
+        if(targetPageId.includes("aux")){
+            return;
+        }
+        const origin = parseInt(originPageId.match(/PAGE_(\d+)[_.]*/)[1], 10);
+        const target = parseInt(targetPageId.match(/PAGE_(\d+)[_.]*/)[1], 10);
+        const distance = target - origin;
+        if (distance > 50) {
+            console.log(`${routeType}: ${originPageId} -> ${targetPageId} (${distance})`);
+        }
+    }
+    catch(e){
+        //console.log(`error: ${originPageId} -> ${targetPageId}`);
+    }
 }

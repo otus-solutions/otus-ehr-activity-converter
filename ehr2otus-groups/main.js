@@ -14,6 +14,7 @@ function outputResumePath(acronym){
 }
 
 let exportCopyWithQuestionIds = false;
+
 main();
 
 function main(){
@@ -77,7 +78,9 @@ function readAndParse(acronym, templateInfo, outputPath){
     const otusNavigationResume = resumeOtusTemplateNavigation(otusTemplate.navigationList, resumePath + "otus-result-navigation-resume.txt");
     compareNavigations(ehrBranchesQuestions, otusNavigationResume, resumePath+"comparison.txt");
 
-    buildAndExportGraph(acronym, ehrQuestionnaire);
+    if(!globalVars.EXPORT_QUESTION_LABEL_WITH_ID) {
+        buildAndExportGraph(acronym, ehrQuestionnaire);
+    }
 }
 
 function exportTemplateCopyWithIdAtLabels(ehrTemplate, templateName, acronym, templateInfo, outputPath){

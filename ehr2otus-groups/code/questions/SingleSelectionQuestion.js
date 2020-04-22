@@ -1,5 +1,6 @@
 const EhrQuestion = require('./EhrQuestion');
-const choiceGroups = require('../globalVars').choiceGroups;
+const globalVars = require('../globalVars');
+const choiceGroups = globalVars.choiceGroups;
 const OtusTemplatePartsGenerator = require("../OtusTemplatePartsGenerator");
 
 class SingleSelectionQuestion extends EhrQuestion {
@@ -31,13 +32,21 @@ class SingleSelectionQuestion extends EhrQuestion {
         const firstChoiceValueOfArr = sortedChoiceArr[0].value;
         let options = [];
         for(let choiceObj of sortedChoiceArr){
+            const value = parseChoiceValue(choiceObj.value, firstChoiceValueOfArr);
+            let label = choiceObj.label;
+
+            if(globalVars.EXPORT_QUESTION_LABEL_WITH_ID) {
+                //label = `\<font color=\"#ff7f7f\"\>${value} - \</font\> ${label}`;
+                label = `${value} - ${label}`;
+            }
+
             options.push({
                 "extents": "StudioObject",
                 "objectType": "AnswerOption",
-                "value": parseChoiceValue(choiceObj.value, firstChoiceValueOfArr),
+                "value": value,
                 "extractionValue": choiceObj.value,
                 "dataType": "Integer",
-                "label":  OtusTemplatePartsGenerator.getLabel(choiceObj.label)
+                "label":  OtusTemplatePartsGenerator.getLabel(label)
             });
         }
         questionObj["options"] = options;
