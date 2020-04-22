@@ -206,18 +206,6 @@ class EhrQuestionnaire {
         ehrGraphViz.save(`${ehrOutputPath}/pages-ehr`);
     }
 
-    hugeJumpsToGraphViz(ehrOutputPath){
-        if(!this.hugeNonDefaultRoutesGraph.isEmpty()) {
-            this.hugeNonDefaultRoutesGraph.sortNodes();
-            for (let i = 0; i < this.hugeNonDefaultRoutesGraph.nodes.length - 1; i++) {
-                const node1 = this.hugeNonDefaultRoutesGraph.nodes[i];
-                const node2 = this.hugeNonDefaultRoutesGraph.nodes[i + 1];
-                this.hugeNonDefaultRoutesGraph.addEdge(node1.id, node2.id, "", "black", "dashed");
-            }
-            this.hugeNonDefaultRoutesGraph.save(ehrOutputPath);
-        }
-    }
-
 }
 
 module.exports = EhrQuestionnaire;

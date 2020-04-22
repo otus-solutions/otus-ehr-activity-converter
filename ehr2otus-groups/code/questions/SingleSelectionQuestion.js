@@ -36,7 +36,6 @@ class SingleSelectionQuestion extends EhrQuestion {
             let label = choiceObj.label;
 
             if(globalVars.EXPORT_QUESTION_LABEL_WITH_ID) {
-                //label = `\<font color=\"#ff7f7f\"\>${value} - \</font\> ${label}`;
                 label = `${value} - ${label}`;
             }
 

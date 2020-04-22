@@ -90,7 +90,7 @@ class QuestionPage {
         this.id = ehrQuestionPageObj.id;
         this.nextPageId = ehrQuestionPageObj.nextPageId;
 
-        _checkDistance(this.id, this.nextPageId, "default");//.
+        _checkDistance(this.id, this.nextPageId, "default");
 
         this._readQuestions(ehrQuestionPageObj.questions);
         this._reorganizeQuestionsThatHiddenQuestion2();
@@ -153,7 +153,7 @@ class QuestionPage {
         for(let hiddenQuestion of this.hiddenQuestions){
             let hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
 
-            const basicGroup = this.basicQuestionGroups[hiddenQuestion.hidden]
+            const basicGroup = this.basicQuestionGroups[hiddenQuestion.hidden];
             if(basicGroup){
                 hiddenQuestionId = basicGroup[0];
             }
@@ -214,41 +214,7 @@ class QuestionPage {
     _readRules(ehrBranchArr){
         for(let ehrBranch of ehrBranchArr) {
             this.branches.push(new Branch(this.id, ehrBranch));
-            _checkDistance(this.id, ehrBranch.targetPageId, "branch");//.
-        }
-    }
-
-    _searchHugeNonDefaultRoutes(targetPageId){
-        const originPageNumber = parseInt(this.id.replace("PAGE_", ""), 10);
-        const targetPageNumber = parseInt(targetPageId.replace("PAGE_", ""), 10);
-        if(targetPageNumber - originPageNumber > 50){
-            const hugeJumps = globalVars.ehrQuestionnaire.hugeNonDefaultRoutes;
-            const graph = globalVars.ehrQuestionnaire.hugeNonDefaultRoutesGraph;
-
-            const hugeJump = {
-                origin: this.id,
-                target: targetPageId
-            };
-
-            console.log(`${this.id} -> ${targetPageId}`);
-
-            graph.addNode(this.id);
-            graph.addNode(targetPageId);
-            if(targetPageId.includes("aux")){ // already solved in xml
-                const realTargetPageId = targetPageId.replace(/_aux.*/g, "_z");
-                hugeJump.target = realTargetPageId;
-                hugeJump['aux'] = targetPageId;
-                graph.addNode(realTargetPageId);
-                graph.addEdge(this.id, realTargetPageId, "", "red");
-                //solution: middle point at route
-                graph.addEdge(this.id, targetPageId, "", "green");
-                graph.addEdge(targetPageId, realTargetPageId, "", "green");
-            }
-            else{
-                graph.addEdge(this.id, targetPageId, "", "red");
-            }
-
-            hugeJumps.push(hugeJump);
+            _checkDistance(this.id, ehrBranch.targetPageId, "branch");
         }
     }
 
@@ -646,6 +612,7 @@ function _checkDistance(originPageId, targetPageId, routeType){
         }
     }
     catch(e){
-        //console.log(`error: ${originPageId} -> ${targetPageId}`);
+        console.log(`error: ${originPageId} -> ${targetPageId}`);
+        console.log(e);
     }
 }
