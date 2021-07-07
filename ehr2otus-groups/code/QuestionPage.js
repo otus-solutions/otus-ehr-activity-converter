@@ -90,6 +90,8 @@ class QuestionPage {
         this.id = ehrQuestionPageObj.id;
         this.nextPageId = ehrQuestionPageObj.nextPageId;
 
+        _checkDistance(this.id, this.nextPageId, "default");
+
         this._readQuestions(ehrQuestionPageObj.questions);
         this._reorganizeQuestionsThatHiddenQuestion2();
         this._setCutIndexes();
@@ -151,7 +153,7 @@ class QuestionPage {
         for(let hiddenQuestion of this.hiddenQuestions){
             let hiddenQuestionId = globalVars.dictQuestionNameId[hiddenQuestion.hidden];
 
-            const basicGroup = this.basicQuestionGroups[hiddenQuestion.hidden]
+            const basicGroup = this.basicQuestionGroups[hiddenQuestion.hidden];
             if(basicGroup){
                 hiddenQuestionId = basicGroup[0];
             }
@@ -209,9 +211,10 @@ class QuestionPage {
             .concat(groupCutIndexes).sort((a,b) => { return a-b; });
     }
 
-    _readRules(ehrBranchArr){        
+    _readRules(ehrBranchArr){
         for(let ehrBranch of ehrBranchArr) {
             this.branches.push(new Branch(this.id, ehrBranch));
+            _checkDistance(this.id, ehrBranch.targetPageId, "branch");
         }
     }
 
@@ -500,8 +503,8 @@ class QuestionPage {
 
     fillEHRGraphViz(ehrGraphViz, nodeColor){
         const sep = "\n";
-        ehrGraphViz.addNodeWithLabel(this.id, nodeColor, 
-            this.id + sep + 
+        ehrGraphViz.addNodeWithLabel(this.id, nodeColor,
+            this.id + sep +
             this.questions.map((q,i) => q.id + (this.hiddenIndexes.includes(i)? "*" : "") )
             .join(sep));
         
@@ -521,6 +524,22 @@ class QuestionPage {
 
         for(let branch of this.branches){
             ehrGraphViz.addNodeWithLabel(branch.targetPageId, "white", getLabelForTargetPageNode(branch.targetPageId));
+            branch.fillGraphViz(ehrGraphViz);
+        }
+    }
+
+    fillEHRPagesGraphViz(ehrGraphViz, nodeColor){
+        ehrGraphViz.addNodeWithLabel(this.id, nodeColor, this.id);
+
+        if(this.id === "END_PAGE") {
+            return;
+        }
+
+        ehrGraphViz.addNodeWithLabel(this.nextPageId, "white", this.nextPageId);
+        ehrGraphViz.addEdge(this.id, this.nextPageId);
+
+        for(let branch of this.branches){
+            ehrGraphViz.addNodeWithLabel(branch.targetPageId, "white", branch.targetPageId);
             branch.fillGraphViz(ehrGraphViz);
         }
     }
@@ -578,4 +597,22 @@ function _getFirstQuestionOfPage(targetId){
         return targetId;
     }
     return targetPage.getFirstQuestion().id;
+}
+
+function _checkDistance(originPageId, targetPageId, routeType){
+    try {
+        if(targetPageId.includes("aux")){
+            return;
+        }
+        const origin = parseInt(originPageId.match(/PAGE_(\d+)[_.]*/)[1], 10);
+        const target = parseInt(targetPageId.match(/PAGE_(\d+)[_.]*/)[1], 10);
+        const distance = target - origin;
+        if (distance > 50) {
+            console.log(`${routeType}: ${originPageId} -> ${targetPageId} (${distance})`);
+        }
+    }
+    catch(e){
+        console.log(`error: ${originPageId} -> ${targetPageId}`);
+        console.log(e);
+    }
 }

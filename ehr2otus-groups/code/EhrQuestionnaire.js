@@ -1,5 +1,6 @@
 const globalVars = require('./globalVars');
 const QuestionPage = require('./QuestionPage');
+const DataSource = require('./DataSource');
 const OtusTemplatePartsGenerator = require('./OtusTemplatePartsGenerator');
 const GraphViz = require('./GraphViz');
 
@@ -12,6 +13,10 @@ class EhrQuestionnaire {
         this.defaultRouteQuestionIds = [];
         globalVars.ehrQuestionnaire = this;
         this.defaultRoutePageIds = [];
+
+        this.dataSources = {};
+        this.hugeNonDefaultRoutesGraph = new GraphViz();
+        this.hugeNonDefaultRoutes = [];
     }
 
     get getFirstQuestionPage(){
@@ -70,6 +75,13 @@ class EhrQuestionnaire {
         this.defaultRoutePageIds.pop(); // take off END PAGE
     }
 
+    addQuestionInDataSource(dataSourceId, questionId){
+        if(!this.dataSources[dataSourceId]){
+            this.dataSources[dataSourceId] = new DataSource(dataSourceId);
+        }
+        this.dataSources[dataSourceId].addQuestionAtBindTo(questionId);
+    }
+
     toOtusStudioTemplate(emptyOtusStudioTemplate){
         const firstQuestionId = this.getFirstQuestionPage.getFirstQuestion().id;
         emptyOtusStudioTemplate["navigationList"].push(
@@ -83,6 +95,8 @@ class EhrQuestionnaire {
         for(let questionPage of this.questionPages){
             questionPage.toOtusStudioTemplate(emptyOtusStudioTemplate);
         }
+
+        emptyOtusStudioTemplate['dataSources'] = Object.values(this.dataSources);
     }
 
     findPageOfQuestionId(questionId){
@@ -181,6 +195,15 @@ class EhrQuestionnaire {
             ehrGraphViz.save(`${ehrOutputPath}/${this.questionPages[start].id}-${this.questionPages[end].id}-ehr`);
             otusGraphViz.save(`${otusOutputPath}/${this.questionPages[start].id}-${this.questionPages[end].id}-otus`);
         }
+    }
+
+    onlyEHRPagesToGraphViz(ehrOutputPath){
+        const ehrGraphViz = new GraphViz();
+        for(let questionPage of this.questionPages){
+            const nodeColor = 'white';
+            questionPage.fillEHRPagesGraphViz(ehrGraphViz, nodeColor);
+        }
+        ehrGraphViz.save(`${ehrOutputPath}/pages-ehr`);
     }
 
 }

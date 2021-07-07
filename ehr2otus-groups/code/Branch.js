@@ -9,14 +9,6 @@ class Branch {
         for(let rule of ehrBranch.rule){
             this.rules.push(new Rule(rule));
         }
-
-        // if(!this.targetPageId.includes("aux")){
-        //     const originPageNumber = parseInt(this.originPageId.replace("PAGE_", ""), 10);
-        //     const targetPageNumber = parseInt(this.targetPageId.replace("PAGE_", ""), 10);
-        //     if(targetPageNumber - originPageNumber > 50){
-        //         console.log(`${this.originPageId} -> ${this.targetPageId}`);
-        //     }
-        // }
     }
 
     fillGraphViz(graphViz){

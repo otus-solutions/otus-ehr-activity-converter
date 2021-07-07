@@ -15,3 +15,4 @@ do
 	  dot -Tpng $f > "$PNG_OUTPUT/otus/$b.png"
 	  rm $f
 done
+echo png graphs exported

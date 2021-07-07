@@ -64,8 +64,8 @@ function extractQuestionsFromArrays(acronym, template, filterLevel){
         let outputQuestions = [];
 
         if(questionPage.header){
-            const pageId = questionPage.id.replace(/_/g, "-");
-            const newId = `${acronym}-${pageId}-header`;
+            const pageId = questionPage.id.replace(/_/g, "").toLowerCase();
+            const newId = `${acronym}${pageId}Header`;
             outputQuestions.push({
                 id: newId,
                 name: newId,

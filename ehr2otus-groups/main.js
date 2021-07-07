@@ -13,6 +13,8 @@ function outputResumePath(acronym){
     return outputDirPath() + acronym + "/resume/" + acronym + "-";
 }
 
+let exportCopyWithQuestionIds = false;
+
 main();
 
 function main(){
@@ -22,7 +24,7 @@ function main(){
         return;
     }
     if(numArgs === 4 && process.argv[numArgs-1]==="id"){
-        globalVars.EXPORT_QUESTION_LABEL_WITH_ID = true;
+        exportCopyWithQuestionIds = true;
     }
 
     const acronym = process.argv[2];
@@ -60,20 +62,38 @@ function readAndParse(acronym, templateInfo, outputPath){
     ehrTemplate = ehrTemplateFilter.extractQuestionsFromArrays(acronym, ehrTemplate.survey, 1);
     FileHandler.writeJson(outputPath + acronym+"-filtered.json", ehrTemplate);
 
-    const resumePath = outputResumePath(acronym);
+    if(exportCopyWithQuestionIds){
+        exportTemplateCopyWithIdAtLabels(ehrTemplate, templateName, acronym, templateInfo, outputPath);
+    }
 
     const ehrQuestionnaire = new EhrQuestionnaire();
     ehrQuestionnaire.readFromJsonObj(ehrTemplate);
-    const ehrBranchesQuestions = exportResumes(ehrQuestionnaire, resumePath);
 
     let otusTemplate = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
     ehrQuestionnaire.toOtusStudioTemplate(otusTemplate);
     FileHandler.writeJson(outputPath + acronym + "-otus-result.json", otusTemplate);
 
+    const resumePath = outputResumePath(acronym);
+    const ehrBranchesQuestions = exportResumes(ehrQuestionnaire, resumePath);
     const otusNavigationResume = resumeOtusTemplateNavigation(otusTemplate.navigationList, resumePath + "otus-result-navigation-resume.txt");
     compareNavigations(ehrBranchesQuestions, otusNavigationResume, resumePath+"comparison.txt");
 
-    buildAndExportGraph(acronym, ehrQuestionnaire);
+    if(!globalVars.EXPORT_QUESTION_LABEL_WITH_ID) {
+        buildAndExportGraph(acronym, ehrQuestionnaire);
+    }
+}
+
+function exportTemplateCopyWithIdAtLabels(ehrTemplate, templateName, acronym, templateInfo, outputPath){
+    globalVars.EXPORT_QUESTION_LABEL_WITH_ID = true;
+
+    const ehrQuestionnaire = new EhrQuestionnaire();
+    ehrQuestionnaire.readFromJsonObj(ehrTemplate);
+
+    let otusTemplate2 = OtusTemplatePartsGenerator.getEmptyTemplate(templateName, acronym, templateInfo.oid, templateInfo.creationDate);
+    ehrQuestionnaire.toOtusStudioTemplate(otusTemplate2);
+    FileHandler.writeJson(outputPath + acronym + "-otus-result-with-question-ids.json", otusTemplate2);
+
+    globalVars.EXPORT_QUESTION_LABEL_WITH_ID = false;
 }
 
 function exportResumes(ehr, path){
@@ -153,12 +173,11 @@ function compareNavigations(ehrBranchesQuestions, otusNavigationResume, outputPa
 }
 
 function buildAndExportGraph(acronym, ehrQuestionnaire){
-
     const path = 'output/' + acronym + "/graph";
     FileHandler.mkdir(path);
-    //const path = 'output\\' + acronym + "\\graph\\"; on Windows
 
-    const ehrOutputPath = path + "/ehr", otusOutputPath = path + "/otus";
+    const ehrOutputPath = path + "/ehr",
+        otusOutputPath = path + "/otus";
     FileHandler.mkdir(ehrOutputPath);
     FileHandler.mkdir(otusOutputPath);
 

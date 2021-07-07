@@ -92,7 +92,7 @@ class EhrQuestion {
 
     label2Otus() {
         if(globalVars.EXPORT_QUESTION_LABEL_WITH_ID) {
-            const formattedId = `\<font color=\"#ff7f7f\"\>${this.id}\</font\>\<br\>`;
+            const formattedId = `\<font color=\"#ff7f7f\"\>${this.id} - ${this.pageId}\</font\>\<br\>`;
             return OtusTemplatePartsGenerator.getLabel(formattedId + this.label);
         }
         return OtusTemplatePartsGenerator.getLabel(this.label);
